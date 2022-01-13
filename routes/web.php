@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\AdminController;
@@ -39,7 +37,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'getSua'])->name('loaisanpham.sua');
     Route::post('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'postSua'])->name('loaisanpham.sua');
     Route::get('/loaisanpham/xoa/{id}', [LoaiSanPhamController::class, 'getXoa'])->name('loaisanpham.xoa');
-    
+
     // Quản lý chất liệu
     Route::get('/chatlieu', [ChatLieuController::class, 'getDanhSach'])->name('chatlieu');
     Route::get('/chatlieu/them', [ChatLieuController::class, 'getThem'])->name('chatlieu.them');
@@ -50,14 +48,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/chatlieu/nhap', [ChatLieuController::class, 'postNhap'])->name('chatlieu.nhap');
 
     // Quản lý Hãng sản xuất
-    Route::get('/hangsanxuat', [HangSanXuat::class, 'getDanhSach'])->name('hangsanxuat');
-    Route::get('/hangsanxuat/them', [HangSanXuat::class, 'getThem'])->name('hangsanxuat.them');
-    Route::post('/hangsanxuat/them', [HangSanXuat::class, 'postThem'])->name('hangsanxuat.them');
-    Route::get('/hangsanxuat/sua/{id}', [HangSanXuat::class, 'getSua'])->name('hangsanxuat.sua');
-    Route::post('/hangsanxuat/sua/{id}', [HangSanXuat::class, 'postSua'])->name('hangsanxuat.sua');
-    Route::get('/hangsanxuat/xoa/{id}', [HangSanXuat::class, 'getXoa'])->name('hangsanxuat.xoa');
-    Route::post('/hangsanxuat/nhap', [HangSanXuat::class, 'postNhap'])->name('hangsanxuat.nhap');
-    Route::get('/hangsanxuat/xuat', [HangSanXuat::class, 'getXuat'])->name('hangsanxuat.xuat');
+    Route::get('/hangsanxuat', [HangSanXuatController::class, 'getDanhSach'])->name('hangsanxuat');
+    Route::get('/hangsanxuat/them', [HangSanXuatController::class, 'getThem'])->name('hangsanxuat.them');
+    Route::post('/hangsanxuat/them', [HangSanXuatController::class, 'postThem'])->name('hangsanxuat.them');
+    Route::get('/hangsanxuat/sua/{id}', [HangSanXuatController::class, 'getSua'])->name('hangsanxuat.sua');
+    Route::post('/hangsanxuat/sua/{id}', [HangSanXuatController::class, 'postSua'])->name('hangsanxuat.sua');
+    Route::get('/hangsanxuat/xoa/{id}', [HangSanXuatController::class, 'getXoa'])->name('hangsanxuat.xoa');
+    Route::post('/hangsanxuat/nhap', [HangSanXuatController::class, 'postNhap'])->name('hangsanxuat.nhap');
+    Route::get('/hangsanxuat/xuat', [HangSanXuatController::class, 'getXuat'])->name('hangsanxuat.xuat');
     
     // Quản lý Tình trạng đơn hàng
     Route::get('/tinhtrang', [TinhTrangController::class, 'getDanhSach'])->name('tinhtrang');
