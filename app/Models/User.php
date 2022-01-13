@@ -10,10 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Auth\Notifications\ResetPassword;
 
-class NguoiDung extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $table = 'nguoidung';
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -46,17 +46,17 @@ class NguoiDung extends Authenticatable implements MustVerifyEmail
 
     public function DonHang()
     {
-        return $this->hasMany(DonHang::class, 'nguoidung_id', 'id');
+        return $this->hasMany(DonHang::class, 'user_id', 'id');
     }
 
     public function BaiViet()
     {
-        return $this->hasMany(BaiViet::class, 'nguoidung_id', 'id');
+        return $this->hasMany(BaiViet::class, 'user_id', 'id');
     }
 
     public function BinhLuan()
     {
-        return $this->hasMany(BinhLuan::class, 'nguoidung_id', 'id');
+        return $this->hasMany(BinhLuan::class, 'user_id', 'id');
     }
     public function sendPasswordResetNotification($token)
     {
