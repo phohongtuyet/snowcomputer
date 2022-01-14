@@ -53,10 +53,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/hangsanxuat/them', [HangSanXuatController::class, 'postThem'])->name('hangsanxuat.them');
     Route::get('/hangsanxuat/sua/{id}', [HangSanXuatController::class, 'getSua'])->name('hangsanxuat.sua');
     Route::post('/hangsanxuat/sua/{id}', [HangSanXuatController::class, 'postSua'])->name('hangsanxuat.sua');
-    Route::get('/hangsanxuat/xoa/{id}', [HangSanXuatController::class, 'getXoa'])->name('hangsanxuat.xoa');
+    Route::post('/hangsanxuat/xoa', [HangSanXuatController::class, 'postXoa'])->name('hangsanxuat.xoa');
     Route::post('/hangsanxuat/nhap', [HangSanXuatController::class, 'postNhap'])->name('hangsanxuat.nhap');
     Route::get('/hangsanxuat/xuat', [HangSanXuatController::class, 'getXuat'])->name('hangsanxuat.xuat');
-    
+    Route::post('/hangsanxuat/ajax', [HangSanXuatController::class, 'postHinhAnhAjax'])->name('hangsanxuat.ajax');
+
     // Quản lý Tình trạng đơn hàng
     Route::get('/tinhtrang', [TinhTrangController::class, 'getDanhSach'])->name('tinhtrang');
     Route::get('/tinhtrang/them', [TinhTrangController::class, 'getThem'])->name('tinhtrang.them');
