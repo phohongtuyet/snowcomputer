@@ -19,7 +19,7 @@ class BaiVietController extends Controller
     {        
         if(auth::user()->role == 'staff')
         {
-            $baiviet = BaiViet::orderBy('created_at', 'desc')->where('nguoidung_id',auth::user()->id)->get();
+            $baiviet = BaiViet::orderBy('created_at', 'desc')->where('user_id',auth::user()->id)->get();
             return view('admin.baiviet.danhsach',compact('baiviet'));
         }
 
@@ -76,7 +76,7 @@ class BaiVietController extends Controller
         ]);
            
         $orm = new BaiViet();
-        $orm->nguoidung_id = Auth::user()->id;
+        $orm->user_id = Auth::user()->id;
         $orm->chude_id = $request->chude_id;
         $orm->tieude = $request->tieude;
         $orm->tieude_slug = Str::slug($request->tieude, '-');
@@ -117,7 +117,7 @@ class BaiVietController extends Controller
         ]);
            
         $orm = BaiViet::find($id);
-        $orm->nguoidung_id = Auth::user()->id;
+        $orm->user_id = Auth::user()->id;
         $orm->chude_id = $request->chude_id;
         $orm->tieude = $request->tieude;
         $orm->tieude_slug = Str::slug($request->tieude, '-');

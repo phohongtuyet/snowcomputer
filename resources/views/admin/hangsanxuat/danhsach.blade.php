@@ -3,6 +3,11 @@
 @section('content')
 	<div class="card">
 		<div class="card-header">Hãng sản xuất</div>
+		@if (session('status'))
+            <div id="AlertBox" class="alert alert-success hide" role="alert">
+                {!! session('status') !!}
+            </div>
+        @endif
 		<div class="card-body">
 			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
 			<table id="DataList" class="table table-bordered table-hover table-sm">
@@ -65,6 +70,11 @@
 @section('javascript')
 	<script src="{{ asset('public/vendor/ckfinder/ckfinder.js') }}"></script>
 	<script>
+		$(document).ready(function() {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(2000).slideUp(500);
+        });
+
 		function getXemHinh(id) {
 			$.ajax({
 				url: '{{ route("admin.hangsanxuat.ajax") }}',
