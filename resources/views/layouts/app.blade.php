@@ -56,6 +56,7 @@
 									<li><a class="dropdown-item" href="{{ route('admin.nguoidung') }}"><i class="fal fa-fw fa-users"></i> Tài khoản người dùng</a></li>
 									<li><a class="dropdown-item" href="{{ route('admin.baiviet') }}"><i class="fal fa-fw fa-users"></i> bv   </a></li>
 									<li><a class="dropdown-item" href="{{ route('admin.chude') }}"><i class="fal fa-fw fa-users"></i> cd   </a></li>
+									<li><a class="dropdown-item" href="{{ route('admin.noisanxuat') }}"><i class="fal fa-fw fa-users"></i> cd   </a></li>
 
 
 								</ul>

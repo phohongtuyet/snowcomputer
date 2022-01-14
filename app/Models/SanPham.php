@@ -33,6 +33,11 @@ class SanPham extends Model
         return $this->belongsTo(HangSanXuat::class, 'hangsanxuat_id', 'id');
     }
 
+    public function NoiSanXuat()
+    {
+        return $this->belongsTo(NoiSanXuat::class, 'noisanxuat_id', 'id');
+    }
+
     public function HinhAnh()
     {
         return $this->hasMany(HinhAnh::class, 'sanpham_id', 'id');

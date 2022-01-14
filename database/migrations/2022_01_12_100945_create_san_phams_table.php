@@ -20,9 +20,11 @@ class CreateSanPhamsTable extends Migration
             $table->foreignId('noisanxuat_id')->constrained('noisanxuat');
             $table->string('tensanpham');
             $table->string('tensanpham_slug');
+            $table->integer('baohanh');
             $table->integer('soluong');
             $table->double('dongia');
             $table->text('motasanpham')->nullable();
+            $table->text('thumuc')->nullable();
             $table->unsignedTinyInteger('hienthi')->default(1);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();

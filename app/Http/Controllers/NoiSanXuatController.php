@@ -4,82 +4,74 @@ namespace App\Http\Controllers;
 
 use App\Models\NoiSanXuat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NoiSanXuatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
+    }
+    
+    public function getDanhSach()
+    {
+        $noisanxuat = NoiSanXuat::all();
+        return view('admin.noisanxuat.danhsach',compact('noisanxuat'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getThem()
     {
-        //
+        return view('admin.noisanxuat.them');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function postThem(Request $request)
     {
-        //
+        $this->validate($request, [
+            'tenquocgia' => ['required', 'max:255', 'unique:noisanxuat'],
+        ],
+        $messages = [
+            'required' => 'Tên quooc không được bỏ trống.',
+            'unique' => 'Tên loại đã có trong hệ thống.',
+        ]);
+           
+        $orm = new NoiSanXuat();
+        $orm->tenquocgia = $request->tenquocgia;
+        $orm->tenquocgia_slug = Str::slug($request->tenquocgia, '-');
+        $orm->save();
+        return redirect()->route('admin.noisanxuat')->with('status', 'Thêm mới thành công');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\NoiSanXuat  $noiSanXuat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(NoiSanXuat $noiSanXuat)
+    public function getSua($id)
     {
-        //
+        $noisanxuat = NoiSanXuat::find($id);
+        return view('admin.noisanxuat.sua', compact('noisanxuat'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\NoiSanXuat  $noiSanXuat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NoiSanXuat $noiSanXuat)
+    public function postSua(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'tenquocgia' => ['required', 'max:255', 'unique:noisanxuat,tenquocgia,'.$id],
+        ],
+        $messages = [
+            'required' => 'Tên loại không được bỏ trống.',
+            'unique' => 'Tên loại đã có trong hệ thống.',
+            'max' => 'Độ dài tối đa không quá 255 ký tự!',
+        ]);
+           
+        $orm = NoiSanXuat::find($id);
+        $orm->tenquocgia = $request->tenquocgia;
+        $orm->tenquocgia_slug = Str::slug($request->tenquocgia, '-');
+        $orm->save();
+
+        return redirect()->route('admin.noisanxuat')->with('status', 'Cập nhật thành công');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\NoiSanXuat  $noiSanXuat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, NoiSanXuat $noiSanXuat)
+    public function postXoa(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\NoiSanXuat  $noiSanXuat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(NoiSanXuat $noiSanXuat)
-    {
-        //
+        $orm = NoiSanXuat::find($request->ID_delete);
+        $orm->delete();
+    
+        return redirect()->route('admin.noisanxuat')->with('status', 'Xóa  thành công');
     }
 }

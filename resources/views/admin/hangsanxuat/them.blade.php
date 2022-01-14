@@ -28,7 +28,11 @@
     </form>
     </div>
  </div>
- <script src="{{ asset('public/vendor/ckfinder/ckfinder.js') }}"></script>
+ 
+@endsection
+
+@section('javascript')
+<script src="{{ asset('public/vendor/ckfinder/ckfinder.js') }}"></script>
 <script>
     var chonHinh = document.getElementById('ChonHinh');
     chonHinh.onclick = function() { uploadFileWithCKFinder(); };
@@ -42,8 +46,4 @@
         });
     }
 </script>
-@endsection
-
-@section('javascript')
-	
 @endsection

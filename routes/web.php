@@ -11,7 +11,7 @@ use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\DonHangChiTietController;
-use App\Http\Controllers\ChatLieuController;
+use App\Http\Controllers\NoiSanXuatController;
 use App\Http\Controllers\HinhAnhController;
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhluanController;
@@ -39,13 +39,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/loaisanpham/xoa/{id}', [LoaiSanPhamController::class, 'getXoa'])->name('loaisanpham.xoa');
 
     // Quản lý chất liệu
-    Route::get('/chatlieu', [ChatLieuController::class, 'getDanhSach'])->name('chatlieu');
-    Route::get('/chatlieu/them', [ChatLieuController::class, 'getThem'])->name('chatlieu.them');
-    Route::post('/chatlieu/them', [ChatLieuController::class, 'postThem'])->name('chatlieu.them');
-    Route::get('/chatlieu/sua/{id}', [ChatLieuController::class, 'getSua'])->name('chatlieu.sua');
-    Route::post('/chatlieu/sua/{id}', [ChatLieuController::class, 'postSua'])->name('chatlieu.sua');
-    Route::get('/chatlieu/xoa/{id}', [ChatLieuController::class, 'getXoa'])->name('chatlieu.xoa');
-    Route::post('/chatlieu/nhap', [ChatLieuController::class, 'postNhap'])->name('chatlieu.nhap');
+    Route::get('/noisanxuat', [NoiSanXuatController::class, 'getDanhSach'])->name('noisanxuat');
+    Route::get('/noisanxuat/them', [NoiSanXuatController::class, 'getThem'])->name('noisanxuat.them');
+    Route::post('/noisanxuat/them', [NoiSanXuatController::class, 'postThem'])->name('noisanxuat.them');
+    Route::get('/noisanxuat/sua/{id}', [NoiSanXuatController::class, 'getSua'])->name('noisanxuat.sua');
+    Route::post('/noisanxuat/sua/{id}', [NoiSanXuatController::class, 'postSua'])->name('noisanxuat.sua');
+    Route::post('/noisanxuat/xoa', [NoiSanXuatController::class, 'postXoa'])->name('noisanxuat.xoa');
+    Route::post('/noisanxuat/nhap', [NoiSanXuatController::class, 'postNhap'])->name('noisanxuat.nhap');
 
     // Quản lý Hãng sản xuất
     Route::get('/hangsanxuat', [HangSanXuatController::class, 'getDanhSach'])->name('hangsanxuat');
@@ -72,11 +72,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/sanpham/them', [SanPhamController::class, 'postThem'])->name('sanpham.them');
     Route::get('/sanpham/sua/{id}', [SanPhamController::class, 'getSua'])->name('sanpham.sua');
     Route::post('/sanpham/sua/{id}', [SanPhamController::class, 'postSua'])->name('sanpham.sua');
-    Route::get('/sanpham/xoa/{id}', [SanPhamController::class, 'getXoa'])->name('sanpham.xoa');
+    Route::post('/sanpham/xoa', [SanPhamController::class, 'postXoa'])->name('sanpham.xoa');
     Route::post('/sanpham/nhap', [SanPhamController::class, 'postNhap'])->name('sanpham.nhap');
     Route::get('/sanpham/xuat', [SanPhamController::class, 'getXuat'])->name('sanpham.xuat');
     Route::get('/sanpham/OnOffHienThi/{id}', [SanPhamController::class, 'getOnOffHienThi'])->name('sanpham.OnOffHienThi');
     Route::get('/sanphamghet/xuat', [SanPhamController::class, 'getXuatSanPhamHet'])->name('sanpham.het.xuat');
+    Route::post('/sanphamghet/ajax', [SanPhamController::class, 'postHinhAnhSanPhamAjax'])->name('sanpham.hinhanh.ajax');
 
     // Quản lý chủ đề
     Route::get('/chude', [ChuDeController::class, 'getDanhSach'])->name('chude');
