@@ -54,7 +54,9 @@
 									<li><a class="dropdown-item" href="{{ route('admin.sanpham') }}"><i class="fal fa-fw fa-cubes"></i> Sản phẩm</a></li>
 									<li><a class="dropdown-item" href="{{ route('admin.donhang') }}"><i class="fal fa-fw fa-file-invoice"></i> Đơn hàng</a></li>
 									<li><a class="dropdown-item" href="{{ route('admin.nguoidung') }}"><i class="fal fa-fw fa-users"></i> Tài khoản người dùng</a></li>
-									<li><a class="dropdown-item" href="{{ route('admin.baiviet') }}"><i class="fal fa-fw fa-users"></i> Tài khoản người dùng</a></li>
+									<li><a class="dropdown-item" href="{{ route('admin.baiviet') }}"><i class="fal fa-fw fa-users"></i> bv   </a></li>
+									<li><a class="dropdown-item" href="{{ route('admin.chude') }}"><i class="fal fa-fw fa-users"></i> cd   </a></li>
+
 
 								</ul>
 							</li>

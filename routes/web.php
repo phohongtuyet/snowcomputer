@@ -84,7 +84,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/chude/them', [ChuDeController::class, 'postThem'])->name('chude.them');
     Route::get('/chude/sua/{id}', [ChuDeController::class, 'getSua'])->name('chude.sua');
     Route::post('/chude/sua/{id}', [ChuDeController::class, 'postSua'])->name('chude.sua');
-    Route::get('/chude/xoa/{id}', [ChuDeController::class, 'getXoa'])->name('chude.xoa');
+    Route::post('/chude/xoa', [ChuDeController::class, 'postXoa'])->name('chude.xoa');
     
     // Quản lý bài viết
     Route::get('/baiviet', [BaiVietController::class, 'getDanhSach'])->name('baiviet');
