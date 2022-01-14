@@ -7,79 +7,73 @@ use Illuminate\Http\Request;
 
 class TinhTrangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
+    }
+    
+    public function getDanhSach()
+    {
+        $tinhtrang = TinhTrang::all();
+        return view('admin.tinhtrang.danhsach',compact('tinhtrang'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getThem()
     {
-        //
+        return view('admin.tinhtrang.them');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function postThem(Request $request)
     {
-        //
+        $this->validate($request, [
+            'tinhtrang' => ['required', 'max:255', 'unique:tinhtrang'],
+        ],
+        $messages = [
+            'required' => 'Tên tình trạng không được bỏ trống.',
+            'unique' => 'Tên tình trạng đã có trong hệ thống.',
+            'max'=> 'Tên tình trạng vượt quá 255 ký tự.'
+        ]);
+
+       
+        $orm = new TinhTrang();
+        $orm->tinhtrang = $request->tinhtrang;
+        $orm->save();
+        
+        return redirect()->route('admin.tinhtrang')->with('status', 'Thêm mới thành công');
+
+        //return redirect()->route('admin.tinhtrang');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TinhTrang  $tinhTrang
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TinhTrang $tinhTrang)
+    public function getSua($id)
     {
-        //
+        $tinhtrang = TinhTrang::find($id);
+        return view('admin.tinhtrang.sua', compact('tinhtrang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TinhTrang  $tinhTrang
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TinhTrang $tinhTrang)
+    public function postSua(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'tinhtrang' => ['required', 'max:255', 'unique:tinhtrang,tinhtrang,'.$id],
+        ],
+        $messages = [
+            'required' => 'Tên tình trạng không được bỏ trống.',
+            'unique' => 'Tên tình trạng đã có trong hệ thống.',
+            'max'=> 'Tên tình trạng vượt quá 255 ký tự.'
+        ]);
+
+        $orm = TinhTrang::find($id);
+        $orm->tinhtrang = $request->tinhtrang;
+        $orm->save();
+
+        return redirect()->route('admin.tinhtrang')->with('status', 'Cập nhật thành công');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TinhTrang  $tinhTrang
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TinhTrang $tinhTrang)
+	public function postXoa(Request $request)
     {
-        //
-    }
+        $orm = TinhTrang::find($request->ID_delete);
+        $orm->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TinhTrang  $tinhTrang
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TinhTrang $tinhTrang)
-    {
-        //
+        return redirect()->route('admin.tinhtrang')->with('status', 'Xóa thành công');
     }
 }
