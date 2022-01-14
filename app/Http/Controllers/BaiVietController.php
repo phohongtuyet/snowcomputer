@@ -133,9 +133,9 @@ class BaiVietController extends Controller
 
     }
 
-    public function getXoa($id)
+    public function postXoa(Request $request)
     {
-        $orm = BaiViet::find($id);
+        $orm = BaiViet::find($request->ID_delete);
         $orm->delete();
     
         return redirect()->route('admin.baiviet')->with('status','Xóa thành công');

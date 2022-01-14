@@ -92,7 +92,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/baiviet/them', [BaiVietController::class, 'postThem'])->name('baiviet.them');
     Route::get('/baiviet/sua/{id}', [BaiVietController::class, 'getSua'])->name('baiviet.sua');
     Route::post('/baiviet/sua/{id}', [BaiVietController::class, 'postSua'])->name('baiviet.sua');
-    Route::get('/baiviet/xoa/{id}', [BaiVietController::class, 'getXoa'])->name('baiviet.xoa');
+    Route::post('/baiviet/xoa', [BaiVietController::class, 'postXoa'])->name('baiviet.xoa');
     Route::get('/baiviet/OnOffDuyet/{id}', [BaiVietController::class, 'getOnOffDuyet'])->name('baiviet.OnOffDuyet');
     Route::get('/baiviet/OnOffHienThi/{id}', [BaiVietController::class, 'getOnOffHienThi'])->name('baiviet.OnOffHienThi');
     Route::get('/baiviet/OnOffBinhLuan/{id}', [BaiVietController::class, 'getOnOffBinhLuan'])->name('baiviet.OnOffBinhLuan');

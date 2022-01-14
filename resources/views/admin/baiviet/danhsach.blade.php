@@ -90,7 +90,7 @@
                             
                             </td>
                             <td class="text-center"><a href="{{ route('admin.baiviet.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>                            
-                            <td class="text-center"><a href="{{ route('admin.baiviet.xoa', ['id' => $value->id]) }}" onclick="return confirm('Bạn có muốn xóa bài viết {{ $value->tieude}} không?')"><i class="fa fa-trash-alt text-danger"></i></a></td>
+                            <td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
 
                         </tr>
                     @endforeach
@@ -100,14 +100,14 @@
     </div>
  </div>
 
- <form action="{{ route('admin.hangsanxuat.xoa') }}" method="post">
+ <form action="{{ route('admin.baiviet.xoa') }}" method="post">
 		@csrf
 		<input type="hidden" id="ID_delete" name="ID_delete" value="" />
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Xóa hãng sản xuất </h5>
+					<h5 class="modal-title" id="exampleModalLabel">Xóa bài viết </h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
