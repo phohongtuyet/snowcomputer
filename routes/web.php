@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KhachHangController;
@@ -22,6 +21,26 @@ Auth::routes();
 
 // Trang chủ
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
+
+// Trang tài khoản khách hàng
+Route::prefix('khach-hang')->group(function() {
+    // Trang chủ tài khoản khách hàng
+    Route::get('/', [KhachHangController::class, 'getHome'])->name('khachhang');
+    
+    // Xem và cập nhật trạng thái đơn hàng
+    Route::get('/donhang', [KhachHangController::class, 'getDonHang'])->name('khachhang.donhang');
+    Route::get('/don-hang/{id}', [KhachHangController::class, 'getDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
+    Route::post('/don-hang/{id}', [KhachHangController::class, 'postDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
+    Route::get('/donhang-huy/{id}', [KhachHangController::class, 'getDonHangHuy'])->name('khachhang.donhang.huy');
+
+    // Xem và cập nhật mật khẩu
+	Route::get('/matkhau', [KhachHangController::class, 'getMatKhau'])->name('khachhang.matkhau');
+	Route::post('/matkhau', [KhachHangController::class, 'postMatKhau'])->name('khachhang.matkhau');
+
+    // Cập nhật thông tin tài khoản
+	Route::get('/hoso', [KhachHangController::class, 'getHoSo'])->name('khachhang.hoso');
+	Route::post('/hoso', [KhachHangController::class, 'postHoSo'])->name('khachhang.hoso');	
+});
 
 // Trang quản trị
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
