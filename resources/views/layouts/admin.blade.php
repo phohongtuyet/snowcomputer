@@ -22,12 +22,15 @@
   <link rel="stylesheet" href="{{ asset('public/admin/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 </head>
 <body>
   <div class="container-scroller"> 
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        
         <div class="me-3">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
             <span class="icon-menu"></span>
@@ -42,10 +45,11 @@
           </a>
         </div>
       </div>
+      @if(Auth::user() != null)
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Xin chào , <span class="text-black fw-bold">{{ Auth::user()->name}}</span></h1>
+            <h1 class="welcome-text">Xin chào , <span class="text-black fw-bold">{{Auth::user()->name}}</span></h1>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -180,8 +184,8 @@
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                <p class="mb-1 mt-3 font-weight-semibold">{{Auth::user()->name}}</p>
+                <p class="fw-light text-muted mb-0">{{Auth::user()->email}}</p>
               </div>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
@@ -195,6 +199,7 @@
           <span class="mdi mdi-menu"></span>
         </button>
       </div>
+      @endif
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -370,103 +375,129 @@
       <!-- partial -->
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          
-          <li class="nav-item nav-category"> danh mục</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">Quản lý danh mục</span>
-              <i class="menu-arrow"></i> 
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.noisanxuat') }}">Typography</a></li>
-              </ul>
-            </div>
-          </li>
+      <ul class="nav">
+        @guest
+          @if(Route::has('login'))
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ route('login') }}"><i class="fal fa-fw fa-sign-in-alt"></i> Đăng nhập</a>
+            </li>
+          @endif
+          @if(Route::has('register'))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('register') }}"><i class="fal fa-fw fa-user-plus"></i> Đăng ký</a>
+            </li>
+          @endif
+        @else
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            
+            <li class="nav-item nav-category"> danh mục</li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Quản lý danh mục</span>
+                <i class="menu-arrow"></i> 
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>
+                </ul>
+              </div>
+            </li>
 
-          <li class="nav-item nav-category">bài viết </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">Quản lý bài viết</span>
-              <i class="menu-arrow"></i> 
-            </a>
-            <div class="collapse" id="ui-post">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.chude') }}">Chủ đề</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.baiviet') }}">Bài viết</a></li>
-              </ul>
-            </div>
-          </li>
+            <li class="nav-item nav-category">bài viết </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-post" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Quản lý bài viết</span>
+                <i class="menu-arrow"></i> 
+              </a>
+              <div class="collapse" id="ui-post">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.chude') }}">Chủ đề</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.baiviet') }}">Bài viết</a></li>
+                </ul>
+              </div>
+            </li>
 
-          <li class="nav-item nav-category">Sản phẩm</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#product" aria-expanded="false" aria-controls="form-elements">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Quản lý sản phẩm </span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="product">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{route('admin.sanpham')}}">Sản phẩm </a></li>
-                <li class="nav-item"><a class="nav-link" href="{{route('admin.sanpham')}}">Đánh giá </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item nav-category">Đơn hàng</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#order" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-account-circle-outline"></i>
-              <span class="menu-title">Quản lý đơn hàng </span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="order">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item nav-category">pages</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-account-circle-outline"></i>
-              <span class="menu-title">Tài khoản </span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href=""> Đăng xuất </a></li>
-              </ul>
-            </div>
-          </li>
+            <li class="nav-item nav-category">Sản phẩm</li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#product" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <span class="menu-title">Quản lý sản phẩm </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="product">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.sanpham')}}">Sản phẩm </a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.sanpham')}}">Đánh giá </a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item nav-category">Đơn hàng</li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#order" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon mdi mdi-account-circle-outline"></i>
+                <span class="menu-title">Quản lý đơn hàng </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="order">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Đăng xuất   </p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                        @csrf
+                    </form>
+                  </li>	
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item nav-category">pages</li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon mdi mdi-account-circle-outline"></i>
+                <span class="menu-title">Tài khoản </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Đăng xuất   </p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                        @csrf
+                    </form>
+                  </li>	
+                </ul>
+              </div>
+            </li>
 
-          
-        </ul>
+            
+          </ul>
+        @endguest
       </nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row">
-		  @yield('content')
-
-          </div>
+		        @yield('content')
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Snow Computer </span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2022.</span>
           </div>
         </footer>
         <!-- partial -->
@@ -496,11 +527,39 @@
   <!-- Custom js for this page-->
   <script src="{{ asset('public/admin/js/dashboard.js')}}"></script>
   <script src="{{ asset('public/admin/js/Chart.roundedBarCharts.js')}}"></script>
-  
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+	<script>
+		
+		$(document).ready(function() {
+			$("#table_id").DataTable({
+				"aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tất cả"]],
+				"iDisplayLength": 10,
+				"oLanguage": {
+					"sLengthMenu": "Hiện _MENU_ dòng",
+					"oPaginate": {
+						"sFirst": "<i class='fas fa-step-backward'></i>",
+						"sLast": "<i class='fas fa-step-forward'></i>",
+						"sNext": "<i class='fas fa-chevron-right'></i>",
+						"sPrevious": "<i class='fas fa-chevron-left'></i>"
+					},
+					"sEmptyTable": "Không có dữ liệu",
+					"sSearch": "Tìm kiếm:",
+					"sZeroRecords": "Không có dữ liệu",
+					"sInfo": "Hiện từ _START_ đến _END_ của _TOTAL_ dòng",
+					"sInfoEmpty" : "Không tìm thấy",
+					"sInfoFiltered": " (tổng số _MAX_ dòng)"
+				}
+			});
+			$("#table_id").wrap('<div class="table-responsive"></div>');
+		});
+	</script>
+
   @yield('javascript')
-  <!-- End custom js for this page-->
 </body>
 
 </html>

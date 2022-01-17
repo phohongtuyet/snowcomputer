@@ -2,13 +2,14 @@
 @section('title', 'Hãng sản xuất')
 @section('content')
 	<div class="card">
-		<div class="card-header">Hãng sản xuất</div>
+		<div class="card-body">
+
+		<h4>Hãng sản xuất</h4>
 		@if (session('status'))
             <div id="AlertBox" class="alert alert-success hide" role="alert">
                 {!! session('status') !!}
             </div>
         @endif
-		<div class="card-body">
 			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
 			<table id="DataList" class="table table-bordered table-hover table-sm">
 				<thead>

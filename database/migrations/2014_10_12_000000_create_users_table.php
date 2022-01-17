@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 class CreateUsersTable extends Migration
 {
@@ -27,8 +28,16 @@ class CreateUsersTable extends Migration
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';
         });
+        User::create([
+            'name' => 'Administrator',
+            'username' => 'admin',
+            'email' => 'snowcomputer@gmail.com',
+            'password' => '$2y$10$OZ5YFT7m2IQBEmQyf9B5K.yUER247wUgDi9t0mfnljdDie2Do.GuC', // 123456789
+            'khoa' => 0,
+            'role' => 'admin',
+        ]);
     }
-
+   
     /**
      * Reverse the migrations.
      *

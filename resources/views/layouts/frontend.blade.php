@@ -869,6 +869,7 @@
     <!-- /.container --> 
   </div>
 
+  @yield('content')
 
   <div class="row our-features-box">
     <div class="container">
