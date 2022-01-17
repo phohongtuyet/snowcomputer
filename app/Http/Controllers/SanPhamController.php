@@ -6,6 +6,7 @@ use App\Models\SanPham;
 use App\Models\HangSanXuat;
 use App\Models\LoaiSanPham;
 use App\Models\NoiSanXuat;
+use App\Models\DanhMuc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -82,11 +83,17 @@ class SanPhamController extends Controller
 
         $noisanxuat = NoiSanXuat::all();
         $hangsanxuat = HangSanXuat::all();
-        $loaisanpham = LoaiSanPham::all();
+        $danhmuc = DanhMuc::all();
 
-        return view('admin.sanpham.them', compact('noisanxuat','hangsanxuat','loaisanpham','folder'));
+        return view('admin.sanpham.them', compact('noisanxuat','hangsanxuat','folder','danhmuc'));
     }
-    
+
+    public function getLoai(Request $request)
+    {
+        $loai = LoaiSanPham::where("danhmuc_id", $request->id)->pluck("tenloai", "id");
+        return response()->json($loai);
+    }
+
     public function postThem(Request $request)
     {
         $this->validate($request,[

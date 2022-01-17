@@ -23,6 +23,7 @@ class SlidesController extends Controller
 
 		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+        $slidesimg = array();
 
 		foreach($slides as $value)
 		{

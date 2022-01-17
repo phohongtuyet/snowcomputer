@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('title', 'Sản phẩm')
-
 @section('content')
     <div class="card">
-        <div class="card-header">Thêm san pham  </div>
         <div class="card-body">
+            <h4 class="card-title">Thêm sản phẩm </h4>
+
             <form action="{{ route('admin.sanpham.them') }}" method="post">
                 @csrf          
                 <div class="mb-3">
                     <label class="form-label" for="hangsanxuat_id">Hãng sản xuất </label>
-                    <select class="form-control @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
+                    <select class="form-select @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
                         <option value="">-- Chọn hãng sản xuất --</option>
                         @foreach($hangsanxuat as $value)
                             <option value="{{ $value->id }}">{{ $value->tenhangsanxuat }}</option>
@@ -21,7 +21,7 @@
                 </div>  
                 <div class="mb-3">
                     <label class="form-label" for="noisanxuat_id">Nơi sản xuất </label>
-                    <select class="form-control @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
+                    <select class="form-select @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
                         <option value="">-- Chọn nơi sản xuất--</option>
                         @foreach($noisanxuat as $value)
                             <option value="{{ $value -> id}}">{{ $value -> tenquocgia}}</option>
@@ -32,17 +32,26 @@
                     @enderror
                 </div>  
                 <div class="mb-3">
-                    <label class="form-label" for="loaisanpham_id">Loại sản phẩm</label>
-                    <select class="form-control @error('loaisanpham_id') is-invalid @enderror" name="loaisanpham_id" id="loaisanpham_id" value="{{ old('loaisanpham_id') }}"> 
-                        <option value="">-- Chọn loại sản phẩm --</option>
-                        @foreach($loaisanpham as $value)
-                            <option value="{{ $value->id }}">{{ $value->tenloai }}</option>
+                    <label class="form-label" for="nhomsanpham_id">Danh mục sản phẩm:</label>
+                    <select class="form-select @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required>
+                            <option value="" selected disabled>-- Chọn danh mục --</option>
+                            @foreach ($danhmuc as $value)
+                            <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                        @error('nhomsanpham_id')
+                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="loaisanpham_id">Loại sản phẩm</label>
+                    <select class="form-select @error('loaisanpham_id') is-invalid @enderror" id="loaisanpham_id" name="loaisanpham_id" required></select>
                     @error('loaisanpham_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
-                </div> 
+                </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="tensanpham">Tên sản phẩm  </label>
@@ -74,10 +83,9 @@
                     @error('baohanh')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
-                </div> 
-                
+                </div>  
                 <div class="form-group">
-                    <label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+                    <label for="ThuMuc"><span class="badge badge-info"></span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text" id="ChonHinh"><a href="#hinhanh">Tải ảnh lên</a></div>
@@ -118,5 +126,38 @@
                 height: 500
             });
         }
+    
+        $(document).ready(function(){
+            $('#nhomsanpham_id').change(function() {
+                var id = $(this).val();
+                if (id) {
+
+                    $.ajax({
+                        url: '{{ route("admin.sanpham.loai") }}',
+                        method: 'GET',
+                        data: { _token: '{{ csrf_token() }}', id: id },
+                        success: function(res) {
+                            if (res) {
+                                $("#loaisanpham_id").empty();
+                                $("#loaisanpham_id").append('<option>-- Chọn Loại Sản Phẩm --</option>');
+                                $.each(res, function(key, value) {
+                                    $("#loaisanpham_id").append('<option value="' + key + '">' + value +'</option>');
+                                });
+                            } 
+                            else 
+                            {
+                                $("#loaisanpham_id").empty();
+                            }
+                        }
+                    });
+                } else {
+
+                    $("#loaisanpham_id").empty();
+                
+                }
+            });
+
+           
+        });
     </script>
 @endsection

@@ -21,7 +21,7 @@ class HangSanXuatController extends Controller
         $hangsanxuat = HangSanXuat::all();
 		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
-
+        $hangsanxuatimg = array();
 		foreach($hangsanxuat as $value)
 		{
 			$dir = 'storage/app/' . $value->hinhanh . '/images/';

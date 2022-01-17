@@ -117,6 +117,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/sanpham/OnOffHienThi/{id}', [SanPhamController::class, 'getOnOffHienThi'])->name('sanpham.OnOffHienThi');
     Route::get('/sanphamghet/xuat', [SanPhamController::class, 'getXuatSanPhamHet'])->name('sanpham.het.xuat');
     Route::post('/sanphamghet/ajax', [SanPhamController::class, 'postHinhAnhSanPhamAjax'])->name('sanpham.hinhanh.ajax');
+    Route::get('/sanphamloai', [SanPhamController::class, 'getLoai'])->name('sanpham.loai');
 
     // Quản lý chủ đề
     Route::get('/chude', [ChuDeController::class, 'getDanhSach'])->name('chude');
