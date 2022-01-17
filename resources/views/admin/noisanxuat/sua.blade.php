@@ -1,9 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Tình trạng')
+@section('title', 'Nơi sản xuất')
 @section('content')
  <div class="card">
-    <div class="card-header">Sửa tình trạng</div>
     <div class="card-body table-responsive">
+    <h3  class="card-title">Sửa nơi sản xuất </h3>
+
     <form action="{{ route('admin.noisanxuat.sua',['id' => $noisanxuat -> id]) }}" method="post">
         @csrf
         <div class="mb-3">

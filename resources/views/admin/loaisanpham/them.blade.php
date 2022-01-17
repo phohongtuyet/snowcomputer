@@ -2,8 +2,9 @@
 @section('title', 'Loại sản phẩm')
 @section('content')
  <div class="card">
-    <div class="card-header">Thêm loại sản phẩm </div>
     <div class="card-body table-responsive">
+    <h3 class="card-title">Thêm loại sản phẩm </h3>
+
     <form action="{{ route('admin.loaisanpham.them') }}" method="post">
         @csrf
         <div class="mb-3">

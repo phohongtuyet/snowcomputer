@@ -19,7 +19,39 @@ class HangSanXuatController extends Controller
     public function getDanhSach()
     {
         $hangsanxuat = HangSanXuat::all();
-        return view('admin.hangsanxuat.danhsach',compact('hangsanxuat'));
+		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
+		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+
+		foreach($hangsanxuat as $value)
+		{
+			$dir = 'storage/app/' . $value->hinhanh . '/images/';
+			if(file_exists($dir))
+			{
+				$files = scandir($dir);
+				if(isset($files[2]))
+				{
+					$extension2 = strtolower(pathinfo($files[2], PATHINFO_EXTENSION));
+					if(in_array($extension2, $extensions))
+					{
+						$first_file = config('app.url') . '/'. $dir . $files[2];
+					}
+					else
+						$first_file = $no_image;
+				}
+				else
+					$first_file = $no_image;
+			}
+			else
+				$first_file = $no_image;
+			
+            $hangsanxuatimg[] = array(
+				'id' => $value->id,
+				'tenhangsanxuat' => $value->tenhangsanxuat,
+				'tenhangsanxuat_slug' => $value->tenhangsanxuat_slug,
+				'hinhanh' => $first_file,
+			);
+		}
+        return view('admin.hangsanxuat.danhsach',compact('hangsanxuatimg'));
     }
 
     // Nhập từ Excel

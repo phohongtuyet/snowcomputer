@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h4>Danh sách chủ đề</h4>
+        <h4 class="card-title">Danh sách chủ đề</h4>
         <div class="table-responsive">
             @if (session('status'))
                 <div id="AlertBox" class="alert alert-success hide" role="alert">

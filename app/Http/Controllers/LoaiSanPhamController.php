@@ -68,11 +68,11 @@ class LoaiSanPhamController extends Controller
 
     }
 
-    public function getXoa($id)
+    public function postXoa(Request $request)
     {
-        $orm = LoaiSanPham::find($id);
+        $orm = LoaiSanPham::find($request->ID_delete);
         $orm->delete();
     
-        return redirect()->route('admin.loaisanpham')->with('status', 'Xóa  thành công');
+        return redirect()->route('admin.loaisanpham')->with('status', 'Xóa thành công');
     }
 }

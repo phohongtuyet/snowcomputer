@@ -15,6 +15,7 @@ use App\Http\Controllers\HinhAnhController;
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhluanController;
 use App\Http\Controllers\ChuDeController;
+use App\Http\Controllers\SlidesController;
 
 
 Auth::routes();
@@ -49,13 +50,24 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/home', [AdminController::class, 'getHome'])->name('home');
     Route::get('/403', [AdminController::class, 'getForbidden'])->name('forbidden');
 
+     // Quản lý Slide
+     Route::get('/slides', [SlidesController::class, 'getDanhSach'])->name('slides');
+     Route::get('/slides/them', [SlidesController::class, 'getThem'])->name('slides.them');
+     Route::post('/slides/them', [SlidesController::class, 'postThem'])->name('slides.them');
+     Route::get('/slides/sua/{id}', [SlidesController::class, 'getSua'])->name('slides.sua');
+     Route::post('/slides/sua/{id}', [SlidesController::class, 'postSua'])->name('slides.sua');
+     Route::post('/slides/xoa', [SlidesController::class, 'postXoa'])->name('slides.xoa');
+     Route::get('/slides/hiethi/{id}', [SlidesController::class, 'getHienThi'])->name('slides.hienthi');
+     Route::post('/slides/ajax', [SlidesController::class, 'postHinhAnhAjax'])->name('slides.ajax');
+     Route::get('/slides/OnOffHienThi/{id}', [SlidesController::class, 'getOnOffHienThi'])->name('slides.OnOffHienThi');
+
     // Quản lý Loại sản phẩm
     Route::get('/loaisanpham', [LoaiSanPhamController::class, 'getDanhSach'])->name('loaisanpham');
     Route::get('/loaisanpham/them', [LoaiSanPhamController::class, 'getThem'])->name('loaisanpham.them');
     Route::post('/loaisanpham/them', [LoaiSanPhamController::class, 'postThem'])->name('loaisanpham.them');
     Route::get('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'getSua'])->name('loaisanpham.sua');
     Route::post('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'postSua'])->name('loaisanpham.sua');
-    Route::get('/loaisanpham/xoa/{id}', [LoaiSanPhamController::class, 'getXoa'])->name('loaisanpham.xoa');
+    Route::post('/loaisanpham/xoa', [LoaiSanPhamController::class, 'postXoa'])->name('loaisanpham.xoa');
 
     // Quản lý chất liệu
     Route::get('/noisanxuat', [NoiSanXuatController::class, 'getDanhSach'])->name('noisanxuat');

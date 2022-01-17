@@ -407,6 +407,8 @@
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.slides') }}">Slides  </a></li>
+
                 </ul>
               </div>
             </li>
