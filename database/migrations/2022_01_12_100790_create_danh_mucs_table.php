@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLoaiSanPhamsTable extends Migration
+class CreateDanhMucsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateLoaiSanPhamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('loaisanpham', function (Blueprint $table) {
+        Schema::create('danhmuc', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('danhmuc_id')->constrained('danhmuc');
-            $table->string('tenloai');
-            $table->string('tenloai_slug');
+            $table->string('tendanhmuc');
+            $table->string('tendanhmuc_slug');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
-            $table->engine = 'InnoDB';        
+            $table->engine = 'InnoDB';
         });
     }
 
@@ -31,6 +30,6 @@ class CreateLoaiSanPhamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loaisanpham');
+        Schema::dropIfExists('danhmuc');
     }
 }

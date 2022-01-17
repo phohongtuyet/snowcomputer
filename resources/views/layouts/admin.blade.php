@@ -37,10 +37,10 @@
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="index.html">
+          <a class="navbar-brand brand-logo" href="{{route('admin.home')}}">
             <img src="images/logo.svg" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="index.html">
+          <a class="navbar-brand brand-logo-mini" href="{{route('admin.home')}}">
             <img src="images/logo-mini.svg" alt="logo" />
           </a>
         </div>
@@ -53,39 +53,7 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item dropdown d-none d-lg-block">
-            <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-              <a class="dropdown-item py-3" >
-                <p class="mb-0 font-weight-medium float-left">Select category</p>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Bootstrap Bundle </p>
-                  <p class="fw-light small-text mb-0">This is a Bundle featuring 16 unique dashboards</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Angular Bundle</p>
-                  <p class="fw-light small-text mb-0">Everything you’ll ever need for your Angular projects</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">VUE Bundle</p>
-                  <p class="fw-light small-text mb-0">Bundle of 6 Premium Vue Admin Dashboard</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">React Bundle</p>
-                  <p class="fw-light small-text mb-0">Bundle of 8 Premium React Admin Dashboard</p>
-                </div>
-              </a>
-            </div>
-          </li>
+          
           <li class="nav-item d-none d-lg-block">
             <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
               <span class="input-group-addon input-group-prepend border-right">
@@ -404,6 +372,7 @@
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.danhmuc') }}">Danh mục sản phẩm</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>
@@ -451,19 +420,37 @@
               </a>
               <div class="collapse" id="order">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Đăng xuất   </p>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
-                        @csrf
-                    </form>
-                  </li>	
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.donhang')}}">Đon hàng</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav-item nav-category">pages</li>
+            <li class="nav-item nav-category">Người dùng </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#user" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon mdi mdi-account-circle-outline"></i>
+                <span class="menu-title">Quản lý người dùng </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="user">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.nguoidung')}}">Người dùng</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item nav-category">Hỗ trợ  </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#support" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon mdi mdi-account-circle-outline"></i>
+                <span class="menu-title">Quản lý người dùng </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="support">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.nguoidung')}}">Liên hệ</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item nav-category">Tài khoản</li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <i class="menu-icon mdi mdi-account-circle-outline"></i>
@@ -474,7 +461,6 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                      <i class="far fa-circle nav-icon"></i>
                       <p>Đăng xuất   </p>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">

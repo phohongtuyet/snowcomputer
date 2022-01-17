@@ -16,6 +16,7 @@ use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhluanController;
 use App\Http\Controllers\ChuDeController;
 use App\Http\Controllers\SlidesController;
+use App\Http\Controllers\DanhMucController;
 
 
 Auth::routes();
@@ -50,17 +51,24 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/home', [AdminController::class, 'getHome'])->name('home');
     Route::get('/403', [AdminController::class, 'getForbidden'])->name('forbidden');
 
-     // Quản lý Slide
-     Route::get('/slides', [SlidesController::class, 'getDanhSach'])->name('slides');
-     Route::get('/slides/them', [SlidesController::class, 'getThem'])->name('slides.them');
-     Route::post('/slides/them', [SlidesController::class, 'postThem'])->name('slides.them');
-     Route::get('/slides/sua/{id}', [SlidesController::class, 'getSua'])->name('slides.sua');
-     Route::post('/slides/sua/{id}', [SlidesController::class, 'postSua'])->name('slides.sua');
-     Route::post('/slides/xoa', [SlidesController::class, 'postXoa'])->name('slides.xoa');
-     Route::get('/slides/hiethi/{id}', [SlidesController::class, 'getHienThi'])->name('slides.hienthi');
-     Route::post('/slides/ajax', [SlidesController::class, 'postHinhAnhAjax'])->name('slides.ajax');
-     Route::get('/slides/OnOffHienThi/{id}', [SlidesController::class, 'getOnOffHienThi'])->name('slides.OnOffHienThi');
+    // Quản lý Slide
+    Route::get('/slides', [SlidesController::class, 'getDanhSach'])->name('slides');
+    Route::get('/slides/them', [SlidesController::class, 'getThem'])->name('slides.them');
+    Route::post('/slides/them', [SlidesController::class, 'postThem'])->name('slides.them');
+    Route::get('/slides/sua/{id}', [SlidesController::class, 'getSua'])->name('slides.sua');
+    Route::post('/slides/sua/{id}', [SlidesController::class, 'postSua'])->name('slides.sua');
+    Route::post('/slides/xoa', [SlidesController::class, 'postXoa'])->name('slides.xoa');
+    Route::get('/slides/hiethi/{id}', [SlidesController::class, 'getHienThi'])->name('slides.hienthi');
+    Route::post('/slides/ajax', [SlidesController::class, 'postHinhAnhAjax'])->name('slides.ajax');
+    Route::get('/slides/OnOffHienThi/{id}', [SlidesController::class, 'getOnOffHienThi'])->name('slides.OnOffHienThi');
 
+     // Quản lý danh mục
+    Route::get('/danhmuc', [DanhMucController::class, 'getDanhSach'])->name('danhmuc');
+    Route::get('/danhmuc/them', [DanhMucController::class, 'getThem'])->name('danhmuc.them');
+    Route::post('/danhmuc/them', [DanhMucController::class, 'postThem'])->name('danhmuc.them');
+    Route::get('/danhmuc/sua/{id}', [DanhMucController::class, 'getSua'])->name('danhmuc.sua');
+    Route::post('/danhmuc/sua/{id}', [DanhMucController::class, 'postSua'])->name('danhmuc.sua');
+    Route::post('/danhmuc/xoa', [DanhMucController::class, 'postXoa'])->name('danhmuc.xoa');
     // Quản lý Loại sản phẩm
     Route::get('/loaisanpham', [LoaiSanPhamController::class, 'getDanhSach'])->name('loaisanpham');
     Route::get('/loaisanpham/them', [LoaiSanPhamController::class, 'getThem'])->name('loaisanpham.them');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LoaiSanPham;
+use App\Models\DanhMuc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -21,23 +22,29 @@ class LoaiSanPhamController extends Controller
 
     public function getThem()
     {
-        return view('admin.loaisanpham.them');
+        $danhmuc = DanhMuc::all();
+        return view('admin.loaisanpham.them',compact('danhmuc'));
     }
 
     public function postThem(Request $request)
     {
         $this->validate($request, [
             'tenloai' => ['required', 'max:255', 'unique:loaisanpham'],
+            'danhmuc_id' => ['required'],
+
         ],
         $messages = [
-            'required' => 'Tên loại không được bỏ trống.',
-            'unique' => 'Tên loại đã có trong hệ thống.',
+            'required' => 'Tên loại sản phẩm không được bỏ trống.',
+            'unique' => 'Tên loại sản phẩm đã có trong hệ thống.',
             'max' => 'Độ dài tối đa không quá 255 ký tự!',
+            'danhmuc_id.required' => 'Chưa chọn danh mục sản phẩm.',
+
         ]);
            
         $orm = new LoaiSanPham();
         $orm->tenloai = $request->tenloai;
         $orm->tenloai_slug = Str::slug($request->tenloai, '-');
+        $orm->danhmuc_id = $request->danhmuc_id;
         $orm->save();
         return redirect()->route('admin.loaisanpham')->with('status', 'Thêm mới thành công');
     }

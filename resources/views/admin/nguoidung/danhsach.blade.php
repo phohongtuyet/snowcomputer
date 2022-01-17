@@ -43,11 +43,11 @@
                         <td>{{ $value->email }}</td>
                         <td class="text-center">
                             @if($value->role == 'admin')
-                                <span class="badge bg-danger">{{ $value->role }}</span>
+                                <span class="badge badge-danger">{{ $value->role }}</span>
                             @elseif($value->role == 'staff')
-                                <span class="badge bg-warning text-dark">{{ $value->role }}</span>
+                                <span class="badge badge-warning ">{{ $value->role }}</span>
                             @else
-                                <span class="badge bg-info text-dark">{{ $value->role }}</span>
+                                <span class="badge badge-info ">{{ $value->role }}</span>
 
                             @endif
                         </td>
