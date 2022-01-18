@@ -20,7 +20,7 @@
                     <th width="5%">#</th>
                     <th width="20%">Tên sản phẩm</th>
                     <th width="20%">Tên sản phẩm không dấu</th>
-                    <th width="20%">thong tin san pham</th>
+                    <th width="20%">Thông tin sản phẩm</th>
                     <th width="7%">Số lượng</th>
                     <th width="10%">Đơn giá</th>
                     <th width="10%">Hiển thị</th>
@@ -98,7 +98,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Xóa san pham </h5>
+					<h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm </h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">

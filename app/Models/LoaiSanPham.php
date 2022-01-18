@@ -14,7 +14,7 @@ class LoaiSanPham extends Model
 
     public function SanPham()
     {
-        return $this->hasMany(SanPham::class, 'loai_id', 'id');
+        return $this->hasMany(SanPham::class, 'loaisanpham_id', 'id');
     }
 
     public function DanhMuc()

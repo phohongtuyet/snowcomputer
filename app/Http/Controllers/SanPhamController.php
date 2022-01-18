@@ -137,15 +137,35 @@ class SanPhamController extends Controller
     public function getSua($id)
     {
         $sanpham = SanPham::find($id);
-        $thuonghieu = ThuongHieu::all();
-        $chatlieu = ChatLieu::all();
-        $loai = Loai::all();
-        $hinhanh = HinhAnh::where('sanpham_id', $id)->get();
-        $img = HinhAnh::where('sanpham_id', $id)->first();
-        
-        return view('admin.sanpham.sua', compact('sanpham','thuonghieu','chatlieu','hinhanh','loai','img'));
+        $noisanxuat = NoiSanXuat::all();
+        $hangsanxuat = HangSanXuat::all();
+        $loaisanpham = LoaiSanPham::all();
+        $danhmuc = DanhMuc::all();
+
+        if(session_status() == PHP_SESSION_NONE)
+		{
+			session_start();
+		}
+		$path = config('app.url') . '/storage/app/sanpham/' . str_pad($id, 7, '0', STR_PAD_LEFT) . '/';
+		
+		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
+		$_SESSION['baseUrl'] = $path;
+
+		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
+		$_SESSION['resourceType'] = 'Images';
+		
+		$folder = 'sanpham/' . str_pad($id, 7, '0', STR_PAD_LEFT);
+
+        return view('admin.sanpham.sua', compact('sanpham','hangsanxuat','noisanxuat','loaisanpham','danhmuc','folder'));
     }
-    
+
+    public function getDanhMuc(Request $request)
+    {
+        $loaisanpham = LoaiSanPham::find($request->id)->first();
+        $danhmuc = DanhMuc::where("id", $loaisanpham->danhmuc_id)->pluck("tendanhmuc", "id");
+        return response()->json($danhmuc);
+    }
+
     public function postSua(Request $request, $id)
     {   
         $this->validate($request,[

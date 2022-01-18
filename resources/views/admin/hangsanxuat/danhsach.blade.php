@@ -9,7 +9,7 @@
                 {!! session('status') !!}
             </div>
         @endif
-			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
+			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm</a></p>
 			<table id="DataList" class="table table-bordered table-hover table-sm">
 				<thead>
 					<tr>

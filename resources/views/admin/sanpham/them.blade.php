@@ -32,14 +32,14 @@
                     @enderror
                 </div>  
                 <div class="mb-3">
-                    <label class="form-label" for="nhomsanpham_id">Danh mục sản phẩm:</label>
-                    <select class="form-select @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required>
+                    <label class="form-label" for="danhmuc_id">Danh mục sản phẩm:</label>
+                    <select class="form-select @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
                             <option value="" selected disabled>-- Chọn danh mục --</option>
                             @foreach ($danhmuc as $value)
                             <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
                         @endforeach
                         </select>
-                        @error('nhomsanpham_id')
+                        @error('danhmuc_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                         @enderror
                     
@@ -128,10 +128,9 @@
         }
     
         $(document).ready(function(){
-            $('#nhomsanpham_id').change(function() {
+            $('#danhmuc_id').change(function() {
                 var id = $(this).val();
                 if (id) {
-
                     $.ajax({
                         url: '{{ route("admin.sanpham.loai") }}',
                         method: 'GET',

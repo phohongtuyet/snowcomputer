@@ -2,9 +2,8 @@
 @section('title', 'Danh mục sản phẩm')
 @section('content')
 <div class="card">
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <h4 class="card-title">Danh sách danh mục sản phẩm</h4>
-        <div class="table-responsive">
             @if (session('status'))
                 <div id="AlertBox" class="alert alert-success hide" role="alert">
                     {!! session('status') !!}
@@ -30,12 +29,11 @@
                             <td>{{ $value->tendanhmuc }}</td>
                             <td>{{ $value->tendanhmuc_slug }}</td>
                             <td class="text-center"><a href="{{ route('admin.danhmuc.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
-                            <td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="mdi mdi-delete"></i></a></td>
+                            <td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </div>
     </div>
 </div>
 <form action="{{ route('admin.danhmuc.xoa') }}" method="post">
