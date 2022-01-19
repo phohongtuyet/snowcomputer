@@ -23,38 +23,20 @@ class SlidesController extends Controller
 
 		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
-        $slidesimg = array();
 
-		foreach($slides as $value)
+		if(session_status() == PHP_SESSION_NONE)
 		{
-			$dir = 'storage/app/' . $value->hinhanh . '/images/';
-			if(file_exists($dir))
-			{
-				$files = scandir($dir);
-				if(isset($files[2]))
-				{
-					$extension2 = strtolower(pathinfo($files[2], PATHINFO_EXTENSION));
-					if(in_array($extension2, $extensions))
-					{
-						$first_file = config('app.url') . '/'. $dir . $files[2];
-					}
-					else
-						$first_file = $no_image;
-				}
-				else
-					$first_file = $no_image;
-			}
-			else
-				$first_file = $no_image;
-			
-			$slidesimg[] = array(
-				'id' => $value->id,
-				'hinhanh' => $first_file,
-				'hienthi' => $value->hienthi,
-
-			);
+			session_start();
 		}
-       return view('admin.slides.danhsach',compact('slidesimg'));
+        $path = config('app.url') . '/storage/app/slides/';
+
+		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
+		$_SESSION['baseUrl'] = $path;
+
+		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
+		$_SESSION['resourceType'] = 'Images';
+        
+       return view('admin.slides.danhsach',compact('slides','path'));
     }
 
     public function getOnOffHienThi($id)
@@ -68,40 +50,15 @@ class SlidesController extends Controller
 
     public function getThem()
     {
-        if(session_status() == PHP_SESSION_NONE)
-		{
-			session_start();
-		}
-        //lay thu tu tu dong
-		$hinhanh_identity = DB::select("SELECT `AUTO_INCREMENT`
-                                        FROM  INFORMATION_SCHEMA.TABLES
-                                        WHERE TABLE_SCHEMA = 'snowcomputer'
-                                        AND   TABLE_NAME   = 'slides';");
-		$next_id = $hinhanh_identity[0]->AUTO_INCREMENT;
-
-        //tao thu muc va lay day bang STR_PAD_LEFT
-		Storage::makeDirectory('slides/' . str_pad($next_id, 7, '0', STR_PAD_LEFT), 0775);
-		
-        //gan duong dan
-		$path = config('app.url') . '/storage/app/slides/' . str_pad($next_id, 7, '0', STR_PAD_LEFT) . '/';
-		
-        //ktr duong dan
-		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
-		$_SESSION['baseUrl'] = $path;
-
-		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
-		
-		$folder = 'slides/' . str_pad($next_id, 7, '0', STR_PAD_LEFT);
-
-        return view('admin.slides.them',compact('folder'));
+    
+        return view('admin.slides.them');
     }
 
     public function postThem(Request $request)
     {
 
         $orm = new Slides();
-		$orm->hinhanh = $request->ThuMuc;
+		$orm->hinhanh = $request->HinhAnh;
         $orm->save();
 
         return redirect()->route('admin.slides')->with('status', 'Thêm mới thành công');
@@ -109,29 +66,17 @@ class SlidesController extends Controller
 
     public function getSua($id)
 	{
-		if(session_status() == PHP_SESSION_NONE)
-		{
-			session_start();
-		}
-		$path = config('app.url') . '/storage/app/slides/' . str_pad($id, 7, '0', STR_PAD_LEFT) . '/';
 		
-		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
-		$_SESSION['baseUrl'] = $path;
+		$slides = Slides::find($id);
 
-		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
-		
-		$folder = 'slides/' . str_pad($id, 7, '0', STR_PAD_LEFT);
-		$slides = Slides::where('ID', $id)->first();
-
-		return view('admin.slides.sua', compact('slides','folder'));
+		return view('admin.slides.sua', compact('slides'));
 	}
 		
 
     public function postSua(Request $request, $id)
     {
         $orm = Slides::find($id);
-		$orm->hinhanh = $request->ThuMuc;
+		if(!empty($request->HinhAnh)) $orm->hinhanh = $request->HinhAnh;
         $orm->save();
 
         return redirect()->route('admin.slides')->with('status', 'Cập nhật thành công');

@@ -21,33 +21,60 @@
 				
 				<div class="form-group">
 					<label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+					@if(!empty($hangsanxuat->hinhanh))
+						<img class="d-block rounded" src="{{ $path.'images/'. $hangsanxuat->hinhanh }}" width="100" />
+						<span class="d-block small text-danger">Bỏ trống nếu muốn giữ nguyên ảnh cũ.</span>
+					@endif
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<div class="input-group-text" id="ChonHinh"><a href="#hinhanh">Tải ảnh lên</a></div>
 						</div>
-						<input type="text" class="form-control" id="ThuMuc" name="ThuMuc" value="{{ $folder }}" readonly required />
+						<input type="text" class="form-control @error('HinhAnh') is-invalid @enderror" id="HinhAnh" name="HinhAnh" value="{{ old('HinhAnh') }}" readonly required />
+						@error('HinhAnh')
+							<div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+						@enderror
 					</div>
 				</div>
-				
-				<button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Cập nhật hình ảnh</button>
-			</form>
-		</div>
-	</div>
+
+        <button type="submit" class="btn btn-primary mt-3">Thêm vào CSDL</button>
+    </form>
+    </div>
+ </div>
+ 
 @endsection
 
 @section('javascript')
-	<script src="{{ asset('public/vendor/ckfinder/ckfinder.js') }}"></script>
-	<script>
+<script src="{{ asset('public/vendor/ckfinder/ckfinder.js') }}"></script>
+<script>
+    	function escapeHtml(unsafe)
+		{
+			return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+		}
+		
 		var chonHinh = document.getElementById('ChonHinh');
-		chonHinh.onclick = function() { uploadFileWithCKFinder(); };
-		function uploadFileWithCKFinder()
+		chonHinh.onclick = function() { selectFileWithCKFinder('HinhAnh'); };
+				
+		function selectFileWithCKFinder(elementId)
 		{
 			CKFinder.modal(
 			{
+				chooseFiles: true,
 				displayFoldersPanel: false,
 				width: 800,
-				height: 500
+				height: 500,
+				onInit: function(finder) {
+					finder.on('files:choose', function(evt) {
+						var file = evt.data.files.first();
+						var output = document.getElementById(elementId);
+						output.value = escapeHtml(file.get('name'));
+					});
+					finder.on('file:choose:resizedImage', function(evt) {
+						var output = document.getElementById(elementId);
+						output.value = escapeHtml(evt.data.file.get('name'));
+					});
+				}
 			});
 		}
-	</script>
+		
+</script>
 @endsection

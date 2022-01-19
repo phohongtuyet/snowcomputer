@@ -21,37 +21,19 @@ class HangSanXuatController extends Controller
         $hangsanxuat = HangSanXuat::all();
 		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
-        $hangsanxuatimg = array();
-		foreach($hangsanxuat as $value)
+        if(session_status() == PHP_SESSION_NONE)
 		{
-			$dir = 'storage/app/' . $value->hinhanh . '/images/';
-			if(file_exists($dir))
-			{
-				$files = scandir($dir);
-				if(isset($files[2]))
-				{
-					$extension2 = strtolower(pathinfo($files[2], PATHINFO_EXTENSION));
-					if(in_array($extension2, $extensions))
-					{
-						$first_file = config('app.url') . '/'. $dir . $files[2];
-					}
-					else
-						$first_file = $no_image;
-				}
-				else
-					$first_file = $no_image;
-			}
-			else
-				$first_file = $no_image;
-			
-            $hangsanxuatimg[] = array(
-				'id' => $value->id,
-				'tenhangsanxuat' => $value->tenhangsanxuat,
-				'tenhangsanxuat_slug' => $value->tenhangsanxuat_slug,
-				'hinhanh' => $first_file,
-			);
+			session_start();
 		}
-        return view('admin.hangsanxuat.danhsach',compact('hangsanxuatimg'));
+        $path = config('app.url') . '/storage/app/hangsanxuat/';
+
+		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
+		$_SESSION['baseUrl'] = $path;
+
+		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
+		$_SESSION['resourceType'] = 'Images';
+        
+        return view('admin.hangsanxuat.danhsach',compact('hangsanxuat','path'));
     }
 
     // Nhập từ Excel
@@ -71,39 +53,15 @@ class HangSanXuatController extends Controller
 
     public function getThem()
     {
-        if(session_status() == PHP_SESSION_NONE)
-		{
-			session_start();
-		}
-        //lay thu tu tu dong
-		$hinhanh_identity = DB::select("SELECT `AUTO_INCREMENT`
-                                        FROM  INFORMATION_SCHEMA.TABLES
-                                        WHERE TABLE_SCHEMA = 'snowcomputer'
-                                        AND   TABLE_NAME   = 'hangsanxuat';");
-		$next_id = $hinhanh_identity[0]->AUTO_INCREMENT;
-
-        //tao thu muc va lay day bang STR_PAD_LEFT
-		Storage::makeDirectory('hangsanxuat/' . str_pad($next_id, 7, '0', STR_PAD_LEFT), 0775);
-		
-        //gan duong dan
-		$path = config('app.url') . '/storage/app/hangsanxuat/' . str_pad($next_id, 7, '0', STR_PAD_LEFT) . '/';
-		
-        //ktr duong dan
-		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
-		$_SESSION['baseUrl'] = $path;
-
-		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
-		
-		$folder = 'hangsanxuat/' . str_pad($next_id, 7, '0', STR_PAD_LEFT);
-
-        return view('admin.hangsanxuat.them',compact('folder'));
+        
+        return view('admin.hangsanxuat.them');
     }
 
     public function postThem(Request $request)
     {
         $this->validate($request, [
             'tenhangsanxuat' => ['required', 'max:255', 'unique:hangsanxuat'],
+            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
         ],
         $messages = [
             'required' => 'Tên thương hiệu không được bỏ trống.',
@@ -114,30 +72,18 @@ class HangSanXuatController extends Controller
         $orm = new HangSanXuat();
         $orm->tenhangsanxuat = $request->tenhangsanxuat;
         $orm->tenhangsanxuat_slug = Str::slug($request->tenhangsanxuat, '-');
-		$orm->hinhanh = $request->ThuMuc;
+		$orm->hinhanh = $request->HinhAnh;
         $orm->save();
 
         return redirect()->route('admin.hangsanxuat')->with('status', 'Thêm mới thành công');
     }
 
     public function getSua($id)
-	{
-		if(session_status() == PHP_SESSION_NONE)
-		{
-			session_start();
-		}
-		$path = config('app.url') . '/storage/app/hangsanxuat/' . str_pad($id, 7, '0', STR_PAD_LEFT) . '/';
-		
-		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
-		$_SESSION['baseUrl'] = $path;
+	{	
+		$hangsanxuat = HangSanXuat::find($id);
+        $path = config('app.url') . '/storage/app/hangsanxuat/';
 
-		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
-		$_SESSION['resourceType'] = 'Images';
-		
-		$folder = 'hangsanxuat/' . str_pad($id, 7, '0', STR_PAD_LEFT);
-		$hangsanxuat = HangSanXuat::where('ID', $id)->first();
-
-		return view('admin.hangsanxuat.sua', compact('hangsanxuat','folder'));
+		return view('admin.hangsanxuat.sua', compact('hangsanxuat','path'));
 	}
 		
 
@@ -154,7 +100,7 @@ class HangSanXuatController extends Controller
         $orm = HangSanXuat::find($id);
         $orm->tenhangsanxuat = $request->tenhangsanxuat;
         $orm->tenhangsanxuat_slug = Str::slug($request->tenhangsanxuat, '-');
-		$orm->hinhanh = $request->ThuMuc;
+		if(!empty($request->HinhAnh)) $orm->hinhanh = $request->HinhAnh;
         $orm->save();
 
         return redirect()->route('admin.hangsanxuat')->with('status', 'Cập nhật thành công');

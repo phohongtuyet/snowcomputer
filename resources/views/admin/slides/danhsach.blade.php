@@ -22,12 +22,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($slidesimg as $value)
+					@foreach($slides as $value)
 						<tr>
 							<td>{{ $loop->iteration }}</td>
 							<td>
-								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $value['hinhanh'] }}" style="width: 100;"/></a>			
-							</td>
+								<img src="{{ $path.'images/'. $value['hinhanh'] }}"style="width: 200px; height:auto;">
 							<td> 
 								@if($value['hienthi'] == 1)
                                     <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-check-circle"></i></a>
@@ -76,23 +75,6 @@
             $('#AlertBox').removeClass('hide');
             $('#AlertBox').delay(2000).slideUp(500);
         });
-
-		function getXemHinh(id) {
-			$.ajax({
-				url: '{{ route("admin.slides.ajax") }}',
-				method: 'POST',
-				data: { _token: '{{ csrf_token() }}', id: id },
-				dataType: 'text',
-				success: function(data) {
-					CKFinder.modal(
-					{
-						displayFoldersPanel: false,
-						width: 800,
-						height: 500
-					});
-				}
-			});
-		}
 		
 		function getXoa(id) {
 			$('#ID_delete').val(id);

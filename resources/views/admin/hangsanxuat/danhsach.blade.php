@@ -10,7 +10,7 @@
             </div>
         @endif
 			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm</a></p>
-			<table id="DataList" class="table table-bordered table-hover table-sm">
+			<table id="table_id" class="table table-bordered table-hover table-sm">
 				<thead>
 					<tr>
 						<th width="5%">#</th>
@@ -22,14 +22,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($hangsanxuatimg as $value)
+					@foreach($hangsanxuat as $value)
 
 						<tr>
 							<td>{{ $loop->iteration }}</td>
 							<td>{{ $value['tenhangsanxuat'] }}</td>
                             <td>{{ $value['tenhangsanxuat_slug'] }}</td>
 							<td>
-								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $value['hinhanh'] }}" style="width: 200px; height:auto;"></a>			
+								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;"></a>			
 							</td>
 							<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>
 							<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value['id'] }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
@@ -81,9 +81,21 @@
 				success: function(data) {
 					CKFinder.modal(
 					{
+						chooseFiles: true,
 						displayFoldersPanel: false,
 						width: 800,
-						height: 500
+						height: 500,
+						onInit: function(finder) {
+							finder.on('files:choose', function(evt) {
+								var file = evt.data.files.first();
+								var output = document.getElementById(elementId);
+								output.value = escapeHtml(file.get('name'));
+							});
+							finder.on('file:choose:resizedImage', function(evt) {
+								var output = document.getElementById(elementId);
+								output.value = escapeHtml(evt.data.file.get('name'));
+							});
+						}
 					});
 				}
 			});
