@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-
+use App\Imports\HangSanXuatImport;
+use App\Exports\HangSanXuatExport;
+use Excel;
 class HangSanXuatController extends Controller
 {
     public function __construct()
@@ -46,7 +48,7 @@ class HangSanXuatController extends Controller
 
     public function getXuat()
     {
-        $response = Excel::download(new HangSanXuatExport, 'danh-sach-thuong-hieu.xlsx');
+        $response = Excel::download(new HangSanXuatExport, 'danh-sach-hang-san-xuat.xlsx');
         ob_end_clean();
         return $response;    
     }
