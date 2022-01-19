@@ -373,6 +373,7 @@
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.danhmuc') }}">Danh mục sản phẩm  </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.nhomsanpham') }}">Nhóm sản phẩm  </a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>

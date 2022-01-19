@@ -17,6 +17,7 @@ use App\Http\Controllers\BinhluanController;
 use App\Http\Controllers\ChuDeController;
 use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\NhomSanPhamController;
 
 
 Auth::routes();
@@ -69,6 +70,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/danhmuc/sua/{id}', [DanhMucController::class, 'getSua'])->name('danhmuc.sua');
     Route::post('/danhmuc/sua/{id}', [DanhMucController::class, 'postSua'])->name('danhmuc.sua');
     Route::post('/danhmuc/xoa', [DanhMucController::class, 'postXoa'])->name('danhmuc.xoa');
+    
+    // Quản lý Loại sản phẩm
+    Route::get('/nhomsanpham', [NhomSanPhamController::class, 'getDanhSach'])->name('nhomsanpham');
+    Route::get('/nhomsanpham/them', [NhomSanPhamController::class, 'getThem'])->name('nhomsanpham.them');
+    Route::post('/nhomsanpham/them', [NhomSanPhamController::class, 'postThem'])->name('nhomsanpham.them');
+    Route::get('/nhomsanpham/sua/{id}', [NhomSanPhamController::class, 'getSua'])->name('nhomsanpham.sua');
+    Route::post('/nhomsanpham/sua/{id}', [NhomSanPhamController::class, 'postSua'])->name('nhomsanpham.sua');
+    Route::post('/nhomsanpham/xoa', [NhomSanPhamController::class, 'postXoa'])->name('nhomsanpham.xoa');
+    
     // Quản lý Loại sản phẩm
     Route::get('/loaisanpham', [LoaiSanPhamController::class, 'getDanhSach'])->name('loaisanpham');
     Route::get('/loaisanpham/them', [LoaiSanPhamController::class, 'getThem'])->name('loaisanpham.them');
@@ -118,7 +128,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/sanphamghet/xuat', [SanPhamController::class, 'getXuatSanPhamHet'])->name('sanpham.het.xuat');
     Route::post('/sanphamghet/ajax', [SanPhamController::class, 'postHinhAnhSanPhamAjax'])->name('sanpham.hinhanh.ajax');
     Route::get('/sanphamloai', [SanPhamController::class, 'getLoai'])->name('sanpham.loai');
-    Route::get('/sanphamdanhmuc', [SanPhamController::class, 'getDanhMuc'])->name('sanpham.danhmuc');
+    Route::get('/sanphamdanhmuc', [SanPhamController::class, 'getNhomSanPhamSua'])->name('sanpham.nhom.sua');
+    Route::get('/sanphamnhomsanpham', [SanPhamController::class, 'getNhomSanPham'])->name('sanpham.nhomsanpham');
+    Route::get('/sanphamnhomsanphamsua', [SanPhamController::class, 'getDanhMucSua'])->name('sanpham.danhmuc.sua');
 
     // Quản lý chủ đề
     Route::get('/chude', [ChuDeController::class, 'getDanhSach'])->name('chude');

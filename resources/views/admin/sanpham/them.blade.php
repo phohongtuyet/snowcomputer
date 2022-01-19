@@ -38,11 +38,17 @@
                             @foreach ($danhmuc as $value)
                             <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
                         @endforeach
-                        </select>
-                        @error('danhmuc_id')
+                    </select>
+                    @error('danhmuc_id')
+                    <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                    @enderror 
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="nhomsanpham_id">Nhóm sản phẩm</label>
+                    <select class="form-select @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required></select>
+                    @error('nhomsanpham_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                        @enderror
-                    
+                    @enderror
                 </div>
 
                 <div class="mb-3">
@@ -132,6 +138,34 @@
                 var id = $(this).val();
                 if (id) {
                     $.ajax({
+                        url: '{{ route("admin.sanpham.nhomsanpham") }}',
+                        method: 'GET',
+                        data: { _token: '{{ csrf_token() }}', id: id },
+                        success: function(res) {
+                            if (res) {
+                                $("#nhomsanpham_id").empty();
+                                $("#nhomsanpham_id").append('<option>-- Chọn Nhóm Sản Phẩm --</option>');
+                                $.each(res, function(key, value) {
+                                    $("#nhomsanpham_id").append('<option value="' + key + '">' + value +'</option>');
+                                });
+                            } 
+                            else 
+                            {
+                                $("#nhomsanpham_id").empty();
+                            }
+                        }
+                    });
+                } else {
+
+                    $("#nhomsanpham_id").empty();
+                
+                }
+            });
+
+            $('#nhomsanpham_id').change(function() {
+                var id = $(this).val();
+                if (id) {
+                    $.ajax({
                         url: '{{ route("admin.sanpham.loai") }}',
                         method: 'GET',
                         data: { _token: '{{ csrf_token() }}', id: id },
@@ -154,9 +188,7 @@
                     $("#loaisanpham_id").empty();
                 
                 }
-            });
-
-           
+            });   
         });
     </script>
 @endsection

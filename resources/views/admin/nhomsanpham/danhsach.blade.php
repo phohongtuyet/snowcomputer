@@ -9,26 +9,26 @@
                 {!! session('status') !!}
             </div>
         @endif
-        <p><a href="{{ route('admin.loaisanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
+        <p><a href="{{ route('admin.nhomsanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>
                 <tr>
                     <th width="5%">#</th>
                     <th width="45%">Danh mục </th>
-                    <th width="45%">Tên loại</th>
-                    <th width="40%">Tên loại không dấu</th>
+                    <th width="45%">Tên nhóm </th>
+                    <th width="40%">Tên nhóm không dấu</th>
                     <th width="5%">Sửa</th>
                     <th width="5%">Xóa</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($loaisanpham as $value)
+                @foreach($nhomsanpham as $value)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $value->NhomSanPham->tennhomsanpham }}</td>
-                        <td>{{ $value->tenloai }}</td>
-                        <td>{{ $value->tenloai_slug }}</td>
-                        <td class="text-center"><a href="{{ route('admin.loaisanpham.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
+                        <td>{{ $value->DanhMuc->tendanhmuc }}</td>
+                        <td>{{ $value->tennhomsanpham}}</td>
+                        <td>{{ $value->tennhomsanpham_slug }}</td>
+                        <td class="text-center"><a href="{{ route('admin.nhomsanpham.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
                         <td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                     </tr>
                 @endforeach
@@ -36,7 +36,7 @@
         </table>
     </div>
 </div>
-<form action="{{ route('admin.loaisanpham.xoa') }}" method="post">
+<form action="{{ route('admin.nhomsanpham.xoa') }}" method="post">
 		@csrf
 		<input type="hidden" id="ID_delete" name="ID_delete" value="" />
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

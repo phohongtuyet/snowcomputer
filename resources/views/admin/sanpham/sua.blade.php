@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="danhmuc_id">Danh mục sản phẩm:</label>
                     <select class="form-select @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
-                    <option value="" selected disabled>-- Chọn danh muc --</option>
+                    <option value="" selected disabled>-- Chọn danh mục sản phẩm --</option>
                         @foreach ($danhmuc as $value)
                             <option value="{{ $value->id }}" >{{ $value->tendanhmuc}}</option>
                         @endforeach
@@ -44,6 +44,19 @@
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
                     
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="nhomsanpham_id">Nhóm sản phẩm</label>
+                    <select class="form-select @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required>
+                        <option value="" selected disabled>-- Chọn nhóm sản phẩm --</option>
+                        @foreach ($nhomsanpham as $value)
+                            <option value="{{ $value->id }}" {{ $sanpham->nhomsanpham_id == $value->id ? 'selected' : '' }}>{{ $value->tennhomsanpham}}</option>
+                        @endforeach
+                    </select>
+                    @error('nhomsanpham_id')
+                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
@@ -138,7 +151,25 @@
         var loaisanpham_id = e.value;
         $(document).ready(function(){     
             $.ajax({
-                url: '{{ route("admin.sanpham.danhmuc") }}',
+                url: '{{ route("admin.sanpham.nhom.sua") }}',
+                method: 'GET',
+                data: { _token: '{{ csrf_token() }}', id: loaisanpham_id },
+                success: function(res) {
+                    if (res) {
+                        $.each(res, function(key, value) {
+                            
+                            $('#nhomsanpham_id').find('option[value=' + key + ']').attr('selected','selected');
+                        });
+                    } 
+                    else 
+                    {
+                        $("#nhomsanpham_id").empty();
+                    }
+                }
+            }); 
+
+            $.ajax({
+                url: '{{ route("admin.sanpham.danhmuc.sua") }}',
                 method: 'GET',
                 data: { _token: '{{ csrf_token() }}', id: loaisanpham_id },
                 success: function(res) {
@@ -153,11 +184,39 @@
                         $("#danhmuc_id").empty();
                     }
                 }
-            });              
+            });                   
         });
 
         $(document).ready(function(){
             $('#danhmuc_id').change(function() {
+                var id = $(this).val();
+                if (id) {
+                    $.ajax({
+                        url: '{{ route("admin.sanpham.nhomsanpham") }}',
+                        method: 'GET',
+                        data: { _token: '{{ csrf_token() }}', id: id },
+                        success: function(res) {
+                            if (res) {
+                                $("#nhomsanpham_id").empty();
+                                $("#nhomsanpham_id").append('<option>-- Chọn Loại Sản Phẩm --</option>');
+                                $.each(res, function(key, value) {
+                                    $("#nhomsanpham_id").append('<option value="' + key + '">' + value +'</option>');
+                                });
+                            } 
+                            else 
+                            {
+                                $("#nhomsanpham_id").empty();
+                            }
+                        }
+                    });
+                } else {
+
+                    $("#nhomsanpham_id").empty();
+                
+                }
+            });
+
+            $('#nhomsanpham_id').change(function() {
                 var id = $(this).val();
                 if (id) {
                     $.ajax({
@@ -179,9 +238,9 @@
                         }
                     });
                 } else {
-                    $("#loaisanpham_id").empty();              
+                    $("#loaisanpham_id").empty(); 
                 }
-            });         
+            });   
         });
     </script>
 @endsection

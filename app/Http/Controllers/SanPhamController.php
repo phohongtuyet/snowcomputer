@@ -7,6 +7,7 @@ use App\Models\HangSanXuat;
 use App\Models\LoaiSanPham;
 use App\Models\NoiSanXuat;
 use App\Models\DanhMuc;
+use App\Models\NhomSanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -91,9 +92,15 @@ class SanPhamController extends Controller
         return view('admin.sanpham.them', compact('noisanxuat','hangsanxuat','folder','danhmuc'));
     }
 
+    public function getNhomSanPham(Request $request)
+    {
+        $nhomsanpham = NhomSanPham::where("danhmuc_id", $request->id)->pluck("tennhomsanpham", "id");
+        return response()->json($nhomsanpham);
+    }
+
     public function getLoai(Request $request)
     {
-        $loai = LoaiSanPham::where("danhmuc_id", $request->id)->pluck("tenloai", "id");
+        $loai = LoaiSanPham::where("nhomsanpham_id", $request->id)->pluck("tenloai", "id");
         return response()->json($loai);
     }
 
@@ -144,6 +151,7 @@ class SanPhamController extends Controller
         $hangsanxuat = HangSanXuat::all();
         $loaisanpham = LoaiSanPham::all();
         $danhmuc = DanhMuc::all();
+        $nhomsanpham = NhomSanPham::all();
 
         if(session_status() == PHP_SESSION_NONE)
 		{
@@ -159,13 +167,21 @@ class SanPhamController extends Controller
 		
 		$folder = 'sanpham/' . str_pad($id, 7, '0', STR_PAD_LEFT);
 
-        return view('admin.sanpham.sua', compact('sanpham','hangsanxuat','noisanxuat','loaisanpham','danhmuc','folder'));
+        return view('admin.sanpham.sua', compact('sanpham','hangsanxuat','noisanxuat','loaisanpham','nhomsanpham','danhmuc','folder'));
     }
 
-    public function getDanhMuc(Request $request)
+    public function getNhomSanPhamSua(Request $request)
     {
-        $loaisanpham = LoaiSanPham::find($request->id)->first();
-        $danhmuc = DanhMuc::where("id", $loaisanpham->danhmuc_id)->pluck("tendanhmuc", "id");
+        $loaisanpham = LoaiSanPham::find($request->id);
+        $nhomsanpham = NhomSanPham::where("id", $loaisanpham->nhomsanpham_id)->pluck("tennhomsanpham", "id");
+        return response()->json($nhomsanpham);
+    }
+
+    public function getDanhMucSua(Request $request)
+    {
+        $loaisanpham = LoaiSanPham::find($request->id);
+        $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
+        $danhmuc = DanhMuc::where("id", $nhomsanpham->danhmuc_id)->pluck("tendanhmuc", "id");
         return response()->json($danhmuc);
     }
 

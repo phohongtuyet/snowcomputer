@@ -8,14 +8,14 @@
     <form action="{{ route('admin.loaisanpham.them') }}" method="post">
         @csrf
         <div class="mb-3">
-            <label class="form-label" for="danhmuc_id">Danh mục</label>
-            <select class="form-control @error('danhmuc_id') is-invalid @enderror" name="danhmuc_id" id="danhmuc_id" value="{{ old('danhmuc_id') }}" > 
+            <label class="form-label" for="nhomsanpham_id">Danh mục</label>
+            <select class="form-control @error('nhomsanpham_id') is-invalid @enderror" name="nhomsanpham_id" id="nhomsanpham_id" value="{{ old('nhomsanpham_id') }}" > 
                 <option value="">-- Chọn danh mục --</option>
-                @foreach($danhmuc as $value)
-                    <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
+                @foreach($nhomsanpham as $value)
+                    <option value="{{ $value->id }}">{{ $value->tennhomsanpham }}</option>
                 @endforeach
             </select>
-            @error('danhmuc_id')
+            @error('nhomsanpham_id')
                 <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
             @enderror
         </div> 
