@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Imports\SanPhamImport;
+use App\Exports\SanPhamExport;
+use Excel;
 
 class SanPhamController extends Controller
 {

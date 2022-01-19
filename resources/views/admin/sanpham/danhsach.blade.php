@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('title', 'Sản phẩm')
 @section('content')
-
 <div class="card">
+    <div class="card-body table-responsive">
+        <h4 class="card-title">Danh sách sản phẩm </h4>
         @if (session('status'))
             <div id="AlertBox" class="alert alert-success hide" role="alert">
                 {!! session('status') !!}
             </div>
         @endif
-        <div class="card-body table-responsive">
         <p>
             <a href="{{ route('admin.sanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
             <a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
@@ -23,7 +23,7 @@
                     <th width="20%">Thông tin sản phẩm</th>
                     <th width="7%">Số lượng</th>
                     <th width="10%">Đơn giá</th>
-                    <th width="10%">Hiển thị</th>
+                    <th width="5%">O/F</th>
                     <th width="5%">Sửa</th>
                     <th width="5%">Xóa</th>
                 </tr>
@@ -37,13 +37,13 @@
                     <td class="text-justify">
                         <span class="small">
                             @if(!empty($value->HangSanXuat->tenhangsanxuat))
-                                <br />Hang san xuat: {{ $value->HangSanXuat->tenhangsanxuat }} 
+                                <br />Hãng sản xuất: {{ $value->HangSanXuat->tenhangsanxuat }} 
                             @endif
                             @if(!empty($value->NoiSanXuat->tenquocgia))
-                                <br />noi san xuat: {{ $value->NoiSanXuat->tenquocgia }} 
+                                <br />Nơi sản xuất: {{ $value->NoiSanXuat->tenquocgia }} 
                             @endif
                             @if(!empty($value->LoaiSanPham->tenloai))
-                                <br />loai san pham: {{ $value->LoaiSanPham->tenloai }} 
+                                <br />Loại sản pham: {{ $value->LoaiSanPham->tenloai }} 
                             @endif
                             @if(!empty($value->thumuc))
                                 <br />Hình ảnh: <a href="#hinhanh" onclick="getXemHinh({{ $value->id }})">{{ $value->thumuc }}</a>
@@ -66,7 +66,7 @@
             </tbody>
         </table>
     </div>
- </div>
+</div>
 <form action="{{ route('admin.sanpham.nhap') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
