@@ -10,7 +10,7 @@
         @endif
         <div class="card-body table-responsive">
         <p>
-            <a href="{{ route('admin.sanpham.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm mới</a>
+            <a href="{{ route('admin.sanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
             <a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
             <a href="{{ route('admin.sanpham.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
         </p>

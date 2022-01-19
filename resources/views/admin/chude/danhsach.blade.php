@@ -10,7 +10,7 @@
                 </div>
             @endif
             <p>
-                <a href="{{ route('admin.chude.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm mới</a>
+                <a href="{{ route('admin.chude.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
             </p>
             <table id="table_id" class="table table-hover">
                 <thead>

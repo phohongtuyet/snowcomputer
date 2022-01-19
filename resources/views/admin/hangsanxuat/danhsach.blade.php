@@ -9,7 +9,7 @@
                 {!! session('status') !!}
             </div>
         @endif
-			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm</a></p>
+			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
 			<table id="table_id" class="table table-bordered table-hover table-sm">
 				<thead>
 					<tr>
@@ -29,7 +29,8 @@
 							<td>{{ $value['tenhangsanxuat'] }}</td>
                             <td>{{ $value['tenhangsanxuat_slug'] }}</td>
 							<td>
-								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;"></a>			
+								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $path.'images/'. $value->hinhanh }}" 
+										
 							</td>
 							<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>
 							<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value['id'] }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>

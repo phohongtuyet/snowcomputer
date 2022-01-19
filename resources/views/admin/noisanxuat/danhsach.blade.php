@@ -2,24 +2,22 @@
 @section('title', '')
 @section('content')
 <div class="card">
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <h4 class="card-title">Nơi sản xuất</h4>
-        <div class="table-responsive">
             @if (session('status'))
                 <div id="AlertBox" class="alert alert-success hide" role="alert">
                     {!! session('status') !!}
                 </div>
             @endif
-            <p><a href="{{ route('admin.noisanxuat.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm mới</a></p>
+            <p><a href="{{ route('admin.noisanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
             <table id="table_id" class="table table-hover">
                 <thead>
                     <tr>
-                        <th width="5%">#</th>
-                        <th width="35%">Tên quoc gia</th>
-                        <th width="30%">Tên quoc gia kh dau</th>
-
-                        <th width="5%">Sửa</th>
-                        <th width="5%">Xóa</th>
+                        <th width="10%">#</th>
+                        <th width="35%">Tên quốc gia </th>
+                        <th width="35%">Tên quốc gia không dấu</th>
+                        <th class="text-center" width="10%">Sửa</th>
+                        <th class="text-center" width="10%">Xóa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +34,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
 
 <form action="{{ route('admin.noisanxuat.xoa') }}" method="post">

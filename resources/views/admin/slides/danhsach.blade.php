@@ -11,7 +11,7 @@
             </div>
         @endif
 			<p><a href="{{ route('admin.slides.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
-			<table id="DataList" class="table table-bordered table-hover table-sm">
+			<table id="table_id" class="table table-bordered table-hover table-sm">
 				<thead>
 					<tr>
 						<th width="5%">#</th>

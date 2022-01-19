@@ -9,7 +9,7 @@
                 {!! session('status') !!}
             </div>
         @endif
-        <p><a href="{{ route('admin.loaisanpham.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm mới</a></p>
+        <p><a href="{{ route('admin.loaisanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>
                 <tr>
