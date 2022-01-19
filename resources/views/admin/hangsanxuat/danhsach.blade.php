@@ -9,7 +9,11 @@
                 {!! session('status') !!}
             </div>
         @endif
-			<p><a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a></p>
+			<p>
+				<a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a>
+				<a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
+				<a href="{{ route('admin.hangsanxuat.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
+			</p>
 			<table id="table_id" class="table table-bordered table-hover table-sm">
 				<thead>
 					<tr>
@@ -29,7 +33,7 @@
 							<td>{{ $value['tenhangsanxuat'] }}</td>
                             <td>{{ $value['tenhangsanxuat_slug'] }}</td>
 							<td>
-								<a href="#hinhanh" onclick="getXemHinh({{ $value['id'] }})"><img src="{{ $path.'images/'. $value->hinhanh }}" 
+								<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;">
 										
 							</td>
 							<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>
@@ -59,6 +63,30 @@
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Hủy bỏ</button>
 					<button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Thực hiện</button>
 				</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<form action="{{ route('admin.hangsanxuat.nhap') }}" method="post" enctype="multipart/form-data">
+		@csrf
+		<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-0">
+							<label for="file_excel" class="form-label">Chọn tập tin Excel</label>
+							<input type="file" class="form-control" id="file_excel" name="file_excel" required />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Hủy bỏ</button>
+						<button type="submit" class="btn btn-danger"><i class="fas fa-upload"></i> Nhập dữ liệu</button>
+					</div>
 				</div>
 			</div>
 		</div>
