@@ -12,8 +12,8 @@ class DanhMuc extends Model
 
     protected $fillable = ['tendanhmuc'];
 
-    public function LoaiSanPham()
+    public function NhomSanPham()
     {
-        return $this->hasMany(LoaiSanPham::class, 'danhmuc_id', 'id');
+        return $this->hasMany(NhomSanPham::class, 'danhmuc_id', 'id');
     }
 }
