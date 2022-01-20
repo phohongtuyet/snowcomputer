@@ -25,6 +25,17 @@ Auth::routes();
 // Trang chủ
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
 
+
+
+//Tin tức
+Route::get('/tin-tuc', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet');
+Route::get('/tin-tuc/{tieude_slug}', [HomeController::class, 'getBaiViet_ChiTiet'])->name('frontend.baiviet_chitiet');
+Route::get('/tin-tuc/chu-de/{chude}', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet_chude');
+
+//binhluan
+Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->name('frontend.binhluan');
+
+
 // Trang tài khoản khách hàng
 Route::prefix('khach-hang')->group(function() {
     // Trang chủ tài khoản khách hàng

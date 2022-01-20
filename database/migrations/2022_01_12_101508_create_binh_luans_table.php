@@ -17,7 +17,7 @@ class CreateBinhLuansTable extends Migration
             $table->id();
             $table->foreignId('baiviet_id')->constrained('baiviet');
             $table->foreignId('user_id')->constrained('users');
-            $table->integer('noidung');
+            $table->string('noidung');
             $table->double('hienthi')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();

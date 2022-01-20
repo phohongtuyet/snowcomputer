@@ -177,7 +177,7 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown"> <a href="home.html">Home</a> </li>
+                <li class="active dropdown"> <a href="{{ route('frontend')}}">Home</a> </li>
                 <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Clothing</a>
                   <ul class="dropdown-menu container">
                     <li>
@@ -331,7 +331,7 @@
                 <li class="dropdown"> <a href="contact.html">Jewellery</a> </li>
                 <li class="dropdown"> <a href="contact.html">Shoes</a> </li>
                 <li class="dropdown"> <a href="contact.html">Kids & Girls</a> </li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Tin công nghệ</a>
+                <li class="dropdown"> <a href="{{route('frontend.baiviet')}}">Tin công nghệ</a>
                   
                 </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected items</a> </li>

@@ -26,9 +26,9 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="tomta" class="form-label  @error('tomta') is-invalid @enderror" >Tóm tắt</label>
-            <input type="text" class="form-control" id="tomta" name="tomta" value="{{ old('tomta') }}">
-            @error('tomta')
+            <label for="tomtat" class="form-label  @error('tomtat') is-invalid @enderror" >Tóm tắt</label>
+            <input type="text" class="form-control" id="tomtat" name="tomtat" value="{{ old('tomtat') }}">
+            @error('tomtat')
                 <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
             @enderror
         </div>
