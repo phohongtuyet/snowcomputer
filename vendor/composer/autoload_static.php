@@ -31,8 +31,8 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '9cdd7b9056abc3081735233ba9dd9c7f' => __DIR__ . '/..' . '/facade/flare-client-php/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
@@ -93,6 +93,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         ),
         'R' => 
         array (
+            'ReCaptcha\\' => 10,
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
@@ -324,6 +325,10 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'ReCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
         ),
         'Ramsey\\Uuid\\' => 
         array (
@@ -569,6 +574,8 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\HangSanXuatExport' => __DIR__ . '/../..' . '/app/Exports/HangSanXuatExport.php',
+        'App\\Exports\\SanPhamExport' => __DIR__ . '/../..' . '/app/Exports/SanPhamExport.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -591,6 +598,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'App\\Http\\Controllers\\KhuyenMaiController' => __DIR__ . '/../..' . '/app/Http/Controllers/KhuyenMaiController.php',
         'App\\Http\\Controllers\\LienHeController' => __DIR__ . '/../..' . '/app/Http/Controllers/LienHeController.php',
         'App\\Http\\Controllers\\LoaiSanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoaiSanPhamController.php',
+        'App\\Http\\Controllers\\NhomSanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/NhomSanPhamController.php',
         'App\\Http\\Controllers\\NoiSanXuatController' => __DIR__ . '/../..' . '/app/Http/Controllers/NoiSanXuatController.php',
         'App\\Http\\Controllers\\SanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/SanPhamController.php',
         'App\\Http\\Controllers\\SlidesController' => __DIR__ . '/../..' . '/app/Http/Controllers/SlidesController.php',
@@ -605,6 +613,8 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Imports\\HangSanXuatImport' => __DIR__ . '/../..' . '/app/Imports/HangSanXuatImport.php',
+        'App\\Imports\\SanPhamImport' => __DIR__ . '/../..' . '/app/Imports/SanPhamImport.php',
         'App\\Models\\BaiViet' => __DIR__ . '/../..' . '/app/Models/BaiViet.php',
         'App\\Models\\BinhLuan' => __DIR__ . '/../..' . '/app/Models/BinhLuan.php',
         'App\\Models\\ChuDe' => __DIR__ . '/../..' . '/app/Models/ChuDe.php',
@@ -617,6 +627,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'App\\Models\\KhuyenMai' => __DIR__ . '/../..' . '/app/Models/KhuyenMai.php',
         'App\\Models\\LienHe' => __DIR__ . '/../..' . '/app/Models/LienHe.php',
         'App\\Models\\LoaiSanPham' => __DIR__ . '/../..' . '/app/Models/LoaiSanPham.php',
+        'App\\Models\\NhomSanPham' => __DIR__ . '/../..' . '/app/Models/NhomSanPham.php',
         'App\\Models\\NoiSanXuat' => __DIR__ . '/../..' . '/app/Models/NoiSanXuat.php',
         'App\\Models\\SanPham' => __DIR__ . '/../..' . '/app/Models/SanPham.php',
         'App\\Models\\Slides' => __DIR__ . '/../..' . '/app/Models/Slides.php',
@@ -627,6 +638,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Providers\\ViewServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ViewServiceProvider.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -5346,6 +5358,15 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'ReCaptcha\\ReCaptcha' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/ReCaptcha.php',
+        'ReCaptcha\\RequestMethod' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod.php',
+        'ReCaptcha\\RequestMethod\\Curl' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod/Curl.php',
+        'ReCaptcha\\RequestMethod\\CurlPost' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod/CurlPost.php',
+        'ReCaptcha\\RequestMethod\\Post' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod/Post.php',
+        'ReCaptcha\\RequestMethod\\Socket' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod/Socket.php',
+        'ReCaptcha\\RequestMethod\\SocketPost' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestMethod/SocketPost.php',
+        'ReCaptcha\\RequestParameters' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/RequestParameters.php',
+        'ReCaptcha\\Response' => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha/Response.php',
         'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',

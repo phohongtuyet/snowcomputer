@@ -21,6 +21,21 @@ class HomeController extends Controller
         return view('frontend.index',compact('slides','hangsanxuat'));
     }
 
+
+    public function getDangKy()
+    {
+        return view('frontend.dangky');
+    }
+    
+    public function getDangNhap()
+    {
+        return view('frontend.dangnhap');
+    }
+
+    public function getLienHe ()
+    {
+        return view('frontend.lienhe');
+    }
     public static function LayHinhDauTien($strNoiDung)
 	{
 		$first_img = "";

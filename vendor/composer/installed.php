@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '57a7532ec91b1f12a3132edce6f6b4e5851731f6',
+        'reference' => '9ce03b4531fcb6d376042d2e35dbc531d4112e81',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -155,6 +155,15 @@
             'install_path' => __DIR__ . '/../fruitcake/laravel-cors',
             'aliases' => array(),
             'reference' => '3a066e5cac32e2d1cdaacd6b961692778f37b5fc',
+            'dev_requirement' => false,
+        ),
+        'google/recaptcha' => array(
+            'pretty_version' => '1.2.4',
+            'version' => '1.2.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../google/recaptcha',
+            'aliases' => array(),
+            'reference' => '614f25a9038be4f3f2da7cbfd778dc5b357d2419',
             'dev_requirement' => false,
         ),
         'graham-campbell/result-type' => array(
@@ -409,7 +418,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '57a7532ec91b1f12a3132edce6f6b4e5851731f6',
+            'reference' => '9ce03b4531fcb6d376042d2e35dbc531d4112e81',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(

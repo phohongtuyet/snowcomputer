@@ -15,7 +15,9 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input type="text"
+ class="form-control{{ ($errors->has('email') || $errors->has('username')) ? ' is-invalid' : '' }}"
+ id="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -37,6 +39,16 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end" for="feedback-recaptcha">Xác thực đăng nhập</label>
+                            <div class="col-md-6 g-recaptcha @error('g-recaptcha-response') is-invalid @enderror"
+                            data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"
+                            data-size="normal"
+                            data-theme="light"></div>
+                            @error('g-recaptcha-response')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
                         </div>
 
                         <div class="row mb-3">
@@ -70,4 +82,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('javascript')
+ <script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
 @endsection

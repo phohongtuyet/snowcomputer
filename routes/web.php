@@ -32,9 +32,16 @@ Route::get('/tin-tuc', [HomeController::class, 'getBaiViet'])->name('frontend.ba
 Route::get('/tin-tuc/{tieude_slug}', [HomeController::class, 'getBaiViet_ChiTiet'])->name('frontend.baiviet_chitiet');
 Route::get('/tin-tuc/chu-de/{chude}', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet_chude');
 
-//binhluan
+//Bình luận
 Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->name('frontend.binhluan');
 
+// Liên hệ
+Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('frontend.lienhe');
+
+
+// Trang khách hàng
+Route::get('/khach-hang/dang-ky', [HomeController::class, 'getDangKy'])->name('khachhang.dangky');
+Route::get('/khach-hang/dang-nhap', [HomeController::class, 'getDangNhap'])->name('khachhang.dangnhap');
 
 // Trang tài khoản khách hàng
 Route::prefix('khach-hang')->group(function() {

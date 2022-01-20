@@ -10,6 +10,7 @@
   <meta name="keywords" content="MediaCenter, Template, eCommerce">
   <meta name="robots" content="all">
   <title>Snow Computer</title>
+  <link rel="shortcut icon" href="{{ asset('public/frontend/images/icon.png')}}">
 
   <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" href="{{ asset('public/frontend/css/bootstrap.min.css')}}">
@@ -46,7 +47,7 @@
             <li class="wishlist"><a href="#"><span>Danh sách yêu thích</span></a></li>
             <li class="header_cart hidden-xs"><a href="#"><span>Giỏ hàng của tôi</span></a></li>
             <li class="check"><a href="#"><span>Thủ tục thanh toán</span></a></li>
-            <li class="login"><a href="#"><span>Đăng nhập</span></a></li>
+            <li class="login"><a href="{{route('khachhang.dangnhap')}}"><span>Đăng nhập</span></a></li>
           </ul>
         </div>
         <!-- /.cnt-account -->
@@ -205,7 +206,7 @@
                     </ul>
                   </li>
                 @endforeach
-                <li class="dropdown"> <a href="contact.html">Kids & Girls</a> </li>
+                <li class="dropdown"> <a href="{{route('frontend.lienhe')}}">Liên hệ </a> </li>
                 <li class="dropdown"> <a href="{{route('frontend.baiviet')}}">Tin công nghệ</a>  
                 </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected items</a> </li>
