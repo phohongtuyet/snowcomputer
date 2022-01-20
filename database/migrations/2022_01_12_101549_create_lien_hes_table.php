@@ -18,6 +18,7 @@ class CreateLienHesTable extends Migration
             $table->string('email');
             $table->string('tieude');
             $table->string('noidung');
+            $table->string('phanhoi')->nullable();
             $table->unsignedTinyInteger('trangthai')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();

@@ -447,7 +447,7 @@
               </a>
               <div class="collapse" id="support">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"><a class="nav-link" href="{{route('admin.nguoidung')}}">Liên hệ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{route('admin.lienhe')}}">Liên hệ</a></li>
                 </ul>
               </div>
             </li>

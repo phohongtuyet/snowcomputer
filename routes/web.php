@@ -18,6 +18,7 @@ use App\Http\Controllers\ChuDeController;
 use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\NhomSanPhamController;
+use App\Http\Controllers\LienHeController;
 
 
 Auth::routes();
@@ -134,6 +135,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/tinhtrang/sua/{id}', [TinhTrangController::class, 'postSua'])->name('tinhtrang.sua');
     Route::post('/tinhtrang/xoa', [TinhTrangController::class, 'postXoa'])->name('tinhtrang.xoa');
     
+    // Quản lý Liên hệ
+    Route::get('/lienhe', [LienHeController::class, 'getDanhSach'])->name('lienhe');
+    Route::get('/lienhe/phanhoi/{id}', [LienHeController::class, 'getPhanHoi'])->name('lienhe.phanhoi');
+    Route::post('/lienhe/phanhoi/{id}', [LienHeController::class, 'postPhanHoi'])->name('lienhe.phanhoi');
+    Route::post('/lienhe/xoa', [LienHeController::class, 'postXoa'])->name('lienhe.xoa');
+
     // Quản lý Sản phẩm
     Route::get('/sanpham', [SanPhamController::class, 'getDanhSach'])->name('sanpham');
     Route::get('/sanpham/them', [SanPhamController::class, 'getThem'])->name('sanpham.them');
