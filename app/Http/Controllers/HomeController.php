@@ -6,6 +6,8 @@ use App\Models\HangSanXuat;
 use App\Models\BaiViet;
 use App\Models\ChuDe;
 use App\Models\BinhLuan;
+use App\Models\LienHe;
+
 use Auth;
 
 use Illuminate\Http\Request;
@@ -161,4 +163,30 @@ class HomeController extends Controller
         return view('frontend.baiviet_chitiet', compact('baiviet','binhluan'));
     }
 
+
+    public function postHoTro(Request $request)
+    {
+        $this->validate($request, [
+            'tieude' => ['required','string'],
+            'email' => ['required','email'],
+            'noidung' => ['required','string'],
+
+        ],
+        $messages = [
+            'tieude.required' => 'Tiêu đề không được bỏ trống.',
+            'email.required' => 'Địa chỉ Email không được bỏ trống.',
+            'noidung.required' => 'Nội dung hỗ trợ không được bỏ trống.',
+            'email.email' => 'Địa chỉ Email không đúng.',
+
+        ]);
+        
+
+        $orm = new LienHe();
+        $orm->email = $request->email;
+        $orm->tieude = $request->tieude;
+        $orm->noidung = $request->noidung;
+        $orm->save();
+
+        return view('frontend.lienhe');
+    }
 }

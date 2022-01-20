@@ -15,8 +15,10 @@ class CreateLienHesTable extends Migration
     {
         Schema::create('lienhe', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->integer('noidung');
+            $table->string('email');
+            $table->string('tieude');
+            $table->string('noidung');
+            $table->unsignedTinyInteger('trangthai')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

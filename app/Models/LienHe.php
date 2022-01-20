@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LienHe extends Model
 {
     use HasFactory;
+    protected $table = 'lienhe';
+ 
 }

@@ -118,7 +118,7 @@
 
 
 	<!-- ============================================== CATEGORY : END ============================================== -->						<div class="sidebar-widget outer-bottom-xs wow fadeInUp">
-    <h3 class="section-title">Tab Widget</h3>
+                        <h3 class="section-title">Tab Widget</h3>
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#popular" data-toggle="tab">Xem nhiều</a></li>
 							<li><a href="#recent" data-toggle="tab">Mới nhất </a></li>

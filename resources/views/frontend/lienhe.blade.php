@@ -21,47 +21,48 @@
                 </div>
                 <div class="col-md-8 contact-form">
                     <div class="col-md-12 contact-title">
-                        <h4>Mẫu liên hệ </h4>
+                        <h4>Hỗ trợ </h4>
                     </div>
-                    <div class="col-md-4 ">
-                        <form class="register-form" role="form">
-                            <div class="form-group">
-                            <label class="info-title" for="exampleInputName">Your Name <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="">
-                        </div>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <form class="register-form" role="form">
-                            <div class="form-group">
-                            <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="">
-                        </div>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <form class="register-form" role="form">
-                            <div class="form-group">
-                            <label class="info-title" for="exampleInputTitle">Title <span>*</span></label>
-                            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="Title">
-                        </div>
-                        </form>
-                    </div>
+                    
                     <div class="col-md-12">
-                        <form class="register-form" role="form">
-                            <div class="form-group">
-                            <label class="info-title" for="exampleInputComments">Nội dung <span>*</span></label>
-                            <textarea class="form-control unicase-form-control" id="exampleInputComments"></textarea>
-                        </div>
+                        <form class="register-form" role="form" action="{{ route('frontend.hotro') }}" method="post">
+                        @csrf
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="info-title" for="exampleInputTitle">Tiêu đề<span>*</span></label>
+                                    <input type="text" class="form-control unicase-form-control text-input @error('tieude') is-invalid @enderror" name="tieude"id="exampleInputTitle" placeholder="Tiêu đề">
+                                    @error('tieude')
+                                        <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="info-title" for="exampleInputTitle">Địa chỉ Email<span>*</span></label>
+                                    <input type="text" class="form-control unicase-form-control text-input @error('email') is-invalid @enderror" name="email"id="exampleInputTitle" placeholder="Email">
+                                    @error('email')
+                                        <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="info-title" for="exampleInputComments">Nội dung <span>*</span></label>
+                                <textarea class="form-control unicase-form-control @error('noidung') is-invalid @enderror" name="noidung" id="exampleInputComments"></textarea>
+                                @error('noidung')
+                                    <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 outer-bottom-small m-t-20">
+                                <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Hỗ trợ</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="col-md-12 outer-bottom-small m-t-20">
-                        <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Gửi</button>
-                    </div>
+                    
                 </div>
                 <div class="col-md-4 contact-info">
                     <div class="contact-title">
-                        <h4>Information</h4>
+                        <h4>Thông tin</h4>
                     </div>
                     <div class="clearfix address">
                         <span class="contact-i"><i class="fa fa-map-marker"></i></span>

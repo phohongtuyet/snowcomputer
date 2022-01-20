@@ -37,6 +37,7 @@ Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->
 
 // Liên hệ
 Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('frontend.lienhe');
+Route::post('/lien-he/ho-tro', [HomeController::class, 'postHoTro'])->name('frontend.hotro');
 
 
 // Trang khách hàng
