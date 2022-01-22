@@ -7,6 +7,9 @@ use App\Models\BaiViet;
 use App\Models\ChuDe;
 use App\Models\BinhLuan;
 use App\Models\LienHe;
+use App\Models\DanhMuc;
+use App\Models\SanPham;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 
@@ -18,9 +21,20 @@ class HomeController extends Controller
     {
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        $sanpham = SanPham::where('hienthi',1)->get();
+        $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->select('tendanhmuc')
+                                ->distinct()->get();
+
+       
 
 
-        return view('frontend.index',compact('slides','hangsanxuat'));
+
+
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamdanhmuc'));
     }
 
 

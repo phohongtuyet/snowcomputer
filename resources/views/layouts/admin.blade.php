@@ -38,11 +38,9 @@
         </div>
         <div>
           <a class="navbar-brand brand-logo" href="{{route('admin.home')}}">
-            <img src="images/logo.svg" alt="logo" />
+            <img src="{{ asset('public/admin/images/logo.png')}}" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="{{route('admin.home')}}">
-            <img src="images/logo-mini.svg" alt="logo" />
-          </a>
+         
         </div>
       </div>
       @if(Auth::user() != null)
