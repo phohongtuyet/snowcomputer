@@ -85,7 +85,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder"> 
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="home.html"> <img src="{{ asset('public/frontend/images/SnowComputer.png')}}" alt="logo"> </a> </div>
+          <div class="logo"> <a href="{{ route('frontend')}}"> <img src="{{ asset('public/frontend/images/SnowComputer.png')}}" alt="logo"> </a> </div>
           <!-- /.logo --> 
           <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
@@ -209,7 +209,6 @@
                 <li class="dropdown"> <a href="{{route('frontend.lienhe')}}">Liên hệ </a> </li>
                 <li class="dropdown"> <a href="{{route('frontend.baiviet')}}">Tin công nghệ</a>  
                 </li>
-                <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected items</a> </li>
               </ul>
               <!-- /.navbar-nav -->
               <div class="clearfix"></div>

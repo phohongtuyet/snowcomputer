@@ -9,9 +9,14 @@ use App\Models\BinhLuan;
 use App\Models\LienHe;
 use App\Models\DanhMuc;
 use App\Models\SanPham;
+use App\Models\NhomSanPham;
+use App\Models\LoaiSanPham;
+use App\Models\DanhGiaSanPham;
+
 use Illuminate\Support\Facades\DB;
 
 use Auth;
+use Storage;
 
 use Illuminate\Http\Request;
 
@@ -22,11 +27,7 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-        ->select('tendanhmuc')
-        ->distinct()->get();
+        
 
 
         $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
@@ -36,7 +37,7 @@ class HomeController extends Controller
                                 ->distinct()->get();
 
 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamdanhmuc'));
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanphamdanhmuc'));
     }
 
 
@@ -204,5 +205,24 @@ class HomeController extends Controller
         $orm->save();
 
         return view('frontend.lienhe');
+    }
+
+    public function getSanPham_ChiTiet($tensanpham_slug)
+    {
+        $sanpham = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();
+        $loaisanpham = LoaiSanPham::where('id',$sanpham->loaisanpham_id)->first();
+        $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
+        $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
+        $danhgia = DanhGiaSanPham::where('sanpham_id',$sanpham->id)->get();
+
+        $all_files = array();
+
+        $dir = '/storage/app/' . $sanpham->thumuc . '/images/';
+        $files = Storage::files($sanpham->thumuc . '/images/');
+        foreach($files as $file)
+            $all_files[] = pathinfo($file);
+		
+
+        return view('frontend.sanpham_chitiet',compact('sanpham','dir','all_files','danhmuc','danhgia'));
     }
 }
