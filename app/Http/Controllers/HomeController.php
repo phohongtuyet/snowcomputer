@@ -22,16 +22,18 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        $sanpham = SanPham::where('hienthi',1)->get();
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+        ->select('tendanhmuc')
+        ->distinct()->get();
+
+
         $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->select('tendanhmuc')
+                                ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
-
-       
-
-
 
 
         return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamdanhmuc'));

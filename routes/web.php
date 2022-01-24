@@ -26,7 +26,9 @@ Auth::routes();
 // Trang chủ
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
 
-
+// Trang sản phẩm
+Route::get('/san-pham', [HomeController::class, 'getSanPham'])->name('frontend.sanpham');
+Route::get('/san-pham/{tensanpham_slug}', [HomeController::class, 'getSanPham_ChiTiet'])->name('frontend.sanpham.chitiet');
 
 //Tin tức
 Route::get('/tin-tuc', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet');

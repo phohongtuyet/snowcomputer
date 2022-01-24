@@ -201,10 +201,10 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Quản lý danh mục</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('admin.danhmuc') }}">Danh mục sản phẩm</a></li>
-                <li><a class="nav-link" href="{{ route('admin.danhmuc') }}">Nhóm sản phẩm</a></li>
-                <li><a class="nav-link" href="{{ route('admin.danhmuc') }}">Loại sản phẩm</a></li>
-                <li><a class="nav-link" href="{{ route('admin.danhmuc') }}">Hãng sản xuất</a></li>
-                <li><a class="nav-link" href="{{ route('admin.danhmuc') }}">Nơi sản xuất</a></li>   
+                <li><a class="nav-link" href="{{ route('admin.nhomsanpham') }}">Nhóm sản phẩm</a></li>
+                <li><a class="nav-link" href="{{ route('admin.loaisanpham') }}">Loại sản phẩm</a></li>
+                <li><a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
+                <li><a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>   
                 <li><a class="nav-link" href="{{ route('admin.slides') }}">Trình chiếu </a></li>                
              
               </ul>

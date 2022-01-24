@@ -850,10 +850,16 @@
         
 
         <!-- ============================================== SCROLL TABS ============================================== -->
-        @foreach($sanphamdanhmuc as $sp)  
+        @php 
+          $collection = collect($sanphamdanhmuc);
+          $items= $collection->groupBy('tendanhmuc');
+          $items->toArray();
+        @endphp
+
+        @foreach($items as $sp => $product_list)  
         <div id="product-tabs-slider" class="scroll-tabs outer-top-vs">
           <div class="more-info-tab clearfix ">
-            <h3 class="new-product-title pull-left">{{ $sp->tendanhmuc}}</h3>
+            <h3 class="new-product-title pull-left">{{ $sp }}</h3>
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
               <li class="active"><a data-transition-type="backSlide" href="#all" data-toggle="tab">Tất cả</a></li>
             </ul>
@@ -863,19 +869,20 @@
             <div class="tab-pane in active" id="all">
               <div class="product-slider">
                 <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
-                  @foreach($sanpham as $value)
+                  @if(array_key_exists($sp, $items->toArray()))
+                  @foreach($product_list as $value)
                     <div class="item item-carousel">
                       <div class="products">
                         <div class="product">
                           <div class="product-image">
                             <div class="image"> 
-                            <a href="detail.html">
+                            <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
                               @php 
                                 $img='';
                                 $dir = 'storage/app/' . $value->thumuc . '/images/';
                                 $files = scandir($dir); 
                                 $img = config('app.url') . '/'. $dir . $files[2];
-                                $img2 = config('app.url') . '/'. $dir . $files[3];        
+                                $img2 = config('app.url') . '/'. $dir . $files[2];        
                               @endphp
                                 <img src="{{ $img }}" alt=""> 
                                 <img src="{{ $img2 }}" alt="" class="hover-image">
@@ -888,10 +895,10 @@
                           <!-- /.product-image -->
                           
                           <div class="product-info text-left">
-                            <h3 class="name"><a href="detail.html">{{ $value->tensanpham}}</a></h3>
+                            <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{ $value->tensanpham }}</a></h3>
                             <div class="rating rateit-small"></div>
                             <div class="description"></div>
-                            <div class="product-price"> <span class="price">{{number_format($value->dongia)}} VNĐ </span> <span class="price-before-discount">$ 800</span> 
+                            <div class="product-price"> <span class="price">{{ number_format($value->dongia)}} VNĐ </span> <span class="price-before-discount">$ 800</span> 
                           </div>
                             <!-- /.product-price --> 
                             
@@ -916,7 +923,8 @@
                       </div>
                       <!-- /.products --> 
                     </div>
-                  @endforeach                 
+                  @endforeach  
+                  @endif    
                 </div>
                 <!-- /.home-owl-carousel --> 
               </div>
