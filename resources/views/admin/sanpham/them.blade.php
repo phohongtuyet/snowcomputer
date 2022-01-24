@@ -9,7 +9,7 @@
                 @csrf          
                 <div class="mb-3">
                     <label class="form-label" for="hangsanxuat_id">Hãng sản xuất </label>
-                    <select class="form-select @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
+                    <select class="form-control @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
                         <option value="">-- Chọn hãng sản xuất --</option>
                         @foreach($hangsanxuat as $value)
                             <option value="{{ $value->id }}">{{ $value->tenhangsanxuat }}</option>
@@ -21,7 +21,7 @@
                 </div>  
                 <div class="mb-3">
                     <label class="form-label" for="noisanxuat_id">Nơi sản xuất </label>
-                    <select class="form-select @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
+                    <select class="form-control @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
                         <option value="">-- Chọn nơi sản xuất--</option>
                         @foreach($noisanxuat as $value)
                             <option value="{{ $value -> id}}">{{ $value -> tenquocgia}}</option>
@@ -33,7 +33,7 @@
                 </div>  
                 <div class="mb-3">
                     <label class="form-label" for="danhmuc_id">Danh mục sản phẩm:</label>
-                    <select class="form-select @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
+                    <select class="form-control @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
                             <option value="" selected disabled>-- Chọn danh mục --</option>
                             @foreach ($danhmuc as $value)
                             <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
@@ -45,15 +45,14 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="nhomsanpham_id">Nhóm sản phẩm</label>
-                    <select class="form-select @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required></select>
+                    <select class="form-control @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required></select>
                     @error('nhomsanpham_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label" for="loaisanpham_id">Loại sản phẩm</label>
-                    <select class="form-select @error('loaisanpham_id') is-invalid @enderror" id="loaisanpham_id" name="loaisanpham_id" required></select>
+                    <select class="form-control @error('loaisanpham_id') is-invalid @enderror" id="loaisanpham_id" name="loaisanpham_id" required></select>
                     @error('loaisanpham_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
