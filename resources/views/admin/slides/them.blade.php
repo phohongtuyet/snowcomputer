@@ -1,14 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Hãng sản xuất')
+@section('title', 'Trình chiếu')
 @section('content')
  <div class="card">
         <div class="card-body table-responsive">
-        <h3 class="card-title">Thêm trình chiếu </h3>
+        <h3 class="card-title">Thêm hình ảnh trình chiếu </h3>
 
         <form action="{{ route('admin.slides.them') }}" method="post">
             @csrf
             <div class="form-group">
-                <label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+                <label for="ThuMuc"> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text" id="ChonHinh"><a href="#hinhanh">Tải ảnh lên</a></div>

@@ -225,11 +225,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/nguoidung/them', [UserController::class, 'postThem'])->name('nguoidung.them');
     Route::get('/nguoidung/sua/{id}', [UserController::class, 'getSua'])->name('nguoidung.sua');
     Route::post('/nguoidung/sua/{id}', [UserController::class, 'postSua'])->name('nguoidung.sua');
-    Route::get('/nguoidung/xoa/{id}', [UserController::class, 'getXoa'])->name('nguoidung.xoa');
+    Route::post('/nguoidung/xoa', [UserController::class, 'postXoa'])->name('nguoidung.xoa');
     Route::post('/nguoidung/nhap', [UserController::class, 'postNhap'])->name('nguoidung.nhap');
     Route::post('/nguoidung/xuat', [UserController::class, 'postXuat'])->name('nguoidung.xuat');
     Route::get('/nguoidung/info/{name}', [UserController::class, 'getInfo'])->name('nguoidung.info');
     Route::post('/nguoidung/sua/info/{id}', [UserController::class, 'postSuaInfo'])->name('nguoidung.sua.info');
+    Route::get('/nguoidung/khoa/{id}', [UserController::class, 'getKhoa'])->name('nguoidung.khoa');
 
 
 });

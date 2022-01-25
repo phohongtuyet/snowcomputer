@@ -25,7 +25,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="role">Quyền hạn</label>
-                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" >
+                    <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" >
                         <option value="">-- Chọn --</option>
                         <option value="admin">Quản trị viên</option>
                         <option value="staff">Nhân viên</option>

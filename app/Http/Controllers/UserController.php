@@ -36,7 +36,15 @@ class UserController extends Controller
         $nguoidung = User::all();
         return view('admin.nguoidung.danhsach', compact('nguoidung'));
     }
-    
+
+    public function getKhoa($id)
+    {
+        $orm = User::find($id);
+        $orm->khoa = 1 - $orm->khoa;
+        $orm->save();
+        return redirect()->route('admin.nguoidung');
+    }
+
     public function getThem()
     {
         return view('admin.nguoidung.them');
