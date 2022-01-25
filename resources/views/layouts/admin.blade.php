@@ -180,7 +180,7 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="index.html"> <img alt="image" src="{{ asset('public/admin/img/SnowComputer.png')}}" class="header-logo" /> <span
+            <a href="{{route('admin.home')}}"> <img alt="image" src="{{ asset('public/admin/img/SnowComputer.png')}}" class="header-logo" /> <span
                 class="logo-name">SnowComputer</span>
             </a>
           </div>
@@ -231,7 +231,7 @@
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('admin.sanpham') }}">Sản phẩm</a></li>
                 <li><a class="nav-link" href="">Đánh giá </a></li>
-                <li><a class="nav-link" href="">Khuyễn mãi</a></li>
+                <li><a class="nav-link" href="{{ route('admin.khuyenmai') }}">Khuyễn mãi</a></li>
               </ul>
             </li>
             

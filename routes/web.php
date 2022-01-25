@@ -19,6 +19,7 @@ use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\NhomSanPhamController;
 use App\Http\Controllers\LienHeController;
+use App\Http\Controllers\KhuyenMaiController;
 
 
 Auth::routes();
@@ -85,7 +86,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/slides/ajax', [SlidesController::class, 'postHinhAnhAjax'])->name('slides.ajax');
     Route::get('/slides/OnOffHienThi/{id}', [SlidesController::class, 'getOnOffHienThi'])->name('slides.OnOffHienThi');
 
-     // Quản lý danh mục
+    // Quản lý danh mục
     Route::get('/danhmuc', [DanhMucController::class, 'getDanhSach'])->name('danhmuc');
     Route::get('/danhmuc/them', [DanhMucController::class, 'getThem'])->name('danhmuc.them');
     Route::post('/danhmuc/them', [DanhMucController::class, 'postThem'])->name('danhmuc.them');
@@ -142,6 +143,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/lienhe/phanhoi/{id}', [LienHeController::class, 'getPhanHoi'])->name('lienhe.phanhoi');
     Route::post('/lienhe/phanhoi/{id}', [LienHeController::class, 'postPhanHoi'])->name('lienhe.phanhoi');
     Route::post('/lienhe/xoa', [LienHeController::class, 'postXoa'])->name('lienhe.xoa');
+
+
+    // Quản lý khuyến mãi
+    Route::get('/khuyenmai', [KhuyenMaiController::class, 'getDanhSach'])->name('khuyenmai');
+    Route::get('/khuyenmai/them', [KhuyenMaiController::class, 'getThem'])->name('khuyenmai.them');
+    Route::post('/khuyenmai/them', [KhuyenMaiController::class, 'postThem'])->name('khuyenmai.them');
+    Route::get('/khuyenmai/sua/{id}', [KhuyenMaiController::class, 'getSua'])->name('khuyenmai.sua');
+    Route::post('/khuyenmai/sua/{id}', [KhuyenMaiController::class, 'postSua'])->name('khuyenmai.sua');
+    Route::post('/khuyenmai/xoa', [KhuyenMaiController::class, 'postXoa'])->name('khuyenmai.xoa');
 
     // Quản lý Sản phẩm
     Route::get('/sanpham', [SanPhamController::class, 'getDanhSach'])->name('sanpham');
