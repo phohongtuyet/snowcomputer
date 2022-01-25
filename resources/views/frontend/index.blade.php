@@ -890,7 +890,15 @@
                         </div>
                             <!-- /.image -->
                             
-                            <div class="tag new"><span>new</span></div>
+                            <div class="tag new">
+                                @if($value->trangthaisanpham == 1)
+                                  <span>New</span>
+                                @elseif($value->trangthaisanpham == 2)
+                                  <span>Sale</span>
+                                @else
+                                  <span>hot</span>
+                                @endif
+                            </div>
                           </div>
                           <!-- /.product-image -->
                           

@@ -7,83 +7,109 @@
 
             <form action="{{ route('admin.sanpham.them') }}" method="post">
                 @csrf          
-                <div class="mb-3">
-                    <label class="form-label" for="hangsanxuat_id">Hãng sản xuất </label>
-                    <select class="form-control @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
-                        <option value="">-- Chọn hãng sản xuất --</option>
-                        @foreach($hangsanxuat as $value)
-                            <option value="{{ $value->id }}">{{ $value->tenhangsanxuat }}</option>
-                        @endforeach
-                    </select>
-                    @error('hangsanxuat_id')
-                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror
-                </div>  
-                <div class="mb-3">
-                    <label class="form-label" for="noisanxuat_id">Nơi sản xuất </label>
-                    <select class="form-control @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
-                        <option value="">-- Chọn nơi sản xuất--</option>
-                        @foreach($noisanxuat as $value)
-                            <option value="{{ $value -> id}}">{{ $value -> tenquocgia}}</option>
-                        @endforeach
-                    </select>
-                    @error('noisanxuat_id')
-                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror
-                </div>  
-                <div class="mb-3">
-                    <label class="form-label" for="danhmuc_id">Danh mục sản phẩm:</label>
-                    <select class="form-control @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
-                            <option value="" selected disabled>-- Chọn danh mục --</option>
-                            @foreach ($danhmuc as $value)
-                            <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
-                        @endforeach
-                    </select>
-                    @error('danhmuc_id')
-                    <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="form-label" for="hangsanxuat_id">Hãng sản xuất <span class="text-danger font-weight-bold">*</span></label>
+                        <select class="form-control @error('hangsanxuat_id') is-invalid @enderror" name="hangsanxuat_id" id="hangsanxuat_id" value="{{ old('hangsanxuat_id') }}" > 
+                            <option value="">-- Chọn hãng sản xuất --</option>
+                            @foreach($hangsanxuat as $value)
+                                <option value="{{ $value->id }}">{{ $value->tenhangsanxuat }}</option>
+                            @endforeach
+                        </select>
+                        @error('hangsanxuat_id')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-label" for="noisanxuat_id">Nơi sản xuất <span class="text-danger font-weight-bold">*</span></label>
+                        <select class="form-control @error('noisanxuat_id') is-invalid @enderror" name="noisanxuat_id" id="noisanxuat_id" value="{{ old('noisanxuat_id') }}"> 
+                            <option value="">-- Chọn nơi sản xuất--</option>
+                            @foreach($noisanxuat as $value)
+                                <option value="{{ $value -> id}}">{{ $value -> tenquocgia}}</option>
+                            @endforeach
+                        </select>
+                        @error('noisanxuat_id')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="nhomsanpham_id">Nhóm sản phẩm</label>
-                    <select class="form-control @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required></select>
-                    @error('nhomsanpham_id')
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="danhmuc_id">Danh mục sản phẩm<span class="text-danger font-weight-bold">*</span></label>
+                        <select class="form-control @error('danhmuc_id') is-invalid @enderror" id="danhmuc_id" name="danhmuc_id" required>
+                                <option value="" selected disabled>-- Chọn danh mục --</option>
+                                @foreach ($danhmuc as $value)
+                                <option value="{{ $value->id }}">{{ $value->tendanhmuc }}</option>
+                            @endforeach
+                        </select>
+                        @error('danhmuc_id')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="loaisanpham_id">Loại sản phẩm</label>
-                    <select class="form-control @error('loaisanpham_id') is-invalid @enderror" id="loaisanpham_id" name="loaisanpham_id" required></select>
-                    @error('loaisanpham_id')
-                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror
+                        @enderror 
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="nhomsanpham_id">Nhóm sản phẩm<span class="text-danger font-weight-bold">*</span></label>
+                        <select class="form-control @error('nhomsanpham_id') is-invalid @enderror" id="nhomsanpham_id" name="nhomsanpham_id" required></select>
+                        @error('nhomsanpham_id')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="loaisanpham_id">Loại sản phẩm<span class="text-danger font-weight-bold">*</span></label>
+                        <select class="form-control @error('loaisanpham_id') is-invalid @enderror" id="loaisanpham_id" name="loaisanpham_id" required></select>
+                        @error('loaisanpham_id')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="tensanpham">Tên sản phẩm  </label>
+                    <label class="form-label" for="tensanpham">Tên sản phẩm  <span class="text-danger font-weight-bold">*</span></label>
                     <input type="text" class="form-control @error('tensanpham') is-invalid @enderror" id="tensanpham" name="tensanpham"  value="{{ old('tensanpham') }}" />
                     @error('tensanpham')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
                 </div>  
-                
-                <div class="mb-3">
-                    <label class="form-label" for="soluong">Số lượng</label>
-                    <input type="number" class="form-control @error('soluong') is-invalid @enderror" id="soluong" name="soluong"  value="{{ old('soluong') }}"  />
-                    @error('soluong')
-                        <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
-                    @enderror
-                </div> 
 
                 <div class="mb-3">
-                    <label class="form-label" for="dongia">Đơn giá</label>
-                    <input type="number" class="form-control @error('dongia') is-invalid @enderror" id="dongia" name="dongia" value="{{ old('dongia') }}"  />
-                    @error('dongia')
+                    <label class="form-label" for="trangthaisanpham">Trạng thái sản phẩm<span class="text-danger font-weight-bold">*</span></label>
+                    <select class="form-control @error('trangthaisanpham') is-invalid @enderror" name="trangthaisanpham" id="trangthaisanpham" value="{{ old('soluong') }}"> 
+                        <option value="">-- Chọn --</option>
+                        <option value="1" >New</option>
+                        <option value="2" >Sale</option>
+                        <option value="3" >Hot</option>
+                    </select>
+                    @error('trangthaisanpham')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
-                </div> 
+                </div>  
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="soluong">Số lượng<span class="text-danger font-weight-bold">*</span></label>
+                        <input type="number" class="form-control @error('soluong') is-invalid @enderror" id="soluong" name="soluong"  value="{{ old('soluong') }}"  />
+                        @error('soluong')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                       
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="dongia">Đơn giá<span class="text-danger font-weight-bold">*</span></label>
+                            <input type="number" class="form-control @error('dongia') is-invalid @enderror" id="dongia" name="dongia" value="{{ old('dongia') }}"  />
+                            @error('dongia')
+                                <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                            @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-label" for="dongia">Phần trăm giảm giá (nếu có)</label>
+                        <input type="number" class="form-control @error('phantramgia') is-invalid @enderror" id="phantramgia" name="phantramgia" value="{{ old('phantramgia') }}"  />
+                        @error('phantramgia')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                        @enderror
+                    </div>
+                </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="dongia">Bảo hành </label>
+                    <label class="form-label" for="dongia">Bảo hành(tháng) <span class="text-danger font-weight-bold">*</span></label>
                     <input type="number" class="form-control @error('dongia') is-invalid @enderror" id="baohanh" name="baohanh" value="{{ old('baohanh') }}"  />
                     @error('baohanh')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

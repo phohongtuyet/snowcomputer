@@ -280,15 +280,7 @@
       </div>
       <!-- Main Content -->
       <div class="main-content">
-        <section class="section">
-          <div class="section-body">
-            <div class="row">
-              <div class="col-12">
-                @yield('content')  
-              </div>            
-            </div>
-          </div>    
-        </section>
+        @yield('content')       
       </div>
       <footer class="main-footer">
         <div class="footer-left">

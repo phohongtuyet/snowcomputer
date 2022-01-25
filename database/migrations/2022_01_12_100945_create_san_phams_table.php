@@ -23,6 +23,8 @@ class CreateSanPhamsTable extends Migration
             $table->integer('baohanh');
             $table->integer('soluong');
             $table->double('dongia');
+            $table->integer('phantramgia')->nullable();
+            $table->integer('trangthaisanpham')->nullable();
             $table->text('motasanpham')->nullable();
             $table->text('thumuc')->nullable();
             $table->unsignedTinyInteger('hienthi')->default(1);

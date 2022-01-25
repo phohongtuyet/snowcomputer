@@ -138,6 +138,8 @@ class SanPhamController extends Controller
         $orm->dongia = $request->dongia;
         $orm->baohanh = $request->baohanh;
         $orm->thumuc = $request->ThuMuc;
+        $orm->trangthaisanpham = $request->trangthaisanpham;
+        $orm->phantramgia = $request->phantramgia;
         $orm->motasanpham = $request->motasanpham;
         $orm->save();
 
@@ -205,6 +207,8 @@ class SanPhamController extends Controller
         $orm->soluong = $request->soluong;
         $orm->dongia = $request->dongia;
         $orm->baohanh = $request->baohanh;
+        $orm->trangthaisanpham = $request->trangthaisanpham;
+        $orm->phantramgia = $request->phantramgia;
         $orm->thumuc = $request->ThuMuc;
         $orm->motasanpham = $request->motasanpham;
         $orm->save();

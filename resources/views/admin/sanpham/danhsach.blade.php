@@ -1,72 +1,80 @@
 @extends('layouts.admin')
 @section('title', 'Sản phẩm')
 @section('content')
-<div class="card">
-    <div class="card-body table-responsive">
-        <h4 class="card-title">Danh sách sản phẩm </h4>
-        @if (session('status'))
-            <div id="AlertBox" class="alert alert-success hide" role="alert">
-                {!! session('status') !!}
+<section class="section">
+	<div class="section-body">
+		<div class="row">
+			<div class="col-12">
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <h4 class="card-title">Danh sách sản phẩm </h4>
+                        @if (session('status'))
+                            <div id="AlertBox" class="alert alert-success hide" role="alert">
+                                {!! session('status') !!}
+                            </div>
+                        @endif
+                        <p>
+                            <a href="{{ route('admin.sanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
+                            <a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
+                            <a href="{{ route('admin.sanpham.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
+                        </p>
+                        <table id="table_id" class="table table-bordered table-hover table-sm ">
+                            <thead>
+                                <tr>
+                                    <th width="5%">#</th>
+                                    <th width="20%">Tên sản phẩm</th>
+                                    <th width="20%">Tên sản phẩm không dấu</th>
+                                    <th width="20%">Thông tin sản phẩm</th>
+                                    <th width="7%">Số lượng</th>
+                                    <th width="10%">Đơn giá</th>
+                                    <th width="5%">O/F</th>
+                                    <th width="5%">Sửa</th>
+                                    <th width="5%">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($sanpham as $value)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $value->tensanpham }}</td>
+                                    <td>{{ $value->tensanpham_slug }}</td>
+                                    <td class="text-justify">
+                                        <span class="small">
+                                            @if(!empty($value->HangSanXuat->tenhangsanxuat))
+                                                <br />Hãng sản xuất: {{ $value->HangSanXuat->tenhangsanxuat }} 
+                                            @endif
+                                            @if(!empty($value->NoiSanXuat->tenquocgia))
+                                                <br />Nơi sản xuất: {{ $value->NoiSanXuat->tenquocgia }} 
+                                            @endif
+                                            @if(!empty($value->LoaiSanPham->tenloai))
+                                                <br />Loại sản pham: {{ $value->LoaiSanPham->tenloai }} 
+                                            @endif
+                                            @if(!empty($value->thumuc))
+                                                <br />Hình ảnh: <a href="#hinhanh" onclick="getXemHinh({{ $value->id }})">{{ $value->thumuc }}</a>
+                                            @endif
+                                        </span>
+                                    </td>                    
+                                    <td class="text-end">{{ $value->soluong }}</td>
+                                    <td class="text-end">{{ number_format($value->dongia) }}</td>
+                                    <td class="text-center">
+                                            @if($value->hienthi == 1)
+                                                <a href="{{ route('admin.sanpham.OnOffHienThi', ['id' => $value->id]) }}"><i class="fas fa-check-circle"></i></a>
+                                            @else
+                                                <a href="{{ route('admin.sanpham.OnOffHienThi', ['id' => $value->id]) }}"><i class="fas fa-ban text-danger"></i></a>           
+                                            @endif
+                                        </td>
+                                    <td class="text-center"><a href="{{ route('admin.sanpham.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
+                                    <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        @endif
-        <p>
-            <a href="{{ route('admin.sanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
-            <a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
-            <a href="{{ route('admin.sanpham.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
-        </p>
-        <table id="table_id" class="table table-bordered table-hover table-sm ">
-            <thead>
-                <tr>
-                    <th width="5%">#</th>
-                    <th width="20%">Tên sản phẩm</th>
-                    <th width="20%">Tên sản phẩm không dấu</th>
-                    <th width="20%">Thông tin sản phẩm</th>
-                    <th width="7%">Số lượng</th>
-                    <th width="10%">Đơn giá</th>
-                    <th width="5%">O/F</th>
-                    <th width="5%">Sửa</th>
-                    <th width="5%">Xóa</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($sanpham as $value)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $value->tensanpham }}</td>
-                    <td>{{ $value->tensanpham_slug }}</td>
-                    <td class="text-justify">
-                        <span class="small">
-                            @if(!empty($value->HangSanXuat->tenhangsanxuat))
-                                <br />Hãng sản xuất: {{ $value->HangSanXuat->tenhangsanxuat }} 
-                            @endif
-                            @if(!empty($value->NoiSanXuat->tenquocgia))
-                                <br />Nơi sản xuất: {{ $value->NoiSanXuat->tenquocgia }} 
-                            @endif
-                            @if(!empty($value->LoaiSanPham->tenloai))
-                                <br />Loại sản pham: {{ $value->LoaiSanPham->tenloai }} 
-                            @endif
-                            @if(!empty($value->thumuc))
-                                <br />Hình ảnh: <a href="#hinhanh" onclick="getXemHinh({{ $value->id }})">{{ $value->thumuc }}</a>
-                            @endif
-                        </span>
-                    </td>                    
-                    <td class="text-end">{{ $value->soluong }}</td>
-                    <td class="text-end">{{ number_format($value->dongia) }}</td>
-                    <td class="text-center">
-                            @if($value->hienthi == 1)
-                                <a href="{{ route('admin.sanpham.OnOffHienThi', ['id' => $value->id]) }}"><i class="fas fa-check-circle"></i></a>
-                            @else
-                                <a href="{{ route('admin.sanpham.OnOffHienThi', ['id' => $value->id]) }}"><i class="fas fa-ban text-danger"></i></a>           
-                            @endif
-                        </td>
-                    <td class="text-center"><a href="{{ route('admin.sanpham.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
-                    <td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+		</div>
+	</div>
+</section>
 <form action="{{ route('admin.sanpham.nhap') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -74,7 +82,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>	                
                 </div>
                 <div class="modal-body">
                     <div class="mb-0">
@@ -99,8 +109,10 @@
 				<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm </h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button>					
+                </div>
 				<div class="modal-body">
 					<p class="font-weight-bold text-danger"><i class="fas fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
 				</div>

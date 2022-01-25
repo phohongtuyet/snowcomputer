@@ -1,50 +1,57 @@
 @extends('layouts.admin')
 @section('title', 'Hãng sản xuất')
 @section('content')
-	<div class="card">
-		<div class="card-body">
-		<h4>Hãng sản xuất</h4>
-		@if (session('status'))
-            <div id="AlertBox" class="alert alert-success hide" role="alert">
-                {!! session('status') !!}
-            </div>
-        @endif
-			<p>
-				<a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a>
-				<a href="#nhap" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
-				<a href="{{ route('admin.hangsanxuat.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
-			</p>
-			<table id="table_id" class="table table-bordered table-hover table-sm">
-				<thead>
-					<tr>
-						<th width="5%">#</th>
-						<th width="35%">Tên hãng sản xuất</th>
-						<th width="25%">Tên hãng sản xuất không dấu </th>
-						<th width="25%">Hình ảnh</th>
-						<th width="5%">Sửa</th>
-						<th width="5%">Xóa</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($hangsanxuat as $value)
+<section class="section">
+	<div class="section-body">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+					<h4>Hãng sản xuất</h4>
+					@if (session('status'))
+						<div id="AlertBox" class="alert alert-success hide" role="alert">
+							{!! session('status') !!}
+						</div>
+					@endif
+						<p>
+							<a href="{{ route('admin.hangsanxuat.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm</a>
+							<a href="#nhap" class="btn btn-danger" data-toggle="modal" data-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
+							<a href="{{ route('admin.hangsanxuat.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
+						</p>
+						<table id="table_id" class="table table-bordered table-hover table-sm">
+							<thead>
+								<tr>
+									<th width="5%">#</th>
+									<th width="35%">Tên hãng sản xuất</th>
+									<th width="25%">Tên hãng sản xuất không dấu </th>
+									<th width="25%">Hình ảnh</th>
+									<th width="5%">Sửa</th>
+									<th width="5%">Xóa</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach($hangsanxuat as $value)
 
-						<tr>
-							<td>{{ $loop->iteration }}</td>
-							<td>{{ $value['tenhangsanxuat'] }}</td>
-                            <td>{{ $value['tenhangsanxuat_slug'] }}</td>
-							<td>
-								<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;">
-										
-							</td>
-							<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>
-							<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value['id'] }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
-						</tr>
-						@endforeach
-				</tbody>
-			</table>
+									<tr>
+										<td>{{ $loop->iteration }}</td>
+										<td>{{ $value['tenhangsanxuat'] }}</td>
+										<td>{{ $value['tenhangsanxuat_slug'] }}</td>
+										<td>
+											<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;">
+													
+										</td>
+										<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>
+										<td class="text-center"><a href="#xoa" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="getXoa({{ $value['id'] }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
+									</tr>
+									@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	
+</section>
 	<form action="{{ route('admin.hangsanxuat.xoa') }}" method="post">
 		@csrf
 		<input type="hidden" id="ID_delete" name="ID_delete" value="" />
@@ -75,7 +82,9 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="importModalLabel">Nhập từ Excel</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>					
 					</div>
 					<div class="modal-body">
 						<div class="mb-0">
