@@ -28,16 +28,14 @@ class HomeController extends Controller
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
         
-
-
-        $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
 
 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanphamdanhmuc'));
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham'));
     }
 
 
@@ -214,15 +212,23 @@ class HomeController extends Controller
         $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
         $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
         $danhgia = DanhGiaSanPham::where('sanpham_id',$sanpham->id)->get();
+		$hangsanxuat = HangSanXuat::all();
 
+        //san pham cung danh muc
+        $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                            ->select('sanpham.*','tendanhmuc')
+                            ->distinct()->get();
+
+        //anh san pham
         $all_files = array();
-
         $dir = '/storage/app/' . $sanpham->thumuc . '/images/';
         $files = Storage::files($sanpham->thumuc . '/images/');
         foreach($files as $file)
             $all_files[] = pathinfo($file);
 		
 
-        return view('frontend.sanpham_chitiet',compact('sanpham','dir','all_files','danhmuc','danhgia'));
+        return view('frontend.sanpham_chitiet',compact('sanpham','dir','all_files','danhmuc','danhgia','hangsanxuat','sanphamdanhmuc'));
     }
 }

@@ -851,7 +851,7 @@
 
         <!-- ============================================== SCROLL TABS ============================================== -->
         @php 
-          $collection = collect($sanphamdanhmuc);
+          $collection = collect($sanpham);
           $items= $collection->groupBy('tendanhmuc');
           $items->toArray();
         @endphp
