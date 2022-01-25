@@ -13,9 +13,9 @@
                 <tr>
                     <th width="5%">#</th>
                     <th width="20%">Tiêu đề</th>
-                    <th width="45%">Nội dung </th>
-                    <th width="5%">Trạng thái</th>
-                    <th width="5%">Phản hồi</th>
+                    <th width="30%">Nội dung </th>
+                    <th width="10%">Trạng thái</th>
+                    <th width="10%">Phản hồi</th>
                     <th width="5%">Xóa</th>
                 </tr>
             </thead>

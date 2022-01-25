@@ -1,12 +1,9 @@
 @extends('layouts.admin')
-
-@section('pagetitle')
-	Sửa hình ảnh
-@endsection
-
+@section('title', 'Hãng sản xuất')
 @section('content')
 	<div class="card">
-		<div class="card-header">Trang chủ quản trị</div>
+	<div class="card-header"><h4>Thêm hảng sản xuất </h4></div>
+
 		<div class="card-body">
 			<form role="form" method="post" action="{{ route('admin.hangsanxuat.sua', ['id' => $hangsanxuat->id]) }}">
 				@csrf
@@ -20,7 +17,7 @@
                 </div>
 				
 				<div class="form-group">
-					<label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+					<label for="ThuMuc">Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
 					@if(!empty($hangsanxuat->hinhanh))
 						<img class="d-block rounded" src="{{ $path.'images/'. $hangsanxuat->hinhanh }}" width="100" />
 						<span class="d-block small text-danger">Bỏ trống nếu muốn giữ nguyên ảnh cũ.</span>
@@ -36,7 +33,7 @@
 					</div>
 				</div>
 
-        <button type="submit" class="btn btn-primary mt-3">Thêm vào CSDL</button>
+        <button type="submit" class="btn btn-primary mt-3">Cập nhật	</button>
     </form>
     </div>
  </div>

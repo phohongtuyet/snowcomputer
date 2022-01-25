@@ -56,7 +56,14 @@ class SlidesController extends Controller
 
     public function postThem(Request $request)
     {
+        $this->validate($request, [
+            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
+        ],
+        $messages = [
+            'HinhAnh.required' => 'Hình ảnh trình chiếu không được bỏ trống.',
+            'HinhAnh.unique' => 'Hình ảnh trình chiếu đã có trong hệ thống.',
 
+        ]);
         $orm = new Slides();
 		$orm->hinhanh = $request->HinhAnh;
         $orm->save();
@@ -68,13 +75,22 @@ class SlidesController extends Controller
 	{
 		
 		$slides = Slides::find($id);
+        $path = config('app.url') . '/storage/app/slides/';
 
-		return view('admin.slides.sua', compact('slides'));
+		return view('admin.slides.sua', compact('slides','path'));
 	}
 		
 
     public function postSua(Request $request, $id)
     {
+        $this->validate($request, [
+            'HinhAnh' => [ 'max:255', 'unique:hangsanxuat'],
+        ],
+        $messages = [
+            'HinhAnh.unique' => 'Hình ảnh trình chiếu đã có trong hệ thống.',
+
+        ]);
+
         $orm = Slides::find($id);
 		if(!empty($request->HinhAnh)) $orm->hinhanh = $request->HinhAnh;
         $orm->save();

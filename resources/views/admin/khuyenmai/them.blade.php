@@ -7,7 +7,7 @@
     <form action="{{ route('admin.khuyenmai.them') }}" method="post" class="needs-validation" novalidate>
         @csrf
         <div class="mb-3">
-            <label for="tensukien" class="form-label  @error('tensukien') is-invalid @enderror" >Tên sự kiện  </label>
+            <label for="tensukien" class="form-label  @error('tensukien') is-invalid @enderror" >Tên sự kiện<span class="text-danger font-weight-bold">*</span>  </label>
             <input type="text" class="form-control" id="tensukien" name="tensukien" value="{{ old('tensukien') }}">
             @error('tensukien')
                 <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
@@ -15,7 +15,7 @@
         </div>
        
         <div class="mb-3">
-            <label for="phantram" class="form-label  @error('phantram') is-invalid @enderror" >Phần trâm giảm</label>
+            <label for="phantram" class="form-label  @error('phantram') is-invalid @enderror" >Phần trâm giảm<span class="text-danger font-weight-bold">*</span></label>
             <input type="number" class="form-control" id="phantram" name="phantram" value="{{ old('phantram') }}">
             @error('phantram')
                 <div class="invalid-feedback"><strong>{{ $message }}</strong></div>

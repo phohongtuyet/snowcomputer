@@ -9,9 +9,9 @@
 			@csrf
 			<input type="hidden" id="ID" name="ID" value="{{ $slides->id }}" />
 			<div class="form-group">
-					<label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
-					@if(!empty($hangsanxuat->hinhanh))
-						<img class="d-block rounded" src="{{ $path.'images/'. $hangsanxuat->hinhanh }}" width="100" />
+					<label for="ThuMuc">Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+					@if(!empty($slides->hinhanh))
+						<img class="d-block rounded" src="{{ $path.'images/'. $slides->hinhanh }}" width="200" />
 						<span class="d-block small text-danger">Bỏ trống nếu muốn giữ nguyên ảnh cũ.</span>
 					@endif
 					<div class="input-group">
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 
-        <button type="submit" class="btn btn-primary mt-3">Thêm vào CSDL</button>
+        <button type="submit" class="btn btn-primary mt-3">Cập nhật </button>
     </form>
     </div>
  </div>

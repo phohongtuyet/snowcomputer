@@ -12,7 +12,7 @@
             <p>
                 <a href="{{ route('admin.chude.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
             </p>
-            <table id="table_id" class="table table-hover">
+            <table id="table_id" class="table table-bordered table-hover table-sm ">
                 <thead>
                     <tr>
                         <th width="5%">#</th>

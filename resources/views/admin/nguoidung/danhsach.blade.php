@@ -9,8 +9,10 @@
         </div>
     @endif
     <div class="card-body table-responsive">
+    <h4 class="card-title">Danh sách người dùng </h4>
+
         <div class="d-flex mb-2 ">
-            <a href="{{ route('admin.nguoidung.them') }}" class="btn btn-info mr-1"><i class="fas fa-plus"></i> Thêm mới</a>
+            <a href="{{ route('admin.nguoidung.them') }}" class="btn btn-primary mr-1"><i class="fas fa-plus"></i> Thêm mới</a>
                 
             <form action="{{ route('admin.nguoidung.xuat') }}" method="post">
             @csrf

@@ -66,8 +66,11 @@ class HangSanXuatController extends Controller
             'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
         ],
         $messages = [
-            'required' => 'Tên thương hiệu không được bỏ trống.',
-            'unique' => 'Tên thương hiệu đã có trong hệ thống.',
+            'tenhangsanxuat.required' => 'Tên hãng sản xuất không được bỏ trống.',
+            'tenhangsanxuat.unique' => 'Tên hãng sản xuất đã có trong hệ thống.',
+            'HinhAnh.required' => 'Hình ảnh hãng sản xuất không được bỏ trống.',
+            'HinhAnh.unique' => 'Hình ảnh hãng sản xuất đã có trong hệ thống.',
+
         ]);
 
        

@@ -2,8 +2,10 @@
 @section('title', 'Nhóm sản phẩm')
 @section('content')
  <div class="card">
+    <div class="card-header"><h4>Sửa nhóm sản phẩm</h4></div>
+
     <div class="card-body table-responsive">
-    <h3 class="card-title">Sửa nhóm sản phẩm</h3>
+    
 
     <form action="{{ route('admin.nhomsanpham.sua',['id' => $nhomsanpham -> id]) }}" method="post">
         @csrf

@@ -30,8 +30,8 @@ class NoiSanXuatController extends Controller
             'tenquocgia' => ['required', 'max:255', 'unique:noisanxuat'],
         ],
         $messages = [
-            'required' => 'Tên quooc không được bỏ trống.',
-            'unique' => 'Tên loại đã có trong hệ thống.',
+            'required' => 'Tên quốc gia không được bỏ trống.',
+            'unique' => 'Tên quốc gia đã có trong hệ thống.',
         ]);
            
         $orm = new NoiSanXuat();

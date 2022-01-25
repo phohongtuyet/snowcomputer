@@ -2,8 +2,9 @@
 @section('title', 'Nhóm sản phẩm')
 @section('content')
  <div class="card">
+    <div class="card-header"><h4>Thêm nhóm sản phẩm </h4> </div>
+
     <div class="card-body table-responsive">
-        <h3 class="card-title">Thêm nhóm sản phẩm </h3>
 
         <form action="{{ route('admin.nhomsanpham.them') }}" method="post">
             @csrf
@@ -20,8 +21,8 @@
                 @enderror
             </div> 
             <div class="mb-3">
-                <label for="tennhomsanpham" class="form-label  @error('tennhomsanpham') is-invalid @enderror" value="{{ old('tennhomsanpham') }}">Tên nhóm sản phẩm </label>
-                <input type="text" class="form-control" id="tennhomsanpham" name="tennhomsanpham">
+                <label for="tennhomsanpham" class="form-label " value="{{ old('tennhomsanpham') }}">Tên nhóm sản phẩm </label>
+                <input type="text" class="form-control  @error('tennhomsanpham') is-invalid @enderror" id="tennhomsanpham" name="tennhomsanpham">
                 @error('tennhomsanpham')
                     <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                 @enderror

@@ -3,12 +3,15 @@
 @section('content')
  <div class="card">
     <div class="card-body table-responsive">
-        @if (session('status'))
+    @if (session('status'))
             <div id="AlertBox" class="alert alert-success hide" role="alert">
                 {!! session('status') !!}
             </div>
         @endif
-        <p><a href="{{ route('admin.tinhtrang.them') }}" class="btn btn-info"><i class="fas fa-plus"></i> Thêm mới</a></p>
+    <h4 class="card-title">Danh sách chủ đề</h4>
+
+        
+        <p><a href="{{ route('admin.tinhtrang.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>
                 <tr>

@@ -240,11 +240,20 @@
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="image"></i><span>Quản lý đặt hàng</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ route('admin.sanpham') }}">Tình trạng đơn hàng</a></li>
+                <li><a class="nav-link" href="{{ route('admin.tinhtrang') }}">Tình trạng đơn hàng</a></li>
                 <li><a class="nav-link" href="{{ route('admin.donhang') }}">Đơn hàng </a></li>
               </ul>
             </li>
-            
+
+            <li class="menu-header">Gmail</li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="image"></i><span>Quản lý Gmail</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('admin.lienhe') }}">Hỗ trợ</a></li>
+                <li><a class="nav-link" href="{{ route('admin.donhang') }}">Khuyễn mãi  </a></li>
+              </ul>
+            </li>
+
             <li class="menu-header">Thống kê báo cáo</li>
             <li class="dropdown">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="bar-chart"></i><span>

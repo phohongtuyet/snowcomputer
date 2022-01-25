@@ -7,15 +7,15 @@
     <form action="{{ route('admin.hangsanxuat.them') }}" method="post">
         @csrf
         <div class="mb-3">
-            <label for="tenhangsanxuat" class="form-label  @error('tenhangsanxuat') is-invalid @enderror" value="{{ old('tenhangsanxuat') }}">Tên hãng sản xuất  </label>
-            <input type="text" class="form-control" id="tenhangsanxuat" name="tenhangsanxuat">
+            <label for="tenhangsanxuat" class="form-label" value="{{ old('tenhangsanxuat') }}">Tên hãng sản xuất  </label>
+            <input type="text" class="form-control @error('tenhangsanxuat') is-invalid @enderror" id="tenhangsanxuat" name="tenhangsanxuat">
             @error('tenhangsanxuat')
                 <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
             @enderror
         </div>
 
         <div class="form-group">
-            <label for="ThuMuc"><span class="badge badge-info">3</span> Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
+            <label for="ThuMuc">Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text" id="ChonHinh"><a href="#hinhanh">Tải ảnh lên</a></div>
