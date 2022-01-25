@@ -42,6 +42,7 @@ Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->
 // Liên hệ
 Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('frontend.lienhe');
 Route::post('/lien-he/ho-tro', [HomeController::class, 'postHoTro'])->name('frontend.hotro');
+Route::post('/khuyen-mai', [HomeController::class, 'postKhuyenMai'])->name('frontend.khuyenmai');
 
 
 // Trang khách hàng
@@ -143,7 +144,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/lienhe/phanhoi/{id}', [LienHeController::class, 'getPhanHoi'])->name('lienhe.phanhoi');
     Route::post('/lienhe/phanhoi/{id}', [LienHeController::class, 'postPhanHoi'])->name('lienhe.phanhoi');
     Route::post('/lienhe/xoa', [LienHeController::class, 'postXoa'])->name('lienhe.xoa');
-
+    Route::get('/lienhe/khuyenmai', [LienHeController::class, 'getDanhSachLienHeKhuyenMai'])->name('lienhe.khuyenmai');
+    Route::get('/lienhe/khuyenmai/{id}', [LienHeController::class, 'getKhuyenMai'])->name('lienhe.repkhuyenmai');
+    Route::post('/lienhe/khuyenmai/{id}', [LienHeController::class, 'postKhuyenMai'])->name('lienhe.repkhuyenmai');
 
     // Quản lý khuyến mãi
     Route::get('/khuyenmai', [KhuyenMaiController::class, 'getDanhSach'])->name('khuyenmai');

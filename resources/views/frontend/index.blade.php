@@ -767,13 +767,17 @@
         <!-- ============================================== SPECIAL DEALS : END ============================================== --> 
         <!-- ============================================== NEWSLETTER ============================================== -->
         <div class="sidebar-widget newsletter outer-bottom-small">
-          <h3 class="section-title">Newsletters</h3>
+          <h3 class="section-title">Nhận khuyễn mãi</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <p>Đăng ký nhận thông tin của chúng tôi!</p>
-            <form>
+            <form action="{{ route('frontend.khuyenmai') }}" method="post">
+            @csrf
               <div class="form-group">
                 <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Nhập Email của bạn">
+                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"id="exampleInputEmail1" placeholder="Nhập Email của bạn">
+                @error('email')
+                  <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
+                @enderror
               </div>
               <button class="btn btn-primary">Đăng ký</button>
             </form>

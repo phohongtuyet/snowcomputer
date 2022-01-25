@@ -27,19 +27,10 @@
                     <div class="col-md-12">
                         <form class="register-form" role="form" action="{{ route('frontend.hotro') }}" method="post">
                         @csrf
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="info-title" for="exampleInputTitle">Tiêu đề<span>*</span></label>
-                                    <input type="text" class="form-control unicase-form-control text-input @error('tieude') is-invalid @enderror" name="tieude"id="exampleInputTitle" placeholder="Tiêu đề">
-                                    @error('tieude')
-                                        <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="info-title" for="exampleInputTitle">Địa chỉ Email<span>*</span></label>
-                                    <input type="text" class="form-control unicase-form-control text-input @error('email') is-invalid @enderror" name="email"id="exampleInputTitle" placeholder="Email">
+                                    <input type="text" class="form-control unicase-form-control text-input" name="email"id="exampleInputTitle" placeholder="Email">
                                     @error('email')
                                         <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
                                     @enderror
@@ -47,7 +38,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="info-title" for="exampleInputComments">Nội dung <span>*</span></label>
-                                <textarea class="form-control unicase-form-control @error('noidung') is-invalid @enderror" name="noidung" id="exampleInputComments"></textarea>
+                                <textarea class="form-control unicase-form-control @error('noidung') is-invalid @enderror" name="noidung" id="exampleInputComments" placeholder="Nội dung cần hỗ trợ"></textarea>
                                 @error('noidung')
                                     <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
                                 @enderror

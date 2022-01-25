@@ -247,10 +247,10 @@
 
             <li class="menu-header">Gmail</li>
             <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="image"></i><span>Quản lý Gmail</span></a>
+              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Quản lý Gmail</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('admin.lienhe') }}">Hỗ trợ</a></li>
-                <li><a class="nav-link" href="{{ route('admin.donhang') }}">Khuyễn mãi  </a></li>
+                <li><a class="nav-link" href="{{ route('admin.lienhe.khuyenmai') }}">Khuyễn mãi  </a></li>
               </ul>
             </li>
 

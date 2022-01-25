@@ -182,13 +182,11 @@ class HomeController extends Controller
     public function postHoTro(Request $request)
     {
         $this->validate($request, [
-            'tieude' => ['required','string'],
             'email' => ['required','email'],
             'noidung' => ['required','string'],
 
         ],
         $messages = [
-            'tieude.required' => 'Tiêu đề không được bỏ trống.',
             'email.required' => 'Địa chỉ Email không được bỏ trống.',
             'noidung.required' => 'Nội dung hỗ trợ không được bỏ trống.',
             'email.email' => 'Địa chỉ Email không đúng.',
@@ -198,13 +196,42 @@ class HomeController extends Controller
 
         $orm = new LienHe();
         $orm->email = $request->email;
-        $orm->tieude = $request->tieude;
+        $orm->tieude = 'Hỗ trợ';
         $orm->noidung = $request->noidung;
         $orm->save();
 
         return view('frontend.lienhe');
     }
+    public function postKhuyenMai(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required','email'],
 
+        ],
+        $messages = [
+            'email.required' => 'Địa chỉ Email không được bỏ trống.',
+            'email.email' => 'Địa chỉ Email không đúng.',
+        ]);
+        
+        $orm = new LienHe();
+        $orm->email = $request->email;
+        $orm->tieude = 'Khuyễn mãi';
+        $orm->noidung = '';
+        $orm->save();
+
+        $slides = Slides::where('hienthi', 1)->get();
+		$hangsanxuat = HangSanXuat::all();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->select('sanpham.*','tendanhmuc')
+                                ->distinct()->get();
+
+
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham'));
+    }
     public function getSanPham_ChiTiet($tensanpham_slug)
     {
         $sanpham = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();

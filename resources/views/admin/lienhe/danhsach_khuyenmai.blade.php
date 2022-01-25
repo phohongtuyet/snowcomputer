@@ -15,7 +15,6 @@
                 <tr>
                     <th width="5%">#</th>
                     <th width="20%">Tiêu đề</th>
-                    <th width="30%">Nội dung </th>
                     <th width="10%">Trạng thái</th>
                     <th width="10%">Phản hồi</th>
                     <th width="5%">Xóa</th>
@@ -26,7 +25,6 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $value->tieude }}</td>
-                        <td>{{ $value->noidung }}</td>
                         <td class="text-center">
                             @if($value->trangthai == 0)
                                 <span class="badge badge-danger">Chưa xử lý</span>
@@ -35,7 +33,7 @@
 
                             @endif
                         </td>                        
-                        <td class="text-center"><a href="{{ route('admin.lienhe.phanhoi', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
+                        <td class="text-center"><a href="{{ route('admin.lienhe.repkhuyenmai', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
                         <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                     </tr>
                 @endforeach
