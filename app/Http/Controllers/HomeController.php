@@ -24,6 +24,7 @@ class HomeController extends Controller
 {
     public function getHome()
     {
+
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
@@ -32,7 +33,7 @@ class HomeController extends Controller
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
                                 ->where('hienthi',1)
-                                ->select('sanpham.*','tendanhmuc')
+                                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug')
                                 ->distinct()->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
@@ -237,6 +238,27 @@ class HomeController extends Controller
 
         return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
     }
+
+    public function getSanPham($danhmuc_slug)
+    {
+		$slides = Slides::where('hienthi', 1)->get();
+		$hangsanxuat = HangSanXuat::all();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
+                                ->where('tendanhmuc_slug',$danhmuc_slug)
+                                ->select('sanpham.*','tendanhmuc')
+                                ->paginate(16);
+
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+        
+
+        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+    }
+
     public function getSanPham_ChiTiet($tensanpham_slug)
     {
         $sp = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();

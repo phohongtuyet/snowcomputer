@@ -153,12 +153,12 @@
           $items= $collection->groupBy('tendanhmuc');
           $items->toArray();
         @endphp
-        @foreach($items as $sp => $product_list)  
+        @foreach($items as $sp => $product_list) 
         <div id="product-tabs-slider" class="scroll-tabs outer-top-vs">
           <div class="more-info-tab clearfix ">
-            <h3 class="new-product-title pull-left">{{ $sp }}</h3>
+            <h3 class="new-product-title pull-left">{{ $sp }}</h3> 
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
-              <li class="active"><a href="#" >Tất cả</a></li>
+              <li class="active"><a href="{{ route('frontend.sanpham',['danhmuc_slug' =>Str::slug($sp,'-')]) }}" >Tất cả</a></li>
             </ul>
             <!-- /.nav-tabs --> 
           </div>
@@ -173,14 +173,15 @@
                         <div class="product">
                           <div class="product-image">
                             <div class="image"> 
-                            <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
-                              @php 
+                            @php 
                                 $img='';
                                 $dir = 'storage/app/' . $value->thumuc . '/images/';
                                 $files = scandir($dir); 
                                 $img = config('app.url') . '/'. $dir . $files[2];
-                                $img2 = config('app.url') . '/'. $dir . $files[2];        
+                                $img2 = config('app.url') . '/'. $dir . $files[3];        
                               @endphp
+                            <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
+                              
                                 <img src="{{ $img }}" alt=""> 
                                 <img src="{{ $img2 }}" alt="" class="hover-image">
                             </a> 

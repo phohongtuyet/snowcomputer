@@ -180,7 +180,7 @@
               <ul class="nav navbar-nav">
                 <li class="active dropdown"> <a href="{{ route('frontend')}}">Home</a> </li>
                 @foreach($danhmuc as $value)
-                  <li class="dropdown yamm mega-menu"> <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">{{$value->tendanhmuc}}</a>
+                  <li class="dropdown yamm mega-menu"> <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$value->tendanhmuc_slug]) }}" data-hover="dropdown" class="dropdown-toggle">{{$value->tendanhmuc}}</a>
                     <ul class="dropdown-menu container">
                       <li>
                         <div class="yamm-content ">
