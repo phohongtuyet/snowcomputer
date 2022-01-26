@@ -31,11 +31,14 @@ class HomeController extends Controller
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
 
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+        
 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham'));
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
     }
 
 
@@ -226,36 +229,41 @@ class HomeController extends Controller
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
 
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham'));
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
     }
     public function getSanPham_ChiTiet($tensanpham_slug)
     {
-        $sanpham = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();
-        $loaisanpham = LoaiSanPham::where('id',$sanpham->loaisanpham_id)->first();
+        $sp = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();
+        $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
         $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
         $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
-        $danhgia = DanhGiaSanPham::where('sanpham_id',$sanpham->id)->get();
+        $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
 		$hangsanxuat = HangSanXuat::all();
 
         //san pham cung danh muc
-        $sanphamdanhmuc = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                             ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                             ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                            ->where('hienthi',1)
                             ->select('sanpham.*','tendanhmuc')
                             ->distinct()->get();
 
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+
         //anh san pham
         $all_files = array();
-        $dir = '/storage/app/' . $sanpham->thumuc . '/images/';
-        $files = Storage::files($sanpham->thumuc . '/images/');
+        $dir = '/storage/app/' . $sp->thumuc . '/images/';
+        $files = Storage::files($sp->thumuc . '/images/');
         foreach($files as $file)
             $all_files[] = pathinfo($file);
 		
 
-        return view('frontend.sanpham_chitiet',compact('sanpham','dir','all_files','danhmuc','danhgia','hangsanxuat','sanphamdanhmuc'));
+        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
     }
 }
