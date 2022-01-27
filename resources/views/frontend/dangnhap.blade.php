@@ -21,7 +21,7 @@
                     <p class="">Xin chào, Chào mừng đến với tài khoản của bạn.</p>
                     <div class="social-sign-in outer-top-xs">
                         <a href="#" class="facebook-sign-in"><i class="fa fa-facebook"></i> Đăng nhập bằng Facebook</a>
-                        <a href="#" class="twitter-sign-in"><i class="fa fa-google"></i> Đăng nhập bằng Google</a>
+                        <a href="{{ route('google.login') }}" class="twitter-sign-in"><i class="fa fa-google"></i> Đăng nhập bằng Google</a>
                     </div>
                     <form class="register-form outer-top-xs" role="form" action="{{ route('login') }}" method="post">
                         @csrf

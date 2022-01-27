@@ -12,13 +12,15 @@ use App\Models\SanPham;
 use App\Models\NhomSanPham;
 use App\Models\LoaiSanPham;
 use App\Models\DanhGiaSanPham;
-
-use Illuminate\Support\Facades\DB;
-
-use Auth;
-use Storage;
+use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Auth;
+use Storage;
+use Socialite;
 
 class HomeController extends Controller
 {
@@ -51,6 +53,48 @@ class HomeController extends Controller
     public function getDangNhap()
     {
         return view('frontend.dangnhap');
+    }
+
+    public function getGoogleLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+ 
+    public function getGoogleCallback()
+    {
+        try
+        {
+            $user = Socialite::driver('google')
+            ->setHttpClient(new \GuzzleHttp\Client(['verify' => false]))
+            ->stateless()
+            ->user();
+        }
+        catch(Exception $e)
+        {
+            return redirect()->route('khachhang.dangnhap')->with('warning', 'Lỗi xác thực. Xin vui lòng thử lại!');
+        }
+    
+        $existingUser = User::where('email', $user->email)->first();
+        if($existingUser)
+        {
+            // Nếu người dùng đã tồn tại thì đăng nhập
+            Auth::login($existingUser, true);
+            return redirect()->route('khachhang');
+        }
+        else
+        {
+            // Nếu chưa tồn tại người dùng thì thêm mới
+            $newUser = User::create([
+                'name' => $user->name,
+                'username' => Str::before($user->email, '@'),
+                'email' => $user->email,
+                'password' => Hash::make('snowcomputer@2022'), // Gán mật khẩu tự do
+            ]);
+        
+            // Sau đó đăng nhập
+            Auth::login($newUser, true);
+            return redirect()->route('khachhang');
+        }
     }
 
     public function getLienHe ()

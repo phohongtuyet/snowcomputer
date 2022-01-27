@@ -49,6 +49,10 @@ Route::post('/khuyen-mai', [HomeController::class, 'postKhuyenMai'])->name('fron
 Route::get('/khach-hang/dang-ky', [HomeController::class, 'getDangKy'])->name('khachhang.dangky');
 Route::get('/khach-hang/dang-nhap', [HomeController::class, 'getDangNhap'])->name('khachhang.dangnhap');
 
+// Google OAuth
+Route::get('/login/google', [HomeController::class, 'getGoogleLogin'])->name('google.login');
+Route::get('/login/google/callback', [HomeController::class, 'getGoogleCallback'])->name('google.callback');
+
 // Trang tài khoản khách hàng
 Route::prefix('khach-hang')->group(function() {
     // Trang chủ tài khoản khách hàng
