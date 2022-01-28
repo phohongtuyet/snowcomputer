@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use Auth;
 use Storage;
 use Socialite;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class HomeController extends Controller
 {
@@ -331,5 +332,70 @@ class HomeController extends Controller
 		
 
         return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+    }
+
+    public function getGioHang()
+    {
+        $hangsanxuat = HangSanXuat::all();
+
+        if(Cart::count() <= 0)
+            return view('frontend.giohang_rong');
+        else
+            return view('frontend.giohang',compact('hangsanxuat'));
+    }
+    
+    public function getGioHang_Them($tensanpham_slug)
+    {
+        $sanpham = SanPham::where('tensanpham_slug', $tensanpham_slug)->first();
+       
+        $img='';
+        $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
+        $files = scandir($dir); 
+        $img = config('app.url') . '/'. $dir . $files[2];
+        Cart::add([
+            'id' => $sanpham->id,
+            'name' => $sanpham->tensanpham,
+            'price' => $sanpham->dongia,
+            'qty' => 1,
+            'weight' => 0,
+            'options' => [
+                'image' => $img,
+                'name_slug'=>$sanpham->tensanpham_slug
+                ]
+        ]);
+        
+        return redirect()->route('frontend');
+    }
+    
+    public function getGioHang_Xoa($row_id)
+    {
+        Cart::remove($row_id);
+        return redirect()->route('frontend.giohang');
+    }
+    
+    public function getGioHang_XoaTatCa()
+    {
+        Cart::destroy();
+        return redirect()->route('frontend.giohang');
+    }
+    
+    public function getGioHang_Giam($row_id)
+    {
+        $row = Cart::get($row_id);
+        if($row->qty > 1)
+        {
+            Cart::update($row_id, $row->qty - 1);
+        }
+        return redirect()->route('frontend.giohang');
+    }
+    
+    public function getGioHang_Tang($row_id)
+    {
+        $row = Cart::get($row_id);
+        if($row->qty < 10)
+        {
+            Cart::update($row_id, $row->qty + 1);
+        }
+        return redirect()->route('frontend.giohang');
     }
 }

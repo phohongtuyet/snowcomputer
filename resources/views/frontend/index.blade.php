@@ -174,12 +174,12 @@
                           <div class="product-image">
                             <div class="image"> 
                             @php 
-                                $img='';
-                                $dir = 'storage/app/' . $value->thumuc . '/images/';
-                                $files = scandir($dir); 
-                                $img = config('app.url') . '/'. $dir . $files[2];
-                                $img2 = config('app.url') . '/'. $dir . $files[3];        
-                              @endphp
+                              $img='';
+                              $dir = 'storage/app/' . $value->thumuc . '/images/';
+                              $files = scandir($dir); 
+                              $img = config('app.url') . '/'. $dir . $files[2];
+                              $img2 = config('app.url') . '/'. $dir . $files[3];        
+                            @endphp
                             <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
                               
                                 <img src="{{ $img }}" alt=""> 
@@ -211,8 +211,8 @@
                             <div class="action">
                               <ul class="list-unstyled">
                                 <li class="add-cart-button btn-group">
-                                  <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
                                   <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
+                                  <a class="btn btn-primary icon"href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}"><i class="fa fa-shopping-cart"></i></a>
                                 </li>
                                 <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                 <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>

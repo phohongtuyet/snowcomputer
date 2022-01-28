@@ -118,37 +118,41 @@
         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 animate-dropdown top-cart-row"> 
           <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
           
-          <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
-            <div class="items-cart-inner">
-              <div class="basket">
-              <div class="basket-item-count"><span class="count">2</span></div>
-              <div class="total-price-basket"> <span class="lbl">Shopping Cart</span> <span class="value">$4580</span> </div>
+          <div class="dropdown dropdown-cart"> 
+            <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+              <div class="items-cart-inner">
+                <div class="basket">
+                  <div class="basket-item-count"><span class="count">{{ Cart::count() ?? 0 }}</span></div>
+                  <div class="total-price-basket"> <span class="lbl">Giỏ hàng</span> <span class="value">{{Cart::priceTotal()}}</span> </div>
+                </div>
               </div>
-            </div>
             </a>
             <ul class="dropdown-menu">
               <li>
+                @foreach(Cart::content() as $value)
                 <div class="cart-item product-summary">
                   <div class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="detail.html"><img src="assets/images/products/p4.jpg" alt=""></a> </div>
+                      <div class="image"> <a href="detail.html"><img src="{{$value->options->image}}" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
-                      <div class="price">$600.00</div>
+                      <h3 class="name"><a href="index8a95.html?page-detail">{{ $value->name}}</a></h3>
+                      <div class="price">{{number_format($value->price)}}</div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="{{ route('frontend.giohang.xoa', ['row_id' => $value->rowId]) }}"><i class="fa fa-trash"></i></a> </div>
                   </div>
                 </div>
+                @endforeach
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
+                  <div class="pull-right"> <span class="text">Tổng tiền  :</span><span class='price'>{{ Cart::priceTotal() }}</span> </div>
                   <div class="clearfix"></div>
-                  <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
-                <!-- /.cart-total--> 
-                
+                  <a href="{{ route('frontend.giohang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Giỏ hàng </a> 
+                  <a href="{{ route('frontend.dathang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Thanh Toán</a> 
+                </div>
+                  <!-- /.cart-total-->    
               </li>
             </ul>
             <!-- /.dropdown-menu--> 
