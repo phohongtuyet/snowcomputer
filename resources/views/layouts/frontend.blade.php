@@ -43,11 +43,15 @@
       <div class="header-top-inner">
         <div class="cnt-account">
           <ul class="list-unstyled">
-            <li class="myaccount"><a href="#"><span>Tài khoản của tôi</span></a></li>
-            <li class="wishlist"><a href="#"><span>Danh sách yêu thích</span></a></li>
+            
             <li class="header_cart hidden-xs"><a href="#"><span>Giỏ hàng của tôi</span></a></li>
             <li class="check"><a href="#"><span>Thủ tục thanh toán</span></a></li>
-            <li class="login"><a href="{{route('khachhang.dangnhap')}}"><span>Đăng nhập</span></a></li>
+            @if(!Auth::check())
+              <li class="login"><a href="{{route('khachhang.dangnhap')}}"><span>Đăng nhập</span></a></li>
+            @else
+              <li class="wishlist"><a href="#"><span>Danh sách yêu thích</span></a></li>
+              <li class="myaccount"><a href="{{route('khachhang')}}"><span>Tài khoản của tôi</span></a></li>
+            @endif
           </ul>
         </div>
         <!-- /.cnt-account -->

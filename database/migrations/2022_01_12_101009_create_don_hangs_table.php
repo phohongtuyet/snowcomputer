@@ -15,10 +15,11 @@ class CreateDonHangsTable extends Migration
     {
         Schema::create('donhang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tinhtrang')->constrained('tinhtrang');
+            $table->foreignId('tinhtrang_id')->constrained('tinhtrang');
             $table->foreignId('user_id')->constrained('users');
             $table->string('dienthoaigiaohang', 20);
             $table->string('diachigiaohang');
+            $table->string('chitietgiaohang')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';
