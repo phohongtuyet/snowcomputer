@@ -292,7 +292,7 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        
+        $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
@@ -302,9 +302,9 @@ class HomeController extends Controller
                                 ->paginate(16);
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-        
+        $tendanhmuc = $namedanhmuc->tendanhmuc;
 
-        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
     }
 
     public function getSanPham_ChiTiet($tensanpham_slug)
@@ -366,7 +366,7 @@ class HomeController extends Controller
                 'name_slug'=>$sanpham->tensanpham_slug
                 ]
         ]);
-        
+        //return redirect()->back();
         return redirect()->route('frontend');
     }
     
@@ -464,5 +464,55 @@ class HomeController extends Controller
         // Xóa giỏ hàng khi hoàn tất đặt hàng?
         Cart::destroy();
         return view('frontend.dathang_thanhcong');
+    }
+
+    public function getSanPham_Nhom($nhomsanpham)
+    {
+
+		$slides = Slides::where('hienthi', 1)->get();
+		$hangsanxuat = HangSanXuat::all();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
+                                ->where('tennhomsanpham_slug',$nhomsanpham)
+                                ->select('sanpham.*','tendanhmuc')
+                                ->paginate(16);
+
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+        
+        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+        $tennhomsanpham = $nhomsp->tennhomsanpham;
+        $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+        $tendanhmuc = $namedanhmuc->tendanhmuc;
+        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+    }
+
+    public function getSanPham_LoaiSanPham($nhomsanpham,$loaisanpham)
+    {
+		$slides = Slides::where('hienthi', 1)->get();
+		$hangsanxuat = HangSanXuat::all();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
+                                ->where('tenloai_slug',$loaisanpham)
+                                ->select('sanpham.*','tendanhmuc')
+                                ->paginate(16);
+
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+
+        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+        $tennhomsanpham = $nhomsp->tennhomsanpham;
+        $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+        $tendanhmuc = $namedanhmuc->tendanhmuc;
+        $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
+        $tenloaisanpham = $nameloai->tenloai;
+        
+        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
     }
 }

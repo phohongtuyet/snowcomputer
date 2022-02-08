@@ -195,10 +195,12 @@
                           <div class="row">
                             @foreach($value->NhomSanPham as $nhom)
                               <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                                <h2 class="title">{{ $nhom->tennhomsanpham }}</h2>
+                                <h2 class="title">  
+                                  <a href="{{route('frontend.sanpham.nhom',['nhomsanpham' => $nhom->tennhomsanpham_slug])}}">{{ $nhom->tennhomsanpham }} </a>       
+                                </h2>
                                 @foreach($nhom->LoaiSanPham as $loai)
                                   <ul class="links">
-                                    <li><a href="#">{{$loai->tenloai}}</a></li>
+                                    <li><a href="{{route('frontend.sanpham.loai',['nhomsanpham' => $nhom->tennhomsanpham_slug,'loaisanpham' => $loai->tenloai_slug ])}}">{{$loai->tenloai}}</a></li>
                                   </ul>
                                 @endforeach
                               </div>

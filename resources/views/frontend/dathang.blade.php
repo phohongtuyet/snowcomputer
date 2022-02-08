@@ -198,6 +198,7 @@
                                         <tbody>
                                             @foreach(Cart::content() as $value)
                                                 <tr>
+                                               
                                                     <td>{{$value->name}}  x <strong>{{$value->qty}}</strong>  </td>
                                                     <td>{{number_format( $value->price)}} </td>
                                                 </tr>
@@ -208,7 +209,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('frontend.dathang') }}" onclick="event.preventDefault();document.getElementById('checkoutform').submit();" class="btn btn-primary checkout-btn"class="btn btn-primary checkout-btn">Đặt hàng</a>
+                                                    <a href="{{ route('frontend.dathang') }}" onclick="event.preventDefault();document.getElementById('checkoutform').submit();" class="btn btn-primary checkout-btn"class="btn btn-primary checkout-btn">Hoàn tất đơn hàng</a>
                                                 </td>
                                             </tr>
                                         </tbody><!-- /tbody --> 

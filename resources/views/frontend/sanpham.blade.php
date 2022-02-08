@@ -5,7 +5,14 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li><a href="#">Home</a></li>
-        <li class='active'>Handbags</li>
+        @if(empty($tennhomsanpham))
+          <li class='active'>{{$tendanhmuc}}</li>
+        @elseif(empty($tenloaisanpham))
+          <li class='active'>{{$tennhomsanpham}}</li>
+        @else
+          <li class=>{{$tennhomsanpham}}</li>
+          <li class='active'>{{$tenloaisanpham}}</li>
+        @endif
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -383,7 +390,7 @@
                             <div class="product">
                                 <div class="product-image">
                                 <div class="image"> 
-                                <a href="detail.html">
+                                <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
                                 @php 
                                     $img='';
                                     $dir = 'storage/app/' . $value->thumuc . '/images/';
@@ -408,7 +415,7 @@
                                 <!-- /.product-image -->
                                 
                                 <div class="product-info text-left">
-                                <h3 class="name"><a href="detail.html">{{ $value->tensanpham}}</a></h3>
+                                <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{ $value->tensanpham}}</a></h3>
                                 <div class="rating rateit-small"></div>
                                 <div class="description"></div>
                                 <div class="product-price"> <span class="price"> {{ number_format($value->dongia - ($value->dongia * ($value->phantramgia/100))) }} VNĐ </span> <span class="price-before-discount">@if(!empty($value->phantramgia)) {{ number_format($value->dongia)}} @endif</span> </div>
@@ -420,8 +427,8 @@
                                 <div class="action">
                                     <ul class="list-unstyled">
                                     <li class="add-cart-button btn-group">
-                                        <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                        <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
+                                      <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
+                                      <a class="btn btn-primary icon"href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}"><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                     <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
                                     <li class="lnk"> <a class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
@@ -472,7 +479,7 @@
                                     <!-- /.col -->
                                     <div class="col col-sm-9 col-lg-9">
                                     <div class="product-info">
-                                        <h3 class="name"><a href="detail.html">{{$value->tensanpham}}</a></h3>
+                                        <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{$value->tensanpham}}</a></h3>
                                         <div class="rating rateit-small"></div>
                                         <div class="product-price"> <span class="price"> {{ number_format($value->dongia - ($value->dongia * ($value->phantramgia/100))) }} VNĐ </span> <span class="price-before-discount">@if(!empty($value->phantramgia)) {{ number_format($value->dongia)}} @endif</span> </div>
                                         <!-- /.product-price -->

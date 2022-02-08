@@ -28,8 +28,10 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
 
 // Trang sản phẩm
-Route::get('/category/{danhmuc_slug}', [HomeController::class, 'getSanPham'])->name('frontend.sanpham');
+Route::get('/collections/{danhmuc_slug}', [HomeController::class, 'getSanPham'])->name('frontend.sanpham');
 Route::get('/san-pham/{tensanpham_slug}', [HomeController::class, 'getSanPham_ChiTiet'])->name('frontend.sanpham.chitiet');
+Route::get('/san-pham/category/{nhomsanpham}', [HomeController::class, 'getSanPham_Nhom'])->name('frontend.sanpham.nhom');
+Route::get('/san-pham/type/{nhomsanpham}/{loaisanpham}', [HomeController::class, 'getSanPham_LoaiSanPham'])->name('frontend.sanpham.loai');
 
 // Trang giỏ hàng
 Route::get('/gio-hang', [HomeController::class, 'getGioHang'])->name('frontend.giohang');
