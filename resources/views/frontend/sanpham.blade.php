@@ -4,13 +4,13 @@
   <div class="container">
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
-        <li><a href="#">Home</a></li>
+        <li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
         @if(empty($tennhomsanpham))
-          <li class='active'>{{$tendanhmuc}}</li>
+          <li class='active' >{{$tendanhmuc}}</li>
         @elseif(empty($tenloaisanpham))
           <li class='active'>{{$tennhomsanpham}}</li>
         @else
-          <li class=>{{$tennhomsanpham}}</li>
+          <li style="width: 150px;" class=>{{$tennhomsanpham}}</li>
           <li class='active'>{{$tenloaisanpham}}</li>
         @endif
       </ul>

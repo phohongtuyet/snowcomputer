@@ -5,7 +5,7 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="{{route('frontend')}}">Home</a></li>
+				<li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
 				<li class='active'>Liên hệ</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->

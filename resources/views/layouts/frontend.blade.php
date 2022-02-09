@@ -186,7 +186,7 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown"> <a href="{{ route('frontend')}}">Home</a> </li>
+                <li class="active dropdown"> <a href="{{ route('frontend')}}">Trang chủ </a> </li>
                 @foreach($danhmuc as $value)
                   <li class="dropdown yamm mega-menu"> <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$value->tendanhmuc_slug]) }}" data-hover="dropdown" class="dropdown-toggle">{{$value->tendanhmuc}}</a>
                     <ul class="dropdown-menu container">
