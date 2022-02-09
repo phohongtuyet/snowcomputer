@@ -77,7 +77,6 @@ Route::prefix('khach-hang')->group(function() {
     // Xem và cập nhật trạng thái đơn hàng
     Route::get('/donhang', [KhachHangController::class, 'getDonHang'])->name('khachhang.donhang');
     Route::get('/don-hang/{id}', [KhachHangController::class, 'getDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
-    Route::post('/don-hang/{id}', [KhachHangController::class, 'postDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
     Route::get('/donhang-huy/{id}', [KhachHangController::class, 'getDonHangHuy'])->name('khachhang.donhang.huy');
 
     // Xem và cập nhật mật khẩu
@@ -85,7 +84,6 @@ Route::prefix('khach-hang')->group(function() {
 	Route::post('/matkhau', [KhachHangController::class, 'postMatKhau'])->name('khachhang.matkhau');
 
     // Cập nhật thông tin tài khoản
-	Route::get('/hoso', [KhachHangController::class, 'getHoSo'])->name('khachhang.hoso');
 	Route::post('/hoso', [KhachHangController::class, 'postHoSo'])->name('khachhang.hoso');	
 });
 

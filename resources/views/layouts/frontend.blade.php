@@ -44,7 +44,7 @@
         <div class="cnt-account">
           <ul class="list-unstyled">
             
-            <li class="header_cart hidden-xs"><a href="#"><span>Giỏ hàng của tôi</span></a></li>
+            <li class="header_cart hidden-xs"><a href="{{route('frontend.giohang')}}"><span>Giỏ hàng của tôi</span></a></li>
             <li class="check"><a href="#"><span>Thủ tục thanh toán</span></a></li>
             @if(!Auth::check())
               <li class="login"><a href="{{route('khachhang.dangnhap')}}"><span>Đăng nhập</span></a></li>

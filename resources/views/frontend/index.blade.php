@@ -191,7 +191,7 @@
                               <div class="tag new"><span>New</span></div>
                             @elseif($value->trangthaisanpham == 2)
                               <div class="tag sale"><span>Sale</span></div>
-                            @else
+                            @elseif($value->trangthaisanpham == 3)
                               <div class="tag hot"><span>Hot</span></div>
                             @endif
                           </div>
