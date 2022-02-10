@@ -20,10 +20,12 @@ use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\NhomSanPhamController;
 use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\KhuyenMaiController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\VerifyEmailController;
 
-
-Auth::routes();
-
+Auth::routes(['verify' => true]);
 // Trang chủ
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
 
@@ -90,6 +92,22 @@ Route::prefix('khach-hang')->group(function() {
     // Cập nhật thông tin tài khoản
 	Route::post('/hoso', [KhachHangController::class, 'postHoSo'])->name('khachhang.hoso');	
 });
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Trang quản trị
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
