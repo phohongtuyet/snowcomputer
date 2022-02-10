@@ -18,5 +18,9 @@ class DanhGiaSanPham extends Model
         return $this->belongsTo(SanPham::class, 'sanpham_id', 'id');
     }
 
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     
 }

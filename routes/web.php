@@ -58,8 +58,12 @@ Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->
 // Liên hệ
 Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('frontend.lienhe');
 Route::post('/lien-he/ho-tro', [HomeController::class, 'postHoTro'])->name('frontend.hotro');
+
+//khuyễn mãi
 Route::post('/khuyen-mai', [HomeController::class, 'postKhuyenMai'])->name('frontend.khuyenmai');
 
+//Đánh giá sản phẩm
+Route::post('/danh-gia/{tensanpham_slug}', [HomeController::class, 'postDanhGia'])->name('frontend.danhgia');
 
 // Trang khách hàng
 Route::get('/khach-hang/dang-ky', [HomeController::class, 'getDangKy'])->name('khachhang.dangky');

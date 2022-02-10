@@ -245,46 +245,45 @@
 											<div class="reviews">
                                                 @foreach($danhgia as $value)
                                                     <div class="review">
-                                                        <div class="review-title"><strong class="summary">{{ $value->User()->name}}</strong><span class="date"><i class="fa fa-calendar"></i><span>{{date_format($value->created_at, 'd/m/Y H:i:s')  }} </span></span></div>
+                                                        <div class="review-title"><strong class="summary">{{ $value->User->name}}</strong><span class="date"><i class="fa fa-calendar"></i><span>{{date_format($value->created_at, 'd/m/Y H:i:s')  }} </span></span></div>
                                                         <div class="text">"{{ $value->noidung}}"</div>
                                                     </div>
                                                @endforeach
 											</div><!-- /.reviews -->
-										</div><!-- /.product-reviews -->																				
-										<div class="product-add-review">
-											<h4 class="title">Đánh giá của bạn</h4>																					
-                                                <div class="review-form">
-                                                    <div class="form-container">
-                                                        <form class="cnt-form">
-                                                            
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputName">Your Name <span class="astk">*</span></label>
-                                                                        <input type="text" class="form-control txt" id="exampleInputName" placeholder="">
-                                                                    </div><!-- /.form-group -->
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputSummary">Summary <span class="astk">*</span></label>
-                                                                        <input type="text" class="form-control txt" id="exampleInputSummary" placeholder="">
-                                                                    </div><!-- /.form-group -->
-                                                                </div>
+										</div><!-- /.product-reviews -->	
+                                        @if(Auth::check())																			
+                                            <div class="product-add-review">
+                                                <h4 class="title">Đánh giá của bạn</h4>																					
+                                                    <div class="review-form">
+                                                        <div class="form-container">
+                                                            <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="post">
+                                                            @csrf
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputName">Họ và tên<span class="astk">*</span></label>
+                                                                            <input type="text" class="form-control txt" id="exampleInputName" value="{{Auth::user()->name}}" placeholder="">
+                                                                        </div><!-- /.form-group -->
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputSummary">Đánh giá của bạn về sản phẩm<span class="astk">*</span></label>
+                                                                            <textarea class="form-control txt txt-review" id="noidung" name="noidung" rows="4" placeholder="Mời bạn chia sẻ một số cảm nghĩ về sản phẩm"></textarea>
+                                                                        </div><!-- /.form-group -->
+                                                                    </div>
+                                                                </div><!-- /.row -->
+                                                                
+                                                                <div class="action text-right">
+                                                                    <button class="btn btn-primary btn-upper">Gửi đánh giá</button>
+                                                                </div><!-- /.action -->
 
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputReview">Review <span class="astk">*</span></label>
-                                                                        <textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
-                                                                    </div><!-- /.form-group -->
-                                                                </div>
-                                                            </div><!-- /.row -->
-                                                            
-                                                            <div class="action text-right">
-                                                                <button class="btn btn-primary btn-upper">Gửi đánh giá</button>
-                                                            </div><!-- /.action -->
-
-                                                        </form><!-- /.cnt-form -->
-                                                    </div><!-- /.form-container -->
-                                                </div><!-- /.review-form -->
-										</div><!-- /.product-add-review -->																				
+                                                            </form><!-- /.cnt-form -->
+                                                        </div><!-- /.form-container -->
+                                                    </div><!-- /.review-form -->
+                                            </div><!-- /.product-add-review -->	
+                                        @else
+                                        <div class="product-add-review">
+											<h4 class="title"><a href="{{ route('khachhang.dangnhap')}}" class="btn btn-primary">Đăng nhập để đánh giá </a></h4>																					      
+										</div><!-- /.product-add-review -->	
+                                        @endif
 							        </div><!-- /.product-tab -->
 								</div><!-- /.tab-pane -->
 							</div><!-- /.tab-content -->
@@ -375,7 +374,7 @@
                         </div>
                     </div>
                 </section><!-- /.section -->
-<!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
+            <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
 			
 			</div><!-- /.col -->
 			<div class="clearfix"></div>

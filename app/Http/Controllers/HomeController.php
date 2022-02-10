@@ -515,4 +515,51 @@ class HomeController extends Controller
         
         return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
     }
+
+    public function postDanhGia(Request $request, $tensanpham_slug)
+    {
+        $this->validate($request, [
+            'noidung' => ['required','string'],
+        ],
+        $messages = [
+            'noidung.required' => 'Nội dung đánh gia không được bỏ trống.',
+        ]);
+        
+        $sp = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();
+        $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
+        $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
+        $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
+        $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
+		$hangsanxuat = HangSanXuat::all();
+
+        //san pham cung danh muc
+        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                            ->where('hienthi',1)
+                            ->select('sanpham.*','tendanhmuc')
+                            ->distinct()->get();
+
+        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+
+        //anh san pham
+        $all_files = array();
+        $dir = '/storage/app/' . $sp->thumuc . '/images/';
+        $files = Storage::files($sp->thumuc . '/images/');
+        foreach($files as $file)
+            $all_files[] = pathinfo($file);
+		
+
+        $sanpham = SanPham::where('tensanpham_slug',$tensanpham_slug)->first();
+
+        $orm = new DanhGiaSanPham();
+        $orm->user_id = Auth::user()->id;
+        $orm->sanpham_id = $sanpham->id;
+        $orm->noidung = $request->noidung;
+        $orm->save();
+        //session()->flash('success', 'Đánh giá của bạn đã được ghi nhận');
+
+        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+
+    }
 }
