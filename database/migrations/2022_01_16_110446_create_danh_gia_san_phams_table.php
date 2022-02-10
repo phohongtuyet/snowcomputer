@@ -14,6 +14,7 @@ class CreateDanhGiaSanPhamsTable extends Migration
     public function up()
     {
         Schema::create('danhgiasanpham', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('sanpham_id')->constrained('sanpham');
             $table->foreignId('user_id')->constrained('users');
             $table->string('noidung');

@@ -20,6 +20,7 @@ use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\NhomSanPhamController;
 use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\KhuyenMaiController;
+use App\Http\Controllers\DanhGiaSanPhamController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -187,7 +188,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/lienhe/khuyenmai', [LienHeController::class, 'getDanhSachLienHeKhuyenMai'])->name('lienhe.khuyenmai');
     Route::get('/lienhe/khuyenmai/{id}', [LienHeController::class, 'getKhuyenMai'])->name('lienhe.repkhuyenmai');
     Route::post('/lienhe/khuyenmai/{id}', [LienHeController::class, 'postKhuyenMai'])->name('lienhe.repkhuyenmai');
-
+    
     // Quản lý khuyến mãi
     Route::get('/khuyenmai', [KhuyenMaiController::class, 'getDanhSach'])->name('khuyenmai');
     Route::get('/khuyenmai/them', [KhuyenMaiController::class, 'getThem'])->name('khuyenmai.them');
@@ -195,6 +196,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/khuyenmai/sua/{id}', [KhuyenMaiController::class, 'getSua'])->name('khuyenmai.sua');
     Route::post('/khuyenmai/sua/{id}', [KhuyenMaiController::class, 'postSua'])->name('khuyenmai.sua');
     Route::post('/khuyenmai/xoa', [KhuyenMaiController::class, 'postXoa'])->name('khuyenmai.xoa');
+    
+    // Quản lý đánh giá sản phẩm
+    Route::get('/danhgia', [DanhGiaSanPhamController::class, 'getDanhSach'])->name('danhgia');
+    Route::get('/danhgia/{tensanpham_slug}', [DanhGiaSanPhamController::class, 'getDanhSach_DanhGia'])->name('danhgia.danhsach');
+    Route::get('/danhgia/OnOffHienThi/{id}', [DanhGiaSanPhamController::class, 'getOnOffHienThi'])->name('danhgia.OnOffHienThi');
+    Route::post('/danhgia/xoa', [DanhGiaSanPhamController::class, 'postXoa'])->name('danhgia.xoa');
 
     // Quản lý Sản phẩm
     Route::get('/sanpham', [SanPhamController::class, 'getDanhSach'])->name('sanpham');

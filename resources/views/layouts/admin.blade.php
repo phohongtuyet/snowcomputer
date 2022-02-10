@@ -230,7 +230,7 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>Quản lý sản phẩm</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{ route('admin.sanpham') }}">Sản phẩm</a></li>
-                <li><a class="nav-link" href="">Đánh giá </a></li>
+                <li><a class="nav-link" href="{{ route('admin.danhgia') }}">Đánh giá </a></li>
                 <li><a class="nav-link" href="{{ route('admin.khuyenmai') }}">Khuyễn mãi</a></li>
               </ul>
             </li>
