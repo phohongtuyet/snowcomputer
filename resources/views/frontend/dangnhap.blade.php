@@ -17,10 +17,14 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 logo-holder" style="width: 440px;"> 
                 </div>
-            
-                <div class="col-lg-7 col-md-6 col-sm-8 col-xs-12 top-search-holder"> 
+                <div class="col-lg-7 col-md-6 col-sm-8 col-xs-12 top-search-holder">  
                     <!-- Sign-in -->			
                     <div class="col-md-8 col-sm-6 sign-in ">
+                    @if (session('status'))
+                        <div id="AlertBox" class="alert alert-success " role="alert">
+                            {!! session('status') !!}
+                        </div>
+                    @endif
                             <h4 class="">Đăng nhập</h4>
                             <p class="">Xin chào, Chào mừng đến với tài khoản của bạn.</p>
                             <div class="social-sign-in outer-top-xs">
@@ -53,7 +57,7 @@
                                     <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Ghi nhớ tài khoản!
                                     </label>
-                                    <a href="#" class="forgot-password pull-right">Quên mật khẩu?</a>
+                                    <a href="{{ route('password.request') }}" class="forgot-password pull-right">Quên mật khẩu?</a>
                                 </div>
                                 <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Đăng nhập</button>
                             </form>					
