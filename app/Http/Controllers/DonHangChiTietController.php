@@ -2,84 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DonHangChiTietg;
+use App\Models\DonHang_ChiTiet;
 use Illuminate\Http\Request;
 
 class DonHangChiTietController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getDanhSach($id)
     {
-        //
+        $donhang_chitiet = DonHang_ChiTiet::where('donhang_id',$id)->get();
+        
+        return view('admin.donhang.chitiet', compact('donhang_chitiet'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+    public function getThem()
     {
-        //
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DonHangChiTietg  $donHangChiTietg
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DonHangChiTietg $donHangChiTietg)
+    
+    public function postThem(Request $request)
     {
-        //
+       
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DonHangChiTietg  $donHangChiTietg
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DonHangChiTietg $donHangChiTietg)
+    
+    public function getSua($id)
     {
-        //
+        $donhang_chitiet = DonHang_ChiTiet::find($id);
+        return view('admin.donhang.chitiet_sua', compact('donhang_chitiet'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DonHangChiTietg  $donHangChiTietg
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DonHangChiTietg $donHangChiTietg)
+    
+    public function postSua(Request $request, $id)
     {
-        //
+       
+        $this->validate($request, [
+            'tensanpham' => [ 'max:255'],
+            'soluongban' => ['required', 'numeric'],
+            'dongiaban' => ['required', 'numeric'],        
+        ]);
+
+        $orm = DonHang_ChiTiet::find($id);
+        $orm->donhang_id = $orm->donhang_id;
+        $orm->sanpham_id = $orm->sanpham_id;
+        $orm->soluongban = $request->soluongban;
+        $orm->dongiaban = $request->dongiaban;
+        $orm->save();
+     
+        var_dump( $orm->donhang_id);
+
+        return redirect()->route('admin.donhang.chitiet',['id' => $orm->donhang_id]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DonHangChiTietg  $donHangChiTietg
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DonHangChiTietg $donHangChiTietg)
+    
+    public function getXoa($id)
     {
-        //
+        $orm = DonHang_ChiTiet::find($id);
+        $orm->delete();
+
+        return redirect()->route('admin.donhang.chitiet',$id);
     }
 }

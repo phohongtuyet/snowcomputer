@@ -255,14 +255,8 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="bar-chart"></i><span>
                     Thống kê doanh thu</span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="gmaps-advanced-route.html">Advanced Route</a></li>
-                  <li><a href="gmaps-draggable-marker.html">Draggable Marker</a></li>
-                  <li><a href="gmaps-geocoding.html">Geocoding</a></li>
-                  <li><a href="gmaps-geolocation.html">Geolocation</a></li>
-                  <li><a href="gmaps-marker.html">Marker</a></li>
-                  <li><a href="gmaps-multiple-marker.html">Multiple Marker</a></li>
-                  <li><a href="gmaps-route.html">Route</a></li>
-                  <li><a href="gmaps-simple.html">Simple</a></li>
+                  <li><a href="{{route('admin.donhang.doanhthu')}}">Doanh thu</a></li>
+                 
                 </ul>
               </li>
             

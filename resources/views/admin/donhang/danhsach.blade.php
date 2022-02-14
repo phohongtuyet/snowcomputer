@@ -20,7 +20,7 @@
                     @foreach($donhang as $value)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $value->NguoiDung->name }}</td>
+                        <td>{{ $value->User->name }}</td>
                         <td>
                             <span class="d-block">Điện thoại: <strong>{{ $value->dienthoaigiaohang }}</strong></span>
                             <span class="d-block">Địa chỉ giao: <strong>{{ $value->diachigiaohang }}</strong></span>

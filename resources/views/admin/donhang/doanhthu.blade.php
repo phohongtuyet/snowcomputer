@@ -4,7 +4,8 @@
 
 @if(empty($doanhthu) == false)
 <div class="card">
-    <div class="card-body">         
+    <div class="card-body">     
+        <h4 class="card-title">Thống kê doanh thu theo thời gian</h4>    
         <form action="{{ route('admin.donhang.doanhthu') }}" method="get" class="row row-cols-lg-auto g-3 align-items-center needs-validation" novalidate >
         @csrf
             <div class="col-4">
@@ -32,7 +33,7 @@
     </div> 
     
     @if( $doanhthu->count() == null)
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-danger text-center" role="alert">
         <p>không có sản phẩm nào được bán ra trong thời gian từ <strong>{{date('d-m-Y', strtotime($session_title_dateStart))}}</strong> đến <strong> {{date('d-m-Y', strtotime($session_title_dateEnd))}}</strong></p>
     </div>
     @else
