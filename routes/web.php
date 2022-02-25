@@ -212,7 +212,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/sanpham/xoa', [SanPhamController::class, 'postXoa'])->name('sanpham.xoa')->middleware('nhanvien');
     Route::post('/sanpham/nhap', [SanPhamController::class, 'postNhap'])->name('sanpham.nhap')->middleware('nhanvien');
     Route::get('/sanpham/xuat', [SanPhamController::class, 'getXuat'])->name('sanpham.xuat')->middleware('nhanvien');
-    Route::get('/sanpham/OnOffHienThi/{id}', [SanPhamController::class, 'getOnOffHienThi'])->middleware('nhanvien')->middleware('admin');
+    Route::get('/sanpham/OnOffHienThi/{id}', [SanPhamController::class, 'getOnOffHienThi'])->name('sanpham.OnOffHienThi')->middleware('nhanvien');
     Route::get('/sanphamghet/xuat', [SanPhamController::class, 'getXuatSanPhamHet'])->name('sanpham.het.xuat')->middleware('nhanvien');
     Route::post('/sanphamghet/ajax', [SanPhamController::class, 'postHinhAnhSanPhamAjax'])->name('sanpham.hinhanh.ajax')->middleware('nhanvien');
     Route::get('/sanphamloai', [SanPhamController::class, 'getLoai'])->name('sanpham.loai')->middleware('nhanvien');

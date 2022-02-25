@@ -5,8 +5,10 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">{{ $danhmuc->tendanhmuc}}</a></li>
+				<li><a href="{{route('frontend')}}">Home</a></li>
+				<li style="width: 170px;">
+                    <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$danhmuc->tendanhmuc]) }}">{{ $danhmuc->tendanhmuc}}</a>
+                </li>
 				<li class='active'>{{ $sp->tensanpham}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -207,15 +209,15 @@
                                             <div class="cart-quantity">
                                                 <div class="quant-input">
                                                     <div class="arrows">
-                                                    <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-                                                    <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
+                                                        <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
+                                                        <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
                                                     </div>
                                                     <input type="text" value="1">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="add-btn">
-                                            <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm vào giỏ hàng  </a>
+                                            <a href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $sp->tensanpham_slug]) }}" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm vào giỏ hàng  </a>
                                         </div>				
                                     </div><!-- /.row -->
                                 </div><!-- /.quantity-container -->							
@@ -325,7 +327,13 @@
                                                         <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}"><img  src="{{ $img }}" alt=""></a>
                                                     </div><!-- /.image -->			
 
-                                                    <div class="tag sale"><span>sale</span></div>            		   
+                                                    @if($value->trangthaisanpham == 1)
+                                                        <div class="tag new"><span>New</span></div>
+                                                    @elseif($value->trangthaisanpham == 2)
+                                                        <div class="tag sale"><span>Sale</span></div>
+                                                    @elseif($value->trangthaisanpham == 3)
+                                                        <div class="tag hot"><span>Hot</span></div>
+                                                    @endif           		   
                                                 </div><!-- /.product-image -->
                                                         
                                                 <div class="product-info text-left">

@@ -366,8 +366,8 @@ class HomeController extends Controller
                 'name_slug'=>$sanpham->tensanpham_slug
                 ]
         ]);
-        //return redirect()->back();
-        return redirect()->route('frontend');
+        return redirect()->back();
+        //return redirect()->route('frontend');
     }
     
     public function getGioHang_Xoa($row_id)
