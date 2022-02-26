@@ -10,7 +10,7 @@ class DanhMuc extends Model
     use HasFactory;
     protected $table = 'danhmuc';
 
-    protected $fillable = ['tendanhmuc'];
+    protected $fillable = ['tendanhmuc','tendanhmuc_slug','hinhanh'];
 
     public function NhomSanPham()
     {

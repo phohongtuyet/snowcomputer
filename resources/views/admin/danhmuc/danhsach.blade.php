@@ -18,9 +18,9 @@
                     <tr>
                         <th width="5%">#</th>
                         <th width="40%">Tên danh mục </th>
-                        <th width="40%">Tên danh mục không dấu</th>
-                        <th width="5%">Sửa</th>
-                        <th width="5%">Xóa</th>
+                        <th width="35%">Hình ảnh</th>
+                        <th width="10%">Sửa</th>
+                        <th width="10%">Xóa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +28,9 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $value->tendanhmuc }}</td>
-                            <td>{{ $value->tendanhmuc_slug }}</td>
+                            <td>
+                                <img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;">            
+                            </td>                           
                             <td class="text-center"><a href="{{ route('admin.danhmuc.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
                             <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                         </tr>

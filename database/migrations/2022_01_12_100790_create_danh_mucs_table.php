@@ -17,6 +17,7 @@ class CreateDanhMucsTable extends Migration
             $table->id();
             $table->string('tendanhmuc');
             $table->string('tendanhmuc_slug');
+            $table->string('hinhanh')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

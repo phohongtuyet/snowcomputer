@@ -17,7 +17,22 @@ class DanhMucController extends Controller
     public function getDanhSach()
     {
         $danhmuc = DanhMuc::all();
-        return view('admin.danhmuc.danhsach',compact('danhmuc'));
+
+        $no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
+		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+        if(session_status() == PHP_SESSION_NONE)
+		{
+			session_start();
+		}
+        $path = config('app.url') . '/storage/app/danhmuc/';
+
+		if(isset($_SESSION['baseUrl'])) unset($_SESSION['baseUrl']);
+		$_SESSION['baseUrl'] = $path;
+
+		if(isset($_SESSION['resourceType'])) unset($_SESSION['resourceType']);
+		$_SESSION['resourceType'] = 'Images';
+
+        return view('admin.danhmuc.danhsach',compact('danhmuc','path'));
     }
 
     public function getThem()
@@ -29,15 +44,19 @@ class DanhMucController extends Controller
     {
         $this->validate($request, [
             'tendanhmuc' => ['required', 'max:255', 'unique:danhmuc'],
+            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
         ], 
         $messages = [
             'required' => 'Tên danh mục không được bỏ trống.',
             'unique' => 'Tên danh mục đã có trong hệ thống.',
+            'HinhAnh.required' => 'Hình ảnh danh mục không được bỏ trống.',
+            'HinhAnh.unique' => 'Hình ảnh danh mục đã có trong hệ thống.',
         ]);
            
         $orm = new DanhMuc();
         $orm->tendanhmuc = $request->tendanhmuc;
         $orm->tendanhmuc_slug = Str::slug($request->tendanhmuc, '-');
+        $orm->hinhanh = $request->HinhAnh;
         $orm->save();
 
         return redirect()->route('admin.danhmuc')->with('status', 'Thêm mới thành công');
@@ -46,7 +65,8 @@ class DanhMucController extends Controller
     public function getSua($id)
     {
         $danhmuc = DanhMuc::find($id);
-        return view('admin.danhmuc.sua', compact('danhmuc'));
+        $path = config('app.url') . '/storage/app/danhmuc/';
+        return view('admin.danhmuc.sua', compact('danhmuc','path'));
     }
 
     public function postSua(Request $request, $id)
@@ -62,6 +82,8 @@ class DanhMucController extends Controller
         $orm = DanhMuc::find($id);
         $orm->tendanhmuc = $request->tendanhmuc;
         $orm->tendanhmuc_slug = Str::slug($request->tendanhmuc, '-');
+        if(!empty($request->HinhAnh)) $orm->hinhanh = $request->HinhAnh;
+
         $orm->save();
 
         return redirect()->route('admin.danhmuc')->with('status', 'Cập nhật thành công');

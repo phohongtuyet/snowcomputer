@@ -206,8 +206,12 @@
                               </div>
                             @endforeach
                             <!-- /.col -->
+                            @php 
+                              $no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
+                              $path = config('app.url') . '/storage/app/danhmuc/';
+                            @endphp
                             <div class="col-xs-12 col-sm-6 col-md-4 col-menu banner-image"> 
-                              <img class="img-responsive" src="assets/images/banners/top-menu-banner.jpg" alt=""> 
+                              <img class="img-responsive" src="{{ $path.'images/'. $value->hinhanh }}" alt=""> 
                             </div>
                             <!-- /.yamm-content --> 
                           </div>

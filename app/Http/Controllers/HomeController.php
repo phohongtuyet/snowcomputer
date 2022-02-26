@@ -44,6 +44,7 @@ class HomeController extends Controller
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         
+		
 
         return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
     }
