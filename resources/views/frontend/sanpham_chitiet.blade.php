@@ -201,25 +201,26 @@
                                     </div><!-- /.row -->
                                 </div><!-- /.price-container -->
                                 <div class="quantity-container info-container">
-                                    <div class="row">                                   
-                                        <div class="qty">
-                                            <span class="label">Số lượng :</span>
-                                        </div>                                   
-                                        <div class="qty-count">
-                                            <div class="cart-quantity">
-                                                <div class="quant-input">
-                                                    <div class="arrows">
-                                                        <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-                                                        <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
+                                    <form method="get" action="{{ route('frontend.giohang.them.chitiet',['tensanpham_slug' => $sp->tensanpham_slug]) }}">
+                                    @csrf
+                                        <div class="row">                                   
+                                            <div class="qty">
+                                                <span class="label">Số lượng :</span>
+                                            </div>                                   
+                                            <div class="qty-count">
+                                                <div class="cart-quantity">
+                                                    <div class="quant-input">
+                                                        <div class="arrows">
+                                                        </div>
+                                                        <input type="number" value="1" id="quantity" name="quantity" min="1" max="{{ $sp->soluong}}">
                                                     </div>
-                                                    <input type="text" value="1">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="add-btn">
-                                            <a href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $sp->tensanpham_slug]) }}" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm vào giỏ hàng  </a>
-                                        </div>				
-                                    </div><!-- /.row -->
+                                            <div class="add-btn">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>Thêm vào giỏ hàng   </button>
+                                            </div>				
+                                        </div><!-- /.row -->
+                                    </from>
                                 </div><!-- /.quantity-container -->							
                             </div><!-- /.product-info -->
                         </div><!-- /.col-sm-7 -->

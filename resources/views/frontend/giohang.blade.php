@@ -69,7 +69,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <input type="text" value="{{$value->qty}}">
+                                            <input type="text" value="{{$value->qty}}" min="1">
                                         </div>
                                     </td>
                                     <td class="cart-product-sub-total"><span class="cart-sub-total-price">{{number_format($value->price)}}</span></td>

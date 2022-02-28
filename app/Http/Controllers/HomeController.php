@@ -563,4 +563,27 @@ class HomeController extends Controller
         return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
 
     }
+
+    public function getGioHang_ThemChiTiet(Request $request, $tensanpham_slug)
+    {
+        $sanpham = SanPham::where('tensanpham_slug', $tensanpham_slug)->first();
+       
+        $img='';
+        $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
+        $files = scandir($dir); 
+        $img = config('app.url') . '/'. $dir . $files[2];
+
+        Cart::add([
+            'id' => $sanpham->id,
+            'name' => $sanpham->tensanpham,
+            'price' => $sanpham->dongia,
+            'qty' => $request->quantity,
+            'weight' => 0,
+            'options' => [
+                'image' => $img,
+                'name_slug'=>$sanpham->tensanpham_slug
+                ]
+        ]);
+        return redirect()->back();
+    }
 }
