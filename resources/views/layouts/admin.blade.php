@@ -189,8 +189,8 @@
             </div>
             <ul class="sidebar-menu">
               <li class="menu-header">Main</li>
-              <li class="dropdown active">
-                <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <li class="dropdown">
+                <a href="{{route('admin.home')}}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
               </li>
               <li class="menu-header">Danh mục</li>
               <li class="dropdown">

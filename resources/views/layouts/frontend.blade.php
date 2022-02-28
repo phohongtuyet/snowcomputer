@@ -100,18 +100,10 @@
           <div class="search-area">
             <form>
               <div class="control-group">
-                <ul class="categories-filter animate-dropdown">
-                  <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" >
-                      <li class="menu-header">Computer</li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">- Clothing</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">- Electronics</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">- Shoes</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">- Watches</a></li>
-                    </ul>
-                  </li>
+                <ul class="categories-filter ">
+                   <a href="">Tìm kiếm </a>
                 </ul>
-                <input class="search-field" placeholder="Search here..." />
+                <input class="search-field" name="search" placeholder="Bạn tìm gì..." />
                 <a class="search-button" href="#" ></a> </div>
             </form>
           </div>
@@ -150,12 +142,12 @@
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
-                <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Tổng tiền  :</span><span class='price'>{{ Cart::priceTotal() }}</span> </div>
-                  <div class="clearfix"></div>
-                  <a href="{{ route('frontend.giohang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Giỏ hàng </a> 
-                  <a href="{{ route('frontend.dathang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Thanh Toán</a> 
-                </div>
+                  <div class="clearfix cart-total">
+                    <div class="pull-right"> <span class="text">Tổng tiền  :</span><span class='price'>{{ Cart::priceTotal() }}</span> </div>
+                    <div class="clearfix"></div>
+                        <a href="{{ route('frontend.giohang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Giỏ hàng </a> 
+                        <a href="{{ route('frontend.dathang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Thanh Toán</a> 
+                  </div>
                   <!-- /.cart-total-->    
               </li>
             </ul>
@@ -262,8 +254,8 @@
         <li>
           <div class="feature-box">
             <div class="icon-support"></div>
-            <div class="content-blocks">call 
-              +1 800 789 0000</div>
+            <div class="content-blocks">Gọi 
+             0987 965 435</div>
           </div>
         </li>
         <li>
@@ -300,13 +292,13 @@
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>ThemesGround, 789 Main rd, Anytown, CA 12345 USA</p>
+                  <p>Đại học An Giang</p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p> + (888) 123-4567 / + (888) 456-7890</p>
+                  <p> 0987 965 435</p>
                 </div>
               </li>
               <li class="media">
@@ -391,15 +383,15 @@
           <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="#" title="Youtube"></a></li>
         </ul>
       </div>
-      <div class="col-xs-12 col-sm-4 no-padding copyright"><a target="_blank" href="https://www.templateshub.net">Templates Hub</a> </div>
+      <div class="col-xs-12 col-sm-4 no-padding copyright"><a target="_blank" href="#">&copy; Snow Computer </a> </div>
       <div class="col-xs-12 col-sm-4 no-padding">
         <div class="clearfix payment-methods">
           <ul>
-            <li><img src="assets/images/payments/1.png" alt=""></li>
-            <li><img src="assets/images/payments/2.png" alt=""></li>
-            <li><img src="assets/images/payments/3.png" alt=""></li>
-            <li><img src="assets/images/payments/4.png" alt=""></li>
-            <li><img src="assets/images/payments/5.png" alt=""></li>
+            <li><img src="{{ asset('public/frontend/images/payments/1.png')}}" alt=""></li>
+            <li><img src="{{ asset('public/frontend/images/payments/2.png')}}" alt=""></li>
+            <li><img src="{{ asset('public/frontend/images/payments/3.png')}}" alt=""></li>
+            <li><img src="{{ asset('public/frontend/images/payments/4.png')}}" alt=""></li>
+            <li><img src="{{ asset('public/frontend/images/payments/5.png')}}" alt=""></li>
           </ul>
         </div>
         <!-- /.payment-methods --> 

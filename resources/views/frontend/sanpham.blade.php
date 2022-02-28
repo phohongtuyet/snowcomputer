@@ -27,36 +27,38 @@
         <!-- ================================== TOP NAVIGATION ================================== -->
             <div class="side-menu animate-dropdown outer-bottom-xs">
             <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>
-            <nav class="yamm megamenu-horizontal">
+              <nav class="yamm megamenu-horizontal">
                 <ul class="nav">
-                @foreach($danhmuc as $value)
-                    <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{ $value->tendanhmuc }}</a>
+                  @foreach($danhmuc as $value)
+                  <li class="dropdown yamm mega-menu"> <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$value->tendanhmuc_slug]) }}" data-hover="dropdown" class="dropdown-toggle">{{$value->tendanhmuc}}</a>
                     <ul class="dropdown-menu mega-menu">
-                    <li class="yamm-content">
+                      <li class="yamm-content">
                         <div class="row">
                         @foreach($value->NhomSanPham as $nhom)
-                        <div class="col-sm-12 col-md-3">
-                            <h2 class="title">{{ $nhom->tennhomsanpham }}</h2>
+                          <div class="col-sm-12 col-md-3">
+                            <h2 class="title">
+                              <a href="{{route('frontend.sanpham.nhom',['nhomsanpham' => $nhom->tennhomsanpham_slug])}}">{{ $nhom->tennhomsanpham }} </a>       
+                            </h2>
                             @foreach($nhom->LoaiSanPham as $loai)
-                            <ul class="links list-unstyled">
-                                <li><a href="#">{{$loai->tenloai}}</a></li>
-                            </ul>
+                              <ul class="links list-unstyled">
+                                <li><a href="{{route('frontend.sanpham.loai',['nhomsanpham' => $nhom->tennhomsanpham_slug,'loaisanpham' => $loai->tenloai_slug ])}}">{{$loai->tenloai}}</a></li>
+                              </ul>
                             @endforeach
-                        </div>
+                          </div>
                         @endforeach
-                        
+                          
                         </div>
                         <!-- /.row --> 
-                    </li>
-                    <!-- /.yamm-content -->
+                      </li>
+                      <!-- /.yamm-content -->
                     </ul>
                     <!-- /.dropdown-menu --> 
-                </li>
-                @endforeach
-                <!-- /.menu-item -->
+                  </li>
+                  @endforeach
+                  <!-- /.menu-item -->
                 </ul>
-                <!-- /.nav --> 
-            </nav>
+                  <!-- /.nav --> 
+              </nav>
             <!-- /.megamenu-horizontal --> 
             </div>
             <!-- /.side-menu --> 
