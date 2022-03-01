@@ -5,7 +5,7 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="{{route('frontend')}}">Home</a></li>
-                <li><a href="{{route('frontend.baiviet')}}" >Tin công nghệ</a></li>
+                <li style="width: 102px;"><a href="{{route('frontend.baiviet')}}" >Tin công nghệ</a></li>
 				<li class='active'>{{ $baiviet->tieude}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -36,25 +36,21 @@
                     <div class="blog-post-author-details wow fadeInUp">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="assets/images/testimonials/member3.png" alt="Responsive image" class="img-circle img-responsive">
+                                <img src="{{asset('public/frontend/images/testimonials/member3.png')}}" alt="Responsive image" class="img-circle img-responsive">
                             </div>
                             <div class="col-md-10">
                                 <h4>{{ $baiviet->User->name }}</h4>
                                 <div class="btn-group author-social-network pull-right">
-                                    <span>Follow me on</span>
+                                    <span>Theo dõi trên  </span>
                                     <button type="button" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="twitter-icon fa fa-twitter"></i>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#"><i class="icon fa fa-facebook"></i>Facebook</a></li>
-                                        <li><a href="#"><i class="icon fa fa-linkedin"></i>Linkedin</a></li>
-                                        <li><a href="#"><i class="icon fa fa-pinterest"></i>Pinterst</a></li>
-                                        <li><a href="#"><i class="icon fa fa-rss"></i>RSS</a></li>
+                                        <li><a href="#"><i class="icon fa fa fa-twitter"></i>Witter</a></li>
                                     </ul>
                                 </div>
                                 <span class="author-job">Tác giả</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
                             </div>
                         </div>
                     </div>
@@ -109,7 +105,7 @@
 						<div class="search-area outer-bottom-small">
                         <form>
                             <div class="control-group">
-                                <input placeholder="Nhập để tìm kiếm" class="search-field">
+                            <input class="search-field" id="keyword" type="text" placeholder="Search" aria-label="Search">
                                 <a href="#" class="search-button"></a>   
                             </div>
                         </form>
