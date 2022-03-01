@@ -103,7 +103,7 @@
                 <ul class="categories-filter ">
                    <a href="">Tìm kiếm </a>
                 </ul>
-                <input class="search-field" name="search" placeholder="Bạn tìm gì..." />
+                <input class="search-field typeahead" name="search" placeholder="Bạn tìm gì..." />
                 <a class="search-button" href="#" ></a> </div>
             </form>
           </div>
@@ -418,6 +418,32 @@
   <script src="{{ asset('public/frontend/js/bootstrap-select.min.js')}}"></script> 
   <script src="{{ asset('public/frontend/js/wow.min.js')}}"></script> 
   <script src="{{ asset('public/frontend/js/scripts.js')}}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>  
+  <script type="text/javascript">                      
+      var path = "{{ route('frontend.selectSearch') }}";
+      $('input.typeahead').typeahead({
+          source:  function (query, process) {
+              return $.get(path, { query: query }, function (data) {
+                  return process(data);
+              });
+          },
+          highlighter: function (item, data) {
+              var parts = item.split('#'),
+                  html = '<div class="row">';
+                  html += '<div class="col-md-2">';
+                  html += '<img src="'+data.img+'"/ height="44px;" width="65px;">';
+                  html += '</div>';
+                  html += '<div class="col-md-10 pl-0">';
+                  html += '<span>'+data.name+'</span>';
+                  html += '<p class="m-0">'+  data.price +'</p>';
+                  html += '</div>';
+                  html += '</div>';
+
+              return html;
+      }
+    });
+  </script>
 </body>
 
 </html>

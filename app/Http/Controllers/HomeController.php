@@ -586,4 +586,13 @@ class HomeController extends Controller
         ]);
         return redirect()->back();
     }
+
+    public function selectSearch(Request $request)
+    {
+        $data = SanPham::select("tensanpham as name","thumuc as img","dongia as price")
+                ->where("tensanpham","LIKE","%{$request->input('query')}%")
+                ->get();
+
+        return response()->json($data);
+    }
 }
