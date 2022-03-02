@@ -325,8 +325,7 @@ class HomeController extends Controller
                             ->select('sanpham.*','tendanhmuc')
                             ->distinct()->get();
 
-        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-
+        $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         //anh san pham
         $all_files = array();
         $dir = '/storage/app/' . $sp->thumuc . '/images/';

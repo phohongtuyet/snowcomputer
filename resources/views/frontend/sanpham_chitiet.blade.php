@@ -28,7 +28,7 @@
 				<div class="sidebar-module-container">
     	            <!-- ============================================== HOT DEALS ============================================== -->
                     <div class="sidebar-widget hot-deals outer-bottom-xs">
-                        <h3 class="section-title">Hot deals</h3>
+                        <h3 class="section-title">Ưu đãi lớn </h3>
                         <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
                             @foreach($sanphamsale as $value)
                             <div class="item">
@@ -200,7 +200,7 @@
                                                 <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Add to Compare" href="#">
                                                 <i class="fa fa-signal"></i>
                                                 </a>
-                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="#">
+                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="mailto:snowcomputershop@gmail.com">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
                                             </div>
@@ -310,10 +310,9 @@
                 <section class="section featured-product">
                     <div class="row">
                         <div class="col-lg-3">
-                            <h3 class="section-title">Upsell Products</h3>
+                            <h3 class="section-title">{{$danhmuc->tendanhmuc}}</h3>
                             <div class="ad-imgs">
-                                <img class="img-responsive" src="assets/images/banners/home-banner1.jpg" alt="">
-                                <img class="img-responsive" src="assets/images/banners/home-banner2.jpg" alt="">
+                                <img class="img-responsive" src="{{env('APP_URL') . '/storage/app/danhmuc/images/' . $danhmuc->hinhanh}}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-9">

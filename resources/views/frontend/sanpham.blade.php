@@ -407,11 +407,11 @@
                                 <!-- /.image -->
                                 
                                 @if($value->trangthaisanpham == 1)
-                                    <div class="tag new"><span>New</span></div>
+                                  <div class="tag new"><span>New</span></div>
                                 @elseif($value->trangthaisanpham == 2)
-                                    <div class="tag sale"><span>Sale</span></div>
-                                @else
-                                    <div class="tag hot"><span>Hot</span></div>
+                                  <div class="tag sale"><span>Sale</span></div>
+                                @elseif($value->trangthaisanpham == 3)
+                                  <div class="tag hot"><span>Hot</span></div>
                                 @endif
                                 </div>
                                 <!-- /.product-image -->
@@ -508,12 +508,12 @@
                                 </div>
                                 <!-- /.product-list-row -->
                                 @if($value->trangthaisanpham == 1)
-                                    <div class="tag new"><span>New</span></div>
+                                  <div class="tag new"><span>New</span></div>
                                 @elseif($value->trangthaisanpham == 2)
-                                    <div class="tag sale"><span>Sale</span></div>
-                                @else
-                                    <div class="tag hot"><span>Hot</span></div>
-                                @endif                        
+                                  <div class="tag sale"><span>Sale</span></div>
+                                @elseif($value->trangthaisanpham == 3)
+                                  <div class="tag hot"><span>Hot</span></div>
+                                @endif                       
                             </div>
                         <!-- /.product-list --> 
                         </div>
