@@ -106,7 +106,7 @@
                 </ul>
                 <input class="search-field typeahead" name="search" placeholder="Bạn tìm gì..." />
                 <a href="{{route('frontend.timkiemsanpham')}}" class="search-button" onclick="event.preventDefault();document.getElementById('search').submit();"></a>
-
+              </div>
             </form>
           </div>
           <!-- /.search-area --> 

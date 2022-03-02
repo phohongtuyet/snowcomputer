@@ -6,16 +6,23 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="{{route('frontend')}}">Home</a></li>
-				<li style="width: 170px;">
-                    <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$danhmuc->tendanhmuc]) }}">{{ $danhmuc->tendanhmuc}}</a>
-                </li>
-				<li class='active'>{{ $sp->tensanpham}}</li>
+                @if(!empty($sp))
+                    <li style="width: 170px;">
+                        <a href="{{ route('frontend.sanpham',['danhmuc_slug' =>$danhmuc->tendanhmuc]) }}">{{ $danhmuc->tendanhmuc}}</a>
+                    </li>
+                    <li class='active'>{{ $sp->tensanpham}}</li>
+                @else
+                    <li style="width: 170px;">
+                        <a href="">Tìm kiếm</a>
+                    </li>
+                @endif
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
 </div><!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
 	<div class='container'>
+        @if(!empty($sp))
 		<div class='row single-product'>
 			<div class='col-xs-12 col-sm-12 col-md-3 sidebar'>
 				<div class="sidebar-module-container">
@@ -388,6 +395,21 @@
 			</div><!-- /.col -->
 			<div class="clearfix"></div>
 		</div><!-- /.row -->
+        @else
+        <div class="body-content outer-top-bd">
+            <div class="container">
+                <div class="x-page inner-bottom-sm">
+                    <div class="row">
+                        <div class="col-md-12 x-text text-center">
+                            <h2>Không tìm thấy kết quả phù hợp</h2>
+                            <p>Chúng tôi rất tiếc. SnowComputer không tìm thấy kết quả nào phù hợp với từ khóa "<strong>{{$sesion_title}}</strong>" !!!</p>
+                            <a href="{{route('frontend')}}"><i class="fa fa-home mt-2"></i>Về trang chủ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
         <div id="brands-carousel" class="logo-slider">
                 <div class="logo-slider-inner">	

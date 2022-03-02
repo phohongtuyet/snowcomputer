@@ -600,31 +600,41 @@ class HomeController extends Controller
     {
 
         $sp = SanPham::where('tensanpham_slug',Str::slug($request->search))->first();
-        $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
-        $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
-        $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
-        $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
-		$hangsanxuat = HangSanXuat::all();
-
-        //san pham cung danh muc
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                            ->where('hienthi',1)
-                            ->select('sanpham.*','tendanhmuc')
-                            ->distinct()->get();
-
-        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-
-        //anh san pham
-        $all_files = array();
-        $dir = '/storage/app/' . $sp->thumuc . '/images/';
-        $files = Storage::files($sp->thumuc . '/images/');
-        foreach($files as $file)
-            $all_files[] = pathinfo($file);
-		
-
-        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+        if(!empty($sp))
+        {
+            $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
+            $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
+            $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
+            $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
+            $hangsanxuat = HangSanXuat::all();
+    
+            //san pham cung danh muc
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                ->where('hienthi',1)
+                                ->select('sanpham.*','tendanhmuc')
+                                ->distinct()->get();
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+    
+            //anh san pham
+            $all_files = array();
+            $dir = '/storage/app/' . $sp->thumuc . '/images/';
+            $files = Storage::files($sp->thumuc . '/images/');
+            foreach($files as $file)
+                $all_files[] = pathinfo($file);
+            
+    
+            return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+        }
+        else
+        {
+            $hangsanxuat = HangSanXuat::all();
+            $sesion_title = $request->search;
+            return view('frontend.sanpham_chitiet',compact('hangsanxuat','sesion_title'));
+        }
+        
     }
 
 }
