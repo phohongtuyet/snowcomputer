@@ -97,14 +97,16 @@
         <div class="col-lg-7 col-md-6 col-sm-8 col-xs-12 top-search-holder"> 
           <!-- /.contact-row --> 
           <!-- ============================================================= SEARCH AREA ============================================================= -->
-          <div class="search-area">
-            <form>
+          <div class="search-area" >
+            <form autocomplete="off" id="search" method="get" action ="{{route('frontend.timkiemsanpham')}}"> 
+              
               <div class="control-group">
                 <ul class="categories-filter ">
                    <a href="">Tìm kiếm </a>
                 </ul>
                 <input class="search-field typeahead" name="search" placeholder="Bạn tìm gì..." />
-                <a class="search-button" href="#" ></a> </div>
+                <a href="{{route('frontend.timkiemsanpham')}}" class="search-button" onclick="event.preventDefault();document.getElementById('search').submit();"></a>
+
             </form>
           </div>
           <!-- /.search-area --> 
