@@ -5,14 +5,20 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
-        @if(empty($tennhomsanpham))
-          <li class='active' >{{$tendanhmuc}}</li>
-        @elseif(empty($tenloaisanpham))
-          <li class='active'>{{$tennhomsanpham}}</li>
-        @else
-          <li style="width: 150px;" class=>{{$tennhomsanpham}}</li>
-          <li class='active'>{{$tenloaisanpham}}</li>
-        @endif
+          @if(empty($tennhomsanpham))
+            <li class='active' >{{$sesion_title_menu}}</li>
+          @elseif(empty($tenloaisanpham))
+            <li style="width: 119px;">{{$sesion_title_menu}}</li>
+            <li class='active'>{{$tennhomsanpham}}</li>
+          @elseif(!empty($sesion_title))
+            <li class='active'>{{$tennhomsanpham}}</li>
+            <li class='active' >{{$sesion_title_menu}}</li>
+          @else
+            <li style="width: 119px;" >{{$tendanhmuc}}</li>
+            <li style="width: 106px;" class=>{{$tennhomsanpham}}</li>
+            <li class='active'>{{$tenloaisanpham}}</li>
+          @endif
+        
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -291,6 +297,7 @@
         <!-- /.sidebar-module-container --> 
       </div>
       <!-- /.sidebar -->
+      @if(empty($sesion_title))
       <div class="col-xs-12 col-sm-12 col-md-9 rht-col"> 
         <!-- ========================================== SECTION – HERO ========================================= -->
         
@@ -545,6 +552,9 @@
         <!-- /.search-result-container --> 
         
       </div>
+      @else
+        <p>{!!$sesion_title!!}</p>
+      @endif
       <!-- /.col --> 
     </div>
     <!-- /.row --> 
@@ -553,7 +563,7 @@
       <div class="logo-slider-inner">
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
             @foreach($hangsanxuat as $value)
-                <div class="item m-t-15"> <a href="#" class="image"> 
+            <div class="item m-t-15"> <a href="{{route('frontend.hangsanxuat',['hangsanxuat' => $value->tenhangsanxuat_slug])}}" class="image"> 
                 <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt=""> </a> 
                 </div>
             @endforeach

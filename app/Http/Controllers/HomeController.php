@@ -304,8 +304,8 @@ class HomeController extends Controller
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
         $tendanhmuc = $namedanhmuc->tendanhmuc;
-
-        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        $sesion_title_menu = $namedanhmuc->tendanhmuc;
+        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
     }
 
     public function getSanPham_ChiTiet($tensanpham_slug)
@@ -487,7 +487,9 @@ class HomeController extends Controller
         $tennhomsanpham = $nhomsp->tennhomsanpham;
         $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
         $tendanhmuc = $namedanhmuc->tendanhmuc;
-        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        $sesion_title_menu = $namedanhmuc->tendanhmuc;
+
+        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
     }
 
     public function getSanPham_LoaiSanPham($nhomsanpham,$loaisanpham)
@@ -512,8 +514,9 @@ class HomeController extends Controller
         $tendanhmuc = $namedanhmuc->tendanhmuc;
         $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
         $tenloaisanpham = $nameloai->tenloai;
-        
-        return view('frontend.sanpham',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+        $sesion_title_menu = $nameloai->tenloai;
+
+        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
     }
 
     public function postDanhGia(Request $request, $tensanpham_slug)
@@ -625,7 +628,7 @@ class HomeController extends Controller
                 $all_files[] = pathinfo($file);
             
     
-            return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+            return view('frontend.sanpham_chitiet',compact('sesion_title_menu','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
         }
         else
         {
@@ -636,4 +639,41 @@ class HomeController extends Controller
         
     }
 
+    public function getSanPham_HangSanXuat($hangsanxuat)
+    {        
+        $hsx = HangSanXuat::where('tenhangsanxuat_slug',$hangsanxuat)->first();
+        $sp = SanPham::where('hangsanxuat_id',$hsx->id)->first();
+
+        if(!empty($sp))
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('hangsanxuat_id',$hsx->id)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $sesion_title_menu = $hsx->tenhangsanxuat;
+
+            return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+                
+    
+        }
+        else
+        {            
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $tennhomsanpham = $hsx->tenhangsanxuat;
+            $tendanhmuc = '$namedanhmuc->tendanhmuc';
+            $hangsanxuat = HangSanXuat::all();
+            $sesion_title_menu =$hsx->tenhangsanxuat; 
+            $sesion_title = 'Hiện tại chưa có sản phẩm thuộc hãng <strong>'. $hsx->tenhangsanxuat.'</strong>';
+            return view('frontend.sanpham',compact('sesion_title_menu','sesion_title','tendanhmuc','tennhomsanpham','danhmuc','hangsanxuat'));
+        }     
+    }
 }
