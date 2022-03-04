@@ -46,11 +46,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="info-title" for="exampleInputEmail1">Số điện thoại  <span>*</span></label>
-                                <input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" >
-                            
-                            </div>
-                            <div class="form-group">
                                 <label class="info-title" for="exampleInputEmail1">Mật khẩu <span>*</span></label>
                                 <input type="password" class="form-control unicase-form-control text-input @error('password') is-invalid @enderror"
                                             name="password" value="{{ old('password') }}" id="exampleInputEmail1" >

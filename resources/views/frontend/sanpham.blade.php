@@ -323,8 +323,8 @@
             <div class="col col-sm-6 col-md-3 col-lg-3 col-xs-6">
               <div class="filter-tabs">
                 <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
-                  <li class="active"> <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-large"></i>Grid</a> </li>
-                  <li><a data-toggle="tab" href="#list-container"><i class="icon fa fa-bars"></i>List</a></li>
+                  <li class="active"> <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-large"></i>Lưới</a> </li>
+                  <li><a data-toggle="tab" href="#list-container"><i class="icon fa fa-bars"></i>Danh sách</a></li>
                 </ul>
               </div>
               <!-- /.filter-tabs --> 

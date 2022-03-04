@@ -121,7 +121,7 @@
               <div class="items-cart-inner">
                 <div class="basket">
                   <div class="basket-item-count"><span class="count">{{ Cart::count() ?? 0 }}</span></div>
-                  <div class="total-price-basket"> <span class="lbl">Giỏ hàng</span> <span class="value">{{Cart::priceTotal()}}</span> </div>
+                  <div class="total-price-basket"> <span class="lbl">Giỏ hàng</span> <span class="value">@if(Cart::count() != null) {{Cart::priceTotal()}} @endif</span> </div>
                 </div>
               </div>
             </a>
@@ -131,10 +131,10 @@
                 <div class="cart-item product-summary">
                   <div class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="detail.html"><img src="{{$value->options->image}}" alt=""></a> </div>
+                      <div class="image"> <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => Str::slug($value->name)]) }}"><img src="{{$value->options->image}}" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="index8a95.html?page-detail">{{ $value->name}}</a></h3>
+                      <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => Str::slug($value->name)]) }}">{{ $value->name}}</a></h3>
                       <div class="price">{{number_format($value->price)}}</div>
                     </div>
                     <div class="col-xs-1 action"> <a href="{{ route('frontend.giohang.xoa', ['row_id' => $value->rowId]) }}"><i class="fa fa-trash"></i></a> </div>
