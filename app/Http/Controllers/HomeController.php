@@ -627,7 +627,7 @@ class HomeController extends Controller
             foreach($files as $file)
                 $all_files[] = pathinfo($file);
             
-    
+            $sesion_title_menu='';
             return view('frontend.sanpham_chitiet',compact('sesion_title_menu','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
         }
         else

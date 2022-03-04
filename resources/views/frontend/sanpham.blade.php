@@ -553,9 +553,18 @@
         
       </div>
       @else
-        <p>{!!$sesion_title!!}</p>
+      <div class="col-xs-12 col-sm-12 col-md-9 rht-col"> 
+        <div id="category" class="category-carousel hidden-xs">
+          <div class="item">
+            <div class="image">
+              <div class="text" style="font-size: 35px;">
+                {!!$sesion_title!!}
+              </div>
+            </div>
+          </div>
+        </div>         
+      </div>
       @endif
-      <!-- /.col --> 
     </div>
     <!-- /.row --> 
     <!-- ============================================== BRANDS CAROUSEL ============================================== -->
