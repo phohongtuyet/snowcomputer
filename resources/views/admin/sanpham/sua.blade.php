@@ -148,8 +148,8 @@
                 
                 <div class="mb-3">
                     <label class="form-label" for="motasanpham">Mô tả</label>
-                    <textarea class="form-control" id="motasanpham" name="motasanpham"  value="{{$sanpham->motasanpham }}"></textarea>
-                    @error('tenchatlieu')
+                    <textarea class="form-control" id="motasanpham" name="motasanpham"  value="{{ $sanpham->motasanpham }}"></textarea>
+                    @error('mota')
                         <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                     @enderror
                 </div>          

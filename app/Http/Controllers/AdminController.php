@@ -47,7 +47,7 @@ class AdminController extends Controller
             return redirect()->route('login')->with('warning', 'Tài khoản của bạn đã bị tạm khóa. Vui lòng liên hệ quản trị viên');
         }      
         else
-            return view('admin.errors.404');
+            return view('errors.404');
    }
 
    public function getForbidden()
