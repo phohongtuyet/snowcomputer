@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- index.html  21 Nov 2019 03:44:50 GMT -->
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Trang quản trị - SnowComputer  </title>
-  <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('public/admin/css/app.min.css')}}">
-  <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('public/admin/css/style.css')}}">
   <link rel="stylesheet" href="{{ asset('public/admin/css/components.css')}}">
-  <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{ asset('public/admin/css/custom.css')}}">
   <link rel='shortcut icon' type='image/x-icon' href="{{ asset('public/admin/img/SnowComputer.png')}}" />
-
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 </head>
 
@@ -202,7 +195,6 @@
                   <li><a class="nav-link" href="{{ route('admin.hangsanxuat') }}">Hãng sản xuất</a></li>
                   <li><a class="nav-link" href="{{ route('admin.noisanxuat') }}">Nơi sản xuất</a></li>   
                   <li><a class="nav-link" href="{{ route('admin.slides') }}">Trình chiếu </a></li>                
-              
                 </ul>
               </li>
               <li class="dropdown">
@@ -210,15 +202,13 @@
                     data-feather="navigation"></i><span>Quản lý bài viết</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.chude') }}">Chủ đề</a></li>
-                  <li><a class="nav-link" href="{{ route('admin.baiviet') }}">Bài viết</a></li>
-                  
+                  <li><a class="nav-link" href="{{ route('admin.baiviet') }}">Bài viết</a></li>  
                 </ul>
               </li>
 
               <li class="menu-header">Người dùng</li>
               <li class="dropdown">
-                <a href="{{ route('admin.nguoidung') }}" ><i data-feather="users"></i><span>Quản lý người dùng</span></a>
-                
+                <a href="{{ route('admin.nguoidung') }}" ><i data-feather="users"></i><span>Quản lý người dùng</span></a>     
               </li>
 
               <li class="menu-header">Sản phẩm</li>
@@ -231,10 +221,9 @@
                 </ul>
               </li>
               
-            
               <li class="menu-header">Đặt hàng</li>
               <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="image"></i><span>Quản lý đặt hàng</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shopping-cart"></i><span>Quản lý đặt hàng</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('admin.tinhtrang') }}">Tình trạng đơn hàng</a></li>
                   <li><a class="nav-link" href="{{ route('admin.donhang') }}">Đơn hàng </a></li>
@@ -256,7 +245,6 @@
                     Thống kê doanh thu</span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{{route('admin.donhang.doanhthu')}}">Doanh thu</a></li>
-                 
                 </ul>
               </li>
             
@@ -277,10 +265,10 @@
             @endguest
           </aside>      
         </div>
-      <!-- Main Content -->
       <div class="main-content">
         @yield('content')       
       </div>
+
       <footer class="main-footer">
         <div class="footer-left">
           <a href="">by SnowComputer</a></a>
@@ -290,19 +278,13 @@
       </footer>
     </div>
   </div>
-  <!-- General JS Scripts -->
+
   <script src="{{ asset('public/admin/js/app.min.js')}}"></script>
-  <!-- JS Libraies -->
   <script src="{{ asset('public/admin/bundles/apexcharts/apexcharts.min.js')}}"></script>
-  <!-- Page Specific JS File -->
   <script src="{{ asset('public/admin/js/page/index.js')}}"></script>
-  <!-- Template JS File -->
   <script src="{{ asset('public/admin/js/scripts.js')}}"></script>
-  <!-- Custom JS File -->
   <script src="{{ asset('public/admin/js/custom.js')}}"></script>
-
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-
   <script>
 		
 		$(document).ready(function() {
@@ -328,9 +310,6 @@
 			$("#table_id").wrap('<div class="table-responsive"></div>');
 		});
 	</script>
-  
   @yield('javascript')
 </body>
-
-
 </html>
