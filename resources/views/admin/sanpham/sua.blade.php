@@ -86,19 +86,26 @@
                 <div class="mb-3">
                     <label class="form-label" for="trangthaisanpham">Trạng thái sản phẩm<span class="text-danger font-weight-bold">*</span></label>
                     <select class="form-control @error('trangthaisanpham') is-invalid @enderror" name="trangthaisanpham" id="trangthaisanpham" value="{{ old('soluong') }}"> 
-                        <option value="">-- Chọn --</option>
                         @if($sanpham->trangthaisanpham === 1)
+                            <option value="">-- Chọn --</option>
                             <option value="1" selected >New</option>
                             <option value="2" >Sale</option>
                             <option value="3" >Hot</option>
                         @elseif($sanpham->trangthaisanpham === 2)
+                            <option value="">-- Chọn --</option>
                             <option value="1"  >New</option>
                             <option value="2" selected>Sale</option>
                             <option value="3" >Hot</option>
-                        @else
+                        @elseif($sanpham->trangthaisanpham === 3)
+                            <option value="">-- Chọn --</option>
                             <option value="1"  >New</option>
                             <option value="2" >Sale</option>
                             <option value="3" selected>Hot</option>
+                        @else
+                            <option value=""selected>-- Chọn --</option>
+                            <option value="1"  >New</option>
+                            <option value="2" >Sale</option>
+                            <option value="3" >Hot</option>
                         @endif
                     </select>
                     @error('trangthaisanpham')
