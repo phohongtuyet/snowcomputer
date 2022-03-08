@@ -1,10 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Loại sản phẩm ')
+@section('title', 'Nhóm sản phẩm ')
 @section('content')
 
 <div class="card">
     <div class="card-body table-responsive">
-        <h3 class="card-title">Danh sách loại sản phẩm</h3>
+        <h3 class="card-title">Danh sách nhóm sản phẩm</h3>
         @if (session('status'))
             <div id="AlertBox" class="alert alert-success hide" role="alert">
                 {!! session('status') !!}

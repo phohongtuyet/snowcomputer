@@ -51,22 +51,26 @@ class NhomSanPhamController extends Controller
 
     public function getSua($id)
     {
+        $danhmuc = DanhMuc::all();
         $nhomsanpham = NhomSanPham::find($id);
-        return view('admin.nhomsanpham.sua', compact('nhomsanpham'));
+        return view('admin.nhomsanpham.sua', compact('nhomsanpham','danhmuc'));
     }
 
     public function postSua(Request $request, $id)
     {
         $this->validate($request, [
+            'danhmuc_id' => ['required'],
             'tennhomsanpham' => ['required', 'max:255', 'unique:nhomsanpham,tennhomsanpham,'.$id],
         ],
         $messages = [
-            'required' => 'Tên nhóm không được bỏ trống.',
+            'danhmuc_id.required' => 'Danh mục sản phẩm chưa được chọn.',
+            'tennhomsanpham.required' => 'Tên nhóm không được bỏ trống.',
             'unique' => 'Tên nhóm đã có trong hệ thống.',
             'max' => 'Độ dài tối đa không quá 255 ký tự!',
         ]);
            
         $orm = NhomSanPham::find($id);
+        $orm->danhmuc_id = $request->danhmuc_id;
         $orm->tennhomsanpham = $request->tennhomsanpham;
         $orm->tennhomsanpham_slug = Str::slug($request->tennhomsanpham, '-');
         $orm->save();
