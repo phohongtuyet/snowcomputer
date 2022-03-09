@@ -97,18 +97,19 @@
         <div class="col-12 col-sm-12 col-lg-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4>Biểu đồ doanh thu </h4>
+                    <h4>Biểu đồ doanh thu hôm nay</h4>
                     <div class="card-header-action">
                         <div class="dropdown">
-                            
                         </div>
-                        <a href="#" class="btn btn-primary">View All</a>
+                        <a href="{{route('admin.donhang')}}" class="btn btn-primary">View All</a>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div id="chart" style="height: 300px;"></div>
+                            <div>
+                                <div id="chart" style="height: 300px;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,15 +121,16 @@
 @endsection
 @section('javascript')
 <script>
-    const chart = new Chartisan({
+
+    var chart = new Chartisan({
         el: '#chart',
         url: "@chart('ban_hang_chart')",
         hooks: new ChartisanHooks()
-            .colors(['#90E0EF', '#4299E1','#00C897'])
+            .colors(['#00C897', '#FF6384','#36A2EB'])
             .responsive()
             .beginAtZero()
             .title('Biểu đồ doanh thu hôm nay của cửa hàng')
             .legend({ position: 'bottom' })
-    }); 
+    });    
 </script>
 @endsection

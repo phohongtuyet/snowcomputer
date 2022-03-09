@@ -38,6 +38,6 @@ class CreateBaiVietsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bai_viets');
+        Schema::dropIfExists('baiviet');
     }
 }
