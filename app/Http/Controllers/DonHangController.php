@@ -170,4 +170,33 @@ class DonHangController extends Controller
         return view('admin.donhang.doanhthu');  
 
     }
+
+    public function getChartDoanhThu(Request $request)
+    {
+        if($request->dateStart != '' && $request->dateEnd != '')
+        {
+            $doanhthu = DonHang_ChiTiet::leftJoin('donhang', 'donhang.id', '=', 'donhang_chitiet.donhang_id')
+                                        ->leftJoin('sanpham', 'sanpham.id', '=', 'donhang_chitiet.sanpham_id')
+                                        ->select('sanpham.*',DB::raw('sum(donhang_chitiet.soluongban) AS tongsoluongban'))
+                                        ->where('donhang.tinhtrang_id',10)
+                                        ->whereBetween('donhang.created_at', [ Carbon::parse($request->dateStart)->format('Y-m-d')." 00:00:00", Carbon::parse($request->dateEnd)->format('Y-m-d')." 23:59:59"])
+                                        ->groupBy('sanpham.id')
+                                        ->get();
+           
+            foreach($doanhthu as $item)
+            {
+                $chart[] = array(
+                                'tongsoluongban'=> $item->tongsoluongban,
+                                'dongia'=> $item->dongia,
+                                'ngaydathang'=> Carbon::parse($item['created_at'])->format('m'),
+                                'tensanpham'=> $item->tensanpham,
+                                'tongtien'=> $item->dongia * $item->tongsoluongban,
+                            );
+            }
+            return response()->json(['dh'=>$chart]);  
+            return view('admin.chart.doanhthu',compact('dh','doanhthu'));
+             
+        }
+        return view('admin.chart.doanhthu');  
+    }
 }

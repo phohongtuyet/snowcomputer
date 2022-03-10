@@ -245,6 +245,8 @@
                     Thống kê doanh thu</span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{{route('admin.donhang.doanhthu')}}">Doanh thu</a></li>
+                  <li><a href="{{route('admin.donhang.chart')}}">Doanh thu biểu đồ</a></li>
+
                 </ul>
               </li>
             

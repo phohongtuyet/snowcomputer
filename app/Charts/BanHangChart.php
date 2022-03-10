@@ -23,12 +23,18 @@ class BanHangChart extends BaseChart
                     ->where('donhang.tinhtrang_id',10)
                     ->groupBy('sanpham.id')
                     ->get();
-
-        return Chartisan::build()
-        ->labels([''])
-        ->dataset('Tiền', [$doanhthu[0]->dongia])
-        ->dataset('Số lượng bán', [$doanhthu[0]->tongsoluongban])
-        ->dataset('Tổng tiền', [$doanhthu[0]->tongsoluongban * $doanhthu[0]->dongia]);
-
+        if(!empty($doanhthu))
+        {
+            return Chartisan::build()
+            ->labels(['Chưa có sản phẩm nào được bán hôm nay']);
+        }
+        else
+        {
+            return Chartisan::build()
+            ->labels([''])
+            ->dataset('Tiền', [$doanhthu[0]->dongia])
+            ->dataset('Số lượng bán', [$doanhthu[0]->tongsoluongban])
+            ->dataset('Tổng tiền', [$doanhthu[0]->tongsoluongban * $doanhthu[0]->dongia]);
+        }
     }
 }
