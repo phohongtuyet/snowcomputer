@@ -7,15 +7,14 @@
 				<li><a href="{{route('frontend')}}">Home</a></li>
 				<li class='active'>Tài khoản của tôi</li>
 			</ul>
-		</div><!-- /.breadcrumb-inner -->
-	</div><!-- /.container -->
-</div><!-- /.breadcrumb -->
+		</div>
+	</div>
+</div>
 
 <div class="body-content outer-top-xs">
 	<div class='container'>
 		<div class='row single-product'>
-        <div class='col-xs-12 col-sm-12 col-md-9 rht-col'>
-               
+        	<div class='col-xs-12 col-sm-12 col-md-9 rht-col'>
 				<div class="product-tabs inner-bottom-xs">
 					<div class="row">
 						<div class="col-sm-12 col-md-3 col-lg-3">
@@ -62,7 +61,7 @@
 													<th>{{ date_format($value->created_at, 'd/m/Y H:i:s') }}</th>
 													<th>{{ $value->TinhTrang->tinhtrang }}</th>
 													<th>
-														<a href="{{ route('khachhang.donhang.chitiet',['id' => $value->id])}}"><i class="icon fa fa-info-circle"></i></a>
+														<a href="{{ route('khachhang.donhang.chitiet',['id' => $value->id])}}" class="btn-sua"><i class="icon fa fa-info-circle"></i></a>
 													</th>
 													<th>
 														@if($value->tinhtrang_id === 1 or $value->tinhtrang_id === 2 )
@@ -141,26 +140,33 @@
 						</div><!-- /.col -->
 					</div><!-- /.row -->
 				</div><!-- /.product-tabs -->
-
-				<!-- ============================================== UPSELL PRODUCTS ============================================== -->
-               
-               
-<!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
-			
 			</div><!-- /.col -->
 			<div class="clearfix"></div>
 		</div><!-- /.row -->
+	</div>
 </div>
+<div class="modal fade" id="modal-sua" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Đơn hàng chi tiết</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="sua" class="modal-body">
+						
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+			</div>
+    	</div>
+  	</div>
 </div>
-	@if(session('status'))
-        <div id="thongbao" class="alert alert-success hde thongbao" role="alert">
-            <span class="fa fa-check-circle"></span>
-            <span class="msg">{!! session('status') !!}</span>           
-        </div>     
-    @endif
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+@endsection
+@section('javascript')
 <script>
-    $(document).ready(function() {
+	$(document).ready(function() {
         $("#change_password_group").hide();
         $("#change_password_checkbox").change(function() {
             if($(this).is(":checked"))
@@ -175,6 +181,14 @@
             }
         });
     });
-</script>
 
+	$(document).on('click', '.btn-sua', function(e) {
+		e.preventDefault();
+		let url = $(this).attr('href');
+		$.get(url, function(res) {
+			$('#sua').html(res);
+			$('#modal-sua').modal('show');
+		})
+	});
+</script>
 @endsection

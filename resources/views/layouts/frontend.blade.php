@@ -458,6 +458,8 @@
            },2000);
     });
   </script>
+  @yield('javascript')
+
 </body>
 
 </html>

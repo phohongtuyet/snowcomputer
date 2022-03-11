@@ -87,7 +87,7 @@ Route::prefix('khach-hang')->group(function() {
     
     // Xem và cập nhật trạng thái đơn hàng
     Route::get('/donhang', [KhachHangController::class, 'getDonHang'])->name('khachhang.donhang');
-    Route::get('/don-hang/{id}', [KhachHangController::class, 'getDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
+    Route::get('/don-hang-chi-tiet/{id}', [KhachHangController::class, 'getDonHang_ChiTiet'])->name('khachhang.donhang.chitiet');
     Route::get('/donhang-huy/{id}', [KhachHangController::class, 'getDonHangHuy'])->name('khachhang.donhang.huy');
 
     // Xem và cập nhật mật khẩu

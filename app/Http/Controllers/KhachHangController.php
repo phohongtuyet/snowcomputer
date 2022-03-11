@@ -34,11 +34,12 @@ class KhachHangController extends Controller
 
         return view('khachhang.index',compact('donhang'));
     }
+
     public function getDonHang_ChiTiet($id)
     {
         $donhang = DonHang::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $donhangct = DonHang_ChiTiet::where('donhang_id',$id)->get();
-        return view('khachhang.index',compact('donhangct','donhang')); 
+        return view('khachhang.donhang_chitiet',compact('donhangct','donhang')); 
     }
    
     
