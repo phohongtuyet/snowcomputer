@@ -96,6 +96,12 @@ Route::prefix('khach-hang')->group(function() {
 
     // Cập nhật thông tin tài khoản
 	Route::post('/hoso', [KhachHangController::class, 'postHoSo'])->name('khachhang.hoso');	
+
+    //Sản phẩm yêu thích
+    Route::get('/danh-sach-san-pham-yeu-thich', [KhachHangController::class, 'getSanPhamYeuThich'])->name('khachhang.sanphamyeuthich');	
+    Route::get('/them-san-pham-yeu-thich/{tensanpham_slug}', [KhachHangController::class, 'getThemSanPhamYeuThich'])->name('khachhang.sanphamyeuthich.them');	
+    Route::post('/xoa-san-pham-yeu-thich', [KhachHangController::class, 'postXoaSanPhamYeuThich'])->name('khachhang.sanphamyeuthich.xoa');	
+
 });
 
 // Trang quản trị

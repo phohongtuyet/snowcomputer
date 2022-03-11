@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
         User::create([
             'name' => 'Administrator',
             'username' => 'admin',
-            'email' => 'snowcomputer@gmail.com',
+            'email' => 'snowcomputershop@gmail.com',
             'password' => '$2y$10$OZ5YFT7m2IQBEmQyf9B5K.yUER247wUgDi9t0mfnljdDie2Do.GuC', // 123456789
             'khoa' => 0,
             'role' => 'admin',

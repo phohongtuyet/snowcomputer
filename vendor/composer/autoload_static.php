@@ -597,6 +597,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
     );
 
     public static $classMap = array (
+        'App\\Charts\\BanHangChart' => __DIR__ . '/../..' . '/app/Charts/BanHangChart.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\HangSanXuatExport' => __DIR__ . '/../..' . '/app/Exports/HangSanXuatExport.php',
@@ -661,6 +662,7 @@ class ComposerStaticInit83c69364c5337ded7ee11e9f3ca9d133
         'App\\Models\\NhomSanPham' => __DIR__ . '/../..' . '/app/Models/NhomSanPham.php',
         'App\\Models\\NoiSanXuat' => __DIR__ . '/../..' . '/app/Models/NoiSanXuat.php',
         'App\\Models\\SanPham' => __DIR__ . '/../..' . '/app/Models/SanPham.php',
+        'App\\Models\\SanPhamYeuThich' => __DIR__ . '/../..' . '/app/Models/SanPhamYeuThich.php',
         'App\\Models\\Slides' => __DIR__ . '/../..' . '/app/Models/Slides.php',
         'App\\Models\\TinhTrang' => __DIR__ . '/../..' . '/app/Models/TinhTrang.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

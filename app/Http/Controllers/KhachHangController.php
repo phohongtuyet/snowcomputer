@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\DonHang;
 use App\Models\DonHang_ChiTiet;
+use App\Models\SanPhamYeuThich;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\HangSanXuat;
 
 class KhachHangController extends Controller
 {
@@ -66,5 +69,41 @@ class KhachHangController extends Controller
         $orm->save();
         
         return redirect()->back()->with('status', 'Khách hàng đã cập nhật thông tin thành công!');
+    }
+
+    public function getSanPhamYeuThich()
+    {
+        $hangsanxuat = HangSanXuat::all();
+        $sanphamyeuthich = SanPhamYeuThich::all();
+
+        return view('khachhang.sanphamyeuthich',compact('hangsanxuat','sanphamyeuthich'));
+    }
+
+    public function getThemSanPhamYeuThich ($tensanpham_slug)
+    {
+        $sanpham = SanPham::where('tensanpham_slug', $tensanpham_slug)->first();
+
+        $sanphamyeuthich = SanPhamYeuThich::where('sanpham_id',$sanpham->id)->first();
+
+        if(empty($sanphamyeuthich))
+        {
+            $orm = new SanPhamYeuThich();
+            $orm->sanpham_id = $sanpham->id;
+            $orm->user_id = Auth::user()->id;
+            $orm->save();
+            return redirect()->back()->with('status', 'Đã thêm sản phẩm vào danh sách yêu thích!');
+        }
+        else
+        {
+            return redirect()->back()->with('status', 'Sản phẩm đã tồn tại trong danh sách yêu thích!');
+        }
+    }
+
+    public function postXoaSanPhamYeuThich(Request $request )
+    {
+        $orm = SanPhamYeuThich::find($request->ID_delete);
+        $orm->delete();
+    
+        return redirect()->back()->with('status', 'Xóa thành công sản phẩm khỏi danh sách yêu thích!');
     }
 }

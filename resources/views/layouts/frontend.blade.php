@@ -50,7 +50,7 @@
             @if(!Auth::check())
               <li class="login"><a href="{{route('khachhang.dangnhap')}}"><span>Đăng nhập</span></a></li>
             @else
-              <li class="wishlist"><a href="#"><span>Danh sách yêu thích</span></a></li>
+              <li class="wishlist"><a href="{{route('khachhang.sanphamyeuthich')}}"><span>Danh sách yêu thích</span></a></li>
               <li class="myaccount"><a href="{{route('khachhang')}}"><span>Tài khoản của tôi</span></a></li>
             @endif
           </ul>

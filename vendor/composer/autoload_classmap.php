@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Charts\\BanHangChart' => $baseDir . '/app/Charts/BanHangChart.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Exports\\HangSanXuatExport' => $baseDir . '/app/Exports/HangSanXuatExport.php',
@@ -70,6 +71,7 @@ return array(
     'App\\Models\\NhomSanPham' => $baseDir . '/app/Models/NhomSanPham.php',
     'App\\Models\\NoiSanXuat' => $baseDir . '/app/Models/NoiSanXuat.php',
     'App\\Models\\SanPham' => $baseDir . '/app/Models/SanPham.php',
+    'App\\Models\\SanPhamYeuThich' => $baseDir . '/app/Models/SanPhamYeuThich.php',
     'App\\Models\\Slides' => $baseDir . '/app/Models/Slides.php',
     'App\\Models\\TinhTrang' => $baseDir . '/app/Models/TinhTrang.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

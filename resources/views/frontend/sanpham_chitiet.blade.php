@@ -194,9 +194,11 @@
                                         </div>
                                         <div class="col-sm-6 col-xs-6">
                                             <div class="favorite-button m-t-5">
-                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="#">
+                                                @if(Auth::check())
+                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $sp->tensanpham_slug]) }}">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
+                                                @endif
                                                 <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Add to Compare" href="#">
                                                 <i class="fa fa-signal"></i>
                                                 </a>
@@ -363,12 +365,13 @@
                                                                 </button>
                                                                 <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng</button>                                                                   
                                                             </li>
-                                                            <li class="lnk wishlist">
-                                                                <a class="add-to-cart" href="detail.html" title="Wishlist">
-                                                                    <i class="icon fa fa-heart"></i>
-                                                                </a>
-                                                            </li>
-
+                                                            @if(Auth::check())
+                                                                <li class="lnk wishlist">
+                                                                    <a class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}" title="Yêu thích">
+                                                                        <i class="icon fa fa-heart"></i>
+                                                                    </a>
+                                                                </li>
+                                                            @endif
                                                             <li class="lnk">
                                                                 <a class="add-to-cart" href="detail.html" title="Compare">
                                                                     <i class="fa fa-signal"></i>
@@ -423,5 +426,10 @@
         </div><!-- /.logo-slider -->
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
-
+@if(session('status'))
+    <div id="thongbao" class="alert alert-success hde thongbao" role="alert">
+        <span class="fa fa-check-circle"></span>
+        <span class="msg">{!! session('status') !!}</span>           
+    </div>      
+@endif
 @endsection
