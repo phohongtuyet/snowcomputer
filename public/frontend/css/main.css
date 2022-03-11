@@ -418,7 +418,7 @@ img[src="assets/images/blank.gif"] {
   margin-top: 0px;
 }
 
-.brand-slider img {opacity:0.3; width:130px}
+.brand-slider img {opacity:0.0; width:130px;}
 
 .brand-slider .owl-item { text-align:center}
 

@@ -170,4 +170,10 @@
 	</div>
 </div>
 <!-- ============================================================= FOOTER ============================================================= -->
+@if(session('status'))
+        <div id="thongbao" class="alert alert-success hide thongbao" role="alert">
+            <span class="fa fa-check-circle"></span>
+            <span class="msg">{!! session('status') !!}</span>           
+        </div>        
+@endif
 @endsection

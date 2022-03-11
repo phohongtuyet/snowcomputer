@@ -217,7 +217,20 @@ class HomeController extends Controller
         $messages = [
             'noidung.required' => 'Nội dung bình luận không được bỏ trống.',
         ]);
-        
+        $chude = ChuDe::all();
+        $xemnhieu = BaiViet::orderBy('luotxem', 'desc')
+        ->where([
+                    ['hienthi',1],
+                    ['kiemduyet', 1],
+                ])
+        ->paginate(2);
+        $moi = BaiViet::orderBy('created_at', 'desc')
+        ->where([
+                    ['hienthi',1],
+                    ['kiemduyet', 1],
+                ])
+        ->paginate(2);
+
         $baiviet = BaiViet::where('tieude_slug', $tieude_slug)->first();
         $binhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
 
@@ -226,9 +239,9 @@ class HomeController extends Controller
         $orm->baiviet_id = $baiviet->id;
         $orm->noidung = $request->noidung;
         $orm->save();
-        session()->flash('success', 'Bình luận của bạn đã được ghi nhận');
+        session()->flash('status', 'Bình luận của bạn đã được ghi nhận');
 
-        return view('frontend.baiviet_chitiet', compact('baiviet','binhluan'));
+        return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
     }
 
 
@@ -366,14 +379,13 @@ class HomeController extends Controller
                 'name_slug'=>$sanpham->tensanpham_slug
                 ]
         ]);
-        return redirect()->back();
-        //return redirect()->route('frontend');
+        return redirect()->back()->with('status', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
     
     public function getGioHang_Xoa($row_id)
     {
         Cart::remove($row_id);
-        return redirect()->route('frontend.giohang');
+        return redirect()->back();
     }
     
     public function getGioHang_XoaTatCa()

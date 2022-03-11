@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+.thongbao{
+  background: #157ED2;
+  padding: 20px 40px;
+  min-width: 420px;
+  position: absolute;
+  right: 0;
+  top: 10px;
+  border-radius: 4px;
+  border-left: 8px solid #FDD922;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.thongbao.showAlert{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.thongbao.show{
+  animation:  1s ease forwards;
+}
+
+.thongbao.hide{
+  animation: 1s ease forwards;
+}
+
+.thongbao .fa-check-circle{
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 30px;
+}
+.thongbao .msg{
+  padding: 0 20px;
+  font-size: 18px;
+  color: #ffffff;
+}

@@ -247,6 +247,12 @@
       <!-- ============================================== CONTENT : END ============================================== --> 
     </div>
     <!-- /.row --> 
+    @if(session('status'))
+        <div id="thongbao" class="alert alert-success hde thongbao" role="alert">
+            <span class="fa fa-check-circle"></span>
+            <span class="msg">{!! session('status') !!}</span>           
+        </div>      
+    @endif
     <!-- ============================================== BRANDS CAROUSEL ============================================== -->
     <div id="brands-carousel" class="logo-slider">
       <div class="logo-slider-inner">

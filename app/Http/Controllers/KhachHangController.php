@@ -30,14 +30,15 @@ class KhachHangController extends Controller
         $orm->save();
 
         $donhang = DonHang::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        session()->flash('status', 'Khách hàng đã hủy đơn hàng thành công');
+
         return view('khachhang.index',compact('donhang'));
     }
     public function getDonHang_ChiTiet($id)
     {
         $donhang = DonHang::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $donhangct = DonHang_ChiTiet::where('donhang_id',$id)->get();
-        return view('khachhang.index',compact('donhangct','donhang'));
-        
+        return view('khachhang.index',compact('donhangct','donhang')); 
     }
    
     
@@ -63,6 +64,6 @@ class KhachHangController extends Controller
         if(!empty($request->password)) $orm->password = Hash::make($request->password);
         $orm->save();
         
-        return redirect()->route('khachhang');       
+        return redirect()->back()->with('status', 'Khách hàng đã cập nhật thông tin thành công!');
     }
 }

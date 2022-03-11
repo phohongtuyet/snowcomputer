@@ -152,7 +152,12 @@
 		</div><!-- /.row -->
 </div>
 </div>
-
+	@if(session('status'))
+        <div id="thongbao" class="alert alert-success hde thongbao" role="alert">
+            <span class="fa fa-check-circle"></span>
+            <span class="msg">{!! session('status') !!}</span>           
+        </div>     
+    @endif
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script>
     $(document).ready(function() {

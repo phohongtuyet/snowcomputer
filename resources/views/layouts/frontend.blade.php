@@ -26,6 +26,7 @@
 
   <!-- Icons/Glyphs -->
   <link rel="stylesheet" href="{{ asset('public/frontend/css/font-awesome.css')}}">
+  <link rel="stylesheet" href="{{ asset('public/frontend/css/thongbao.css')}}">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Barlow:200,300,300i,400,400i,500,500i,600,700,800" rel="stylesheet">
@@ -445,6 +446,16 @@
 
               return html;
       }
+    });
+
+    $(document).ready(function() {
+      $('.thongbao').addClass("show");
+      $('.thongbao').removeClass("hide");
+      $('.thongbao').addClass("showAlert");
+      setTimeout(function(){
+            $('.thongbao').removeClass("show");
+            $('.thongbao').addClass("hide");
+           },2000);
     });
   </script>
 </body>
