@@ -603,10 +603,26 @@ class HomeController extends Controller
 
     public function selectSearch(Request $request)
     {
-        $data = SanPham::select("tensanpham as name","thumuc as img","dongia as price")
+        //tìm sản phẩm theo từ khóa
+        $sanpham = SanPham::select("tensanpham","thumuc","dongia")
                 ->where("tensanpham","LIKE","%{$request->input('query')}%")
                 ->get();
 
+        // gán ảnh từ thư mục vào mảng
+        foreach($sanpham as $item)
+        {   
+            $img='';
+            $dir = 'storage/app/' . $item->thumuc . '/images/';
+            $files = scandir($dir); 
+            $img = config('app.url') . '/'. $dir . $files[2];
+                    
+            $data[] = array(
+                                'name'=> $item->tensanpham,
+                                'img'=> $img,
+                                'price'=> $item->dongia,
+                            );
+        }
+        //Đổ kết quả về tìm kiếm
         return response()->json($data);
     }
 

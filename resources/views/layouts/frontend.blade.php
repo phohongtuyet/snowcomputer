@@ -436,14 +436,13 @@
               var parts = item.split('#'),
                   html = '<div class="row">';
                   html += '<div class="col-md-2">';
-                  html += '<img src="'+data.img+'"/ height="44px;" width="65px;">';
+                  html += '<img src="'+data.img+'"/ height="50px;" width="70px;">';
                   html += '</div>';
-                  html += '<div class="col-md-10 pl-0">';
+                  html += '<div class="col-md-10 pl-0" style="padding-left: 30px;>"';
                   html += '<span>'+data.name+'</span>';
-                  html += '<p class="m-0">'+  data.price +'</p>';
+                  html += '<p class="m-0">'+  data.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}); +'</p>';
                   html += '</div>';
                   html += '</div>';
-
               return html;
       }
     });
