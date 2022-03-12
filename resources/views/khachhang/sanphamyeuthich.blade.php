@@ -5,7 +5,7 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="{{route('frontend')}}">Home</a></li>
-				<li class='active'>Tài khoản của tôi</li>
+				<li class='active'>Danh sách sản phẩm yêu thích</li>
 			</ul>
 		</div>
 	</div>
@@ -26,7 +26,13 @@
                             <tbody>
                                 @foreach($sanphamyeuthich as $value)
                                     <tr>
-                                        <td class="col-md-2 col-sm-6 col-xs-6"><img src="assets/images/products/p1.jpg" alt="imga"></td>
+                                    @php 
+                                        $img='';
+                                        $dir = 'storage/app/' . $value->SanPham->thumuc . '/images/';
+                                        $files = scandir($dir); 
+                                        $img = config('app.url') . '/'. $dir . $files[2];
+                                    @endphp
+                                        <td class="col-md-2 col-sm-6 col-xs-6"><img src="{{$img}}" alt="imga"></td>
                                         <td class="col-md-7 col-sm-6 col-xs-6">
                                             <div class="product-name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => Str::slug($value->SanPham->tensanpham)]) }}">{{$value->SanPham->tensanpham}}</a></div>
                                             <div class="rating">
