@@ -6,19 +6,18 @@
       <ul class="list-inline list-unstyled">
         <li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
           @if(empty($tennhomsanpham))
-            <li class='active' >{{$sesion_title_menu}}</li>
+            <li class='active' ><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
           @elseif(empty($tenloaisanpham))
-            <li style="width: 119px;">{{$sesion_title_menu}}</li>
+            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
             <li class='active'>{{$tennhomsanpham}}</li>
           @elseif(!empty($sesion_title))
-            <li class='active'>{{$tennhomsanpham}}</li>
+            <li style="width: 165px;" class='active'>{{$tennhomsanpham}}</li>
             <li class='active' >{{$sesion_title_menu}}</li>
           @else
-            <li style="width: 119px;" >{{$tendanhmuc}}</li>
-            <li style="width: 106px;" class=>{{$tennhomsanpham}}</li>
+            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($tendanhmuc) ]) }}">{{$tendanhmuc}}</a></li>
+            <li style="width: 173px;"><a href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' =>Str::slug($tennhomsanpham) ]) }}">{{$tennhomsanpham}}</a></li>
             <li class='active'>{{$tenloaisanpham}}</li>
-          @endif
-        
+          @endif 
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -43,11 +42,11 @@
                         @foreach($value->NhomSanPham as $nhom)
                           <div class="col-sm-12 col-md-3">
                             <h2 class="title">
-                              <a href="{{route('frontend.sanpham.nhom',['nhomsanpham' => $nhom->tennhomsanpham_slug])}}">{{ $nhom->tennhomsanpham }} </a>       
+                              <a href="{{route('frontend.sanpham.nhom',['danhmuc_slug' =>$value->tendanhmuc_slug,'nhomsanpham' => $nhom->tennhomsanpham_slug])}}">{{ $nhom->tennhomsanpham }} </a>       
                             </h2>
                             @foreach($nhom->LoaiSanPham as $loai)
                               <ul class="links list-unstyled">
-                                <li><a href="{{route('frontend.sanpham.loai',['nhomsanpham' => $nhom->tennhomsanpham_slug,'loaisanpham' => $loai->tenloai_slug ])}}">{{$loai->tenloai}}</a></li>
+                                <li><a href="{{route('frontend.sanpham.loai',['danhmuc_slug' =>$value->tendanhmuc_slug,'nhomsanpham' => $nhom->tennhomsanpham_slug,'loaisanpham' => $loai->tenloai_slug ])}}">{{$loai->tenloai}}</a></li>
                               </ul>
                             @endforeach
                           </div>

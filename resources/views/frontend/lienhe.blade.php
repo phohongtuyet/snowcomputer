@@ -65,7 +65,7 @@
                     </div>
                     <div class="clearfix email">
                         <span class="contact-i"><i class="fa fa-envelope"></i></span>
-                        <span class="contact-span"><a href="#">snowcomputershop@gmail.com</a></span>
+                        <span class="contact-span"><a href="mailto:snowcomputershop@gmail.com">snowcomputershop@gmail.com</a></span>
                     </div>
                 </div>			
             </div><!-- /.contact-page -->

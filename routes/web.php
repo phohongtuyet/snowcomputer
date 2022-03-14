@@ -31,10 +31,10 @@ Auth::routes(['verify' => true]);
 Route::get('/', [HomeController::class, 'getHome'])->name('frontend');
 
 // Trang sản phẩm
-Route::get('/collections/{danhmuc_slug}', [HomeController::class, 'getSanPham'])->name('frontend.sanpham');
+Route::get('/sanpham/{danhmuc_slug}', [HomeController::class, 'getSanPham'])->name('frontend.sanpham');
 Route::get('/san-pham/{tensanpham_slug}', [HomeController::class, 'getSanPham_ChiTiet'])->name('frontend.sanpham.chitiet');
-Route::get('/san-pham/category/{nhomsanpham}', [HomeController::class, 'getSanPham_Nhom'])->name('frontend.sanpham.nhom');
-Route::get('/san-pham/type/{nhomsanpham}/{loaisanpham}', [HomeController::class, 'getSanPham_LoaiSanPham'])->name('frontend.sanpham.loai');
+Route::get('/san-pham/{danhmuc_slug}/{nhomsanpham}', [HomeController::class, 'getSanPham_Nhom'])->name('frontend.sanpham.nhom');
+Route::get('/san-pham/{danhmuc_slug}/{nhomsanpham}/{loaisanpham}', [HomeController::class, 'getSanPham_LoaiSanPham'])->name('frontend.sanpham.loai');
 Route::get('/ajax-search', [HomeController::class, 'selectSearch'])->name('frontend.selectSearch');
 Route::get('/tim-kiem', [HomeController::class, 'getTimKiemSanPham'])->name('frontend.timkiemsanpham');
 Route::get('/san-pham/hang-san-xuat/{hangsanxuat}', [HomeController::class, 'getSanPham_HangSanXuat'])->name('frontend.hangsanxuat');
@@ -55,7 +55,7 @@ Route::post('/dat-hang', [HomeController::class, 'postDatHang'])->name('frontend
 Route::get('/dat-hang-thanh-cong', [HomeController::class, 'getDatHangThanhCong'])->name('frontend.dathangthanhcong');
 
 //Tin tức
-Route::get('/tin-tuc', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet');
+Route::get('/tin-tuc-cong-nghe', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet');
 Route::get('/tin-tuc/{tieude_slug}', [HomeController::class, 'getBaiViet_ChiTiet'])->name('frontend.baiviet_chitiet');
 Route::get('/tin-tuc/chu-de/{chude}', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet_chude');
 

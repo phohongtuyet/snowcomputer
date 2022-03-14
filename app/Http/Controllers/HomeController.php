@@ -478,9 +478,8 @@ class HomeController extends Controller
         return view('frontend.dathang_thanhcong');
     }
 
-    public function getSanPham_Nhom($nhomsanpham)
+    public function getSanPham_Nhom($danhmuc_slug,$nhomsanpham)
     {
-
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
@@ -495,7 +494,7 @@ class HomeController extends Controller
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
         
-        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
         $tennhomsanpham = $nhomsp->tennhomsanpham;
         $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
         $tendanhmuc = $namedanhmuc->tendanhmuc;
@@ -504,7 +503,7 @@ class HomeController extends Controller
         return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
     }
 
-    public function getSanPham_LoaiSanPham($nhomsanpham,$loaisanpham)
+    public function getSanPham_LoaiSanPham($danhmuc_slug,$nhomsanpham,$loaisanpham)
     {
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
