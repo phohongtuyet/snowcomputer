@@ -303,22 +303,91 @@ class HomeController extends Controller
 
     public function getSanPham($danhmuc_slug)
     {
-		$slides = Slides::where('hienthi', 1)->get();
-		$hangsanxuat = HangSanXuat::all();
-        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
-                                ->where('tendanhmuc_slug',$danhmuc_slug)
-                                ->select('sanpham.*','tendanhmuc')
-                                ->paginate(16);
+        if(request()->orderby=='')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tendanhmuc_slug',$danhmuc_slug)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+        }
+        elseif(request()->orderby === 'priceUp')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tendanhmuc_slug',$danhmuc_slug)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'asc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Giá: Thấp nhất đầu tiên';
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        }
+        elseif(request()->orderby === 'priceDown')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tendanhmuc_slug',$danhmuc_slug)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'desc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Giá: Cao nhất đầu tiên';
 
-        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-        $tendanhmuc = $namedanhmuc->tendanhmuc;
-        $sesion_title_menu = $namedanhmuc->tendanhmuc;
-        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        }
+        elseif(request()->orderby === 'name')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$danhmuc_slug)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tendanhmuc_slug',$danhmuc_slug)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('tensanpham', 'asc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Tên sản phẩm: A đến Z';
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        }
+		
     }
 
     public function getSanPham_ChiTiet($tensanpham_slug)
@@ -480,54 +549,214 @@ class HomeController extends Controller
 
     public function getSanPham_Nhom($danhmuc_slug,$nhomsanpham)
     {
-		$slides = Slides::where('hienthi', 1)->get();
-		$hangsanxuat = HangSanXuat::all();
-        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        if(request()->orderby=='')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tennhomsanpham_slug',$nhomsanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
 
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
-                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
-                                ->where('tennhomsanpham_slug',$nhomsanpham)
-                                ->select('sanpham.*','tendanhmuc')
-                                ->paginate(16);
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        }
+        elseif(request()->orderby === 'priceUp')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+    
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tennhomsanpham_slug',$nhomsanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'asc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Giá: Thấp nhất đầu tiên';
 
-        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-        
-        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
-        $tennhomsanpham = $nhomsp->tennhomsanpham;
-        $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
-        $tendanhmuc = $namedanhmuc->tendanhmuc;
-        $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        }
+        elseif(request()->orderby === 'priceDown')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+    
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tennhomsanpham_slug',$nhomsanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'desc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Giá: Cao nhất đầu tiên';
 
-        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        }
+        elseif(request()->orderby === 'name')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+    
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tennhomsanpham_slug',$nhomsanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('tensanpham', 'asc')
+                                    ->paginate(16);
+    
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Tên sản phẩm từ: A đến Z';
+
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        }
     }
 
     public function getSanPham_LoaiSanPham($danhmuc_slug,$nhomsanpham,$loaisanpham)
     {
-		$slides = Slides::where('hienthi', 1)->get();
-		$hangsanxuat = HangSanXuat::all();
-        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        if(request()->orderby=='')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tenloai_slug',$loaisanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
+            $tenloaisanpham = $nameloai->tenloai;
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $name = 'Mặc định';
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+        }
+        elseif(request()->orderby === 'priceUp')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tenloai_slug',$loaisanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'asc')
+                                    ->paginate(16);
+
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
+            $tenloaisanpham = $nameloai->tenloai;
+            $sesion_title_menu = $nameloai->tenloai;
+            $name = 'Giá: Thấp nhất đầu tiên';
+            return view('frontend.sanpham',compact('tenloaisanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+        }
+        elseif(request()->orderby === 'priceDown')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tenloai_slug',$loaisanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('dongia', 'desc')
+                                    ->paginate(16);
+
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
+            $tenloaisanpham = $nameloai->tenloai;
+            $sesion_title_menu = $nameloai->tenloai;
+            $name = 'Giá: Cao nhất đầu tiên';
+
+            return view('frontend.sanpham',compact('tenloaisanpham','tennhomsanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        }
+        elseif(request()->orderby === 'name')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
         
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
-                                ->where('tenloai_slug',$loaisanpham)
-                                ->select('sanpham.*','tendanhmuc')
-                                ->paginate(16);
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where('tenloai_slug',$loaisanpham)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->orderBy('tensanpham', 'asc')
+                                    ->paginate(16);
 
-        $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
 
-        $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
-        $tennhomsanpham = $nhomsp->tennhomsanpham;
-        $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
-        $tendanhmuc = $namedanhmuc->tendanhmuc;
-        $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
-        $tenloaisanpham = $nameloai->tenloai;
-        $sesion_title_menu = $nameloai->tenloai;
-
-        return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
+            $tenloaisanpham = $nameloai->tenloai;
+            $sesion_title_menu = $nameloai->tenloai;
+            $name = 'Tên sản phẩm: A đến Z';
+            return view('frontend.sanpham',compact('tenloaisanpham','tennhomsanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+        }
     }
 
     public function postDanhGia(Request $request, $tensanpham_slug)

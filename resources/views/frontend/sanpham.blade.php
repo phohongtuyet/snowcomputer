@@ -5,19 +5,16 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
-          @if(empty($tennhomsanpham))
-            <li class='active' ><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
-          @elseif(empty($tenloaisanpham))
-            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
-            <li class='active'>{{$tennhomsanpham}}</li>
-          @elseif(!empty($sesion_title))
-            <li style="width: 165px;" class='active'>{{$tennhomsanpham}}</li>
-            <li class='active' >{{$sesion_title_menu}}</li>
-          @else
-            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($tendanhmuc) ]) }}">{{$tendanhmuc}}</a></li>
-            <li style="width: 173px;"><a href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' =>Str::slug($tennhomsanpham) ]) }}">{{$tennhomsanpham}}</a></li>
-            <li class='active'>{{$tenloaisanpham}}</li>
-          @endif 
+        @if(empty($tenloaisanpham) && empty($tennhomsanpham))
+          <li class='active' ><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
+        @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
+          <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
+          <li class='active'>{{$tennhomsanpham}}</li>
+        @else
+          <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($tendanhmuc) ]) }}">{{$tendanhmuc}}</a></li>
+          <li style="width: 173px;"><a href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' =>Str::slug($tennhomsanpham) ]) }}">{{$tennhomsanpham}}</a></li>
+          <li class='active'>{{ $tenloaisanpham }}</li>
+        @endif 
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -329,17 +326,29 @@
               <!-- /.filter-tabs --> 
             </div>
             <!-- /.col -->
-            <div class="col col-sm-12 col-md-5 col-lg-5 hidden-sm">
+            <div class="col col-sm-12 col-md-5 col-lg-5 hidden-sm" style="width: 521px;">
               <div class="col col-sm-6 col-md-6 no-padding">
                 <div class="lbl-cnt"> <span class="lbl">Sắp xếp</span>
                   <div class="fld inline">
                     <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="#">position</a></li>
-                        <li role="presentation"><a href="#">Giá: Thấp nhất đầu tiên</a></li>
-                        <li role="presentation"><a href="#">Giá: cao nhất trước tiên</a></li>
-                        <li role="presentation"><a href="#">Tên sản phẩm: A đến Z</a></li>
+                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle sapxep"> Mặc định <span class="caret"></span> </button>
+                      <ul role="menu" class="dropdown-menu menu-sapxep">
+                        @if(empty($tenloaisanpham) && empty($tennhomsanpham))
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">Mặc định</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                        @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham) ]) }}">Mặc định</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                        @else
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham)]) }}">Mặc định</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceUp']) }}">Giá: Thấp nhất đầu tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceDown']) }}">Giá: Cao nhất trước tiên</a></li>
+                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                        @endif 
                       </ul>
                     </div>
                   </div>
@@ -347,30 +356,29 @@
                 </div>
                 <!-- /.lbl-cnt --> 
               </div>
-              <!-- /.col -->
-              <div class="col col-sm-6 col-md-6 no-padding hidden-sm hidden-md">
-                <div class="lbl-cnt"> <span class="lbl">Hiển thị</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 1 <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="#">1</a></li>
-                        <li role="presentation"><a href="#">2</a></li>
-                        <li role="presentation"><a href="#">3</a></li>
-                        <li role="presentation"><a href="#">4</a></li>
-                        <li role="presentation"><a href="#">5</a></li>
-                        <li role="presentation"><a href="#">6</a></li>
-                        <li role="presentation"><a href="#">7</a></li>
-                        <li role="presentation"><a href="#">8</a></li>
-                        <li role="presentation"><a href="#">9</a></li>
-                        <li role="presentation"><a href="#">10</a></li>
-                      </ul>
+              <!-- 
+                <div class="col col-sm-6 col-md-6 no-padding hidden-sm hidden-md">
+                  <div class="lbl-cnt"> <span class="lbl">Hiển thị</span>
+                    <div class="fld inline">
+                      <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
+                        <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 1 <span class="caret"></span> </button>
+                        <ul role="menu" class="dropdown-menu">
+                          <li role="presentation"><a href="#">1</a></li>
+                          <li role="presentation"><a href="#">2</a></li>
+                          <li role="presentation"><a href="#">3</a></li>
+                          <li role="presentation"><a href="#">4</a></li>
+                          <li role="presentation"><a href="#">5</a></li>
+                          <li role="presentation"><a href="#">6</a></li>
+                          <li role="presentation"><a href="#">7</a></li>
+                          <li role="presentation"><a href="#">8</a></li>
+                          <li role="presentation"><a href="#">9</a></li>
+                          <li role="presentation"><a href="#">10</a></li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                  <!-- /.fld --> 
                 </div>
-                <!-- /.lbl-cnt --> 
-              </div>
+              -->
               <!-- /.col --> 
             </div>
             <!-- /.col -->
@@ -590,4 +598,13 @@
 </div>
 <!-- /.body-content --> 
 
+@endsection
+@section('javascript')
+<script>
+  const name = '<?php echo $name ;?>';
+    $(".menu-sapxep li a").ready(function(){ 
+      $(".sapxep.btn:first-child").text(name);
+      $(".sapxep.btn:first-child").val($(this).text());
+    });  
+</script>
 @endsection
