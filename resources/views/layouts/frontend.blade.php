@@ -11,11 +11,7 @@
   <meta name="robots" content="all">
   <title>Snow Computer</title>
   <link rel="shortcut icon" href="{{ asset('public/frontend/images/icon.png')}}">
-
-  <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" href="{{ asset('public/frontend/css/bootstrap.min.css')}}">
-
-  <!-- Customizable CSS -->
   <link rel="stylesheet" href="{{ asset('public/frontend/css/main.css')}}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/blue.css')}}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/owl.carousel.css')}}">
@@ -23,12 +19,8 @@
   <link rel="stylesheet" href="{{ asset('public/frontend/css/animate.min.css')}}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/rateit.css')}}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/bootstrap-select.min.css')}}">
-
-  <!-- Icons/Glyphs -->
   <link rel="stylesheet" href="{{ asset('public/frontend/css/font-awesome.css')}}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/thongbao.css')}}">
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Barlow:200,300,300i,400,400i,500,500i,600,700,800" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
@@ -264,7 +256,7 @@
         <li>
           <div class="feature-box">
             <div class="icon-money"></div>
-            <div class="content-blocks">Đảm bảo lại tiền</div>
+            <div class="content-blocks">Đảm bảo hoàn tiền</div>
           </div>
         </li>
         <li>
@@ -288,9 +280,6 @@
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="address-block">
-        
-          <!-- /.module-heading -->
-          
           <div class="module-body">
             <ul class="toggle-footer" style="">
               <li class="media">
@@ -307,7 +296,7 @@
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
-                <div class="media-body"> <span><a href="#">snowcomputer@gmail.com</a></span> </div>
+                <div class="media-body"> <span><a href="mailto:snowcomputershop@gmail.com">snowcomputershop@gmail.com</a></span> </div>
               </li>
             </ul>
           </div>
@@ -318,17 +307,16 @@
         
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
-            <h4 class="module-title">Customer Service</h4>
+            <h4 class="module-title">Dịch vụ khách hàng</h4>
           </div>
           <!-- /.module-heading -->
           
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a href="#" title="Contact us">Tài khoản của tôi</a></li>
-              <li><a href="#" title="About us">Lịch sử đơn hàng</a></li>
+              <li class="first"><a href="#" title="ài khoản của tôi">Tài khoản của tôi</a></li>
+              <li><a href="#" title="Lịch sử đơn hàng">Lịch sử đơn hàng</a></li>
               <li><a href="#" title="faq">FAQ</a></li>
-              <li><a href="#" title="Popular Searches">Đặc biệt</a></li>
-              <li class="last"><a href="#" title="Where is my order?">Trung tâm trợ giúp</a></li>
+              <li><a href="#" title="Đặc biệt">Đặc biệt</a></li>
             </ul>
           </div>
           <!-- /.module-body --> 
@@ -337,39 +325,28 @@
         
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
-            <h4 class="module-title">Corporation</h4>
+            <h4 class="module-title">Hướng dẫn</h4>
           </div>
-          <!-- /.module-heading -->
-          
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a title="Your Account" href="#">About us</a></li>
-              <li><a title="Information" href="#">Customer Service</a></li>
-              <li><a title="Addresses" href="#">Company</a></li>
-              <li><a title="Addresses" href="#">Investor Relations</a></li>
-              <li class="last"><a title="Orders History" href="#">Advanced Search</a></li>
+              <li class="first"><a title="Hướng dẫn mua sắm" href="#">Hướng dẫn mua sắm</a></li>
+              <li><a title="Hướng dẫn thanh toán" href="#">Hướng dẫn thanh toán</a></li>
             </ul>
           </div>
-          <!-- /.module-body --> 
         </div>
-        <!-- /.col -->
         
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
-            <h4 class="module-title">Why Choose Us</h4>
-          </div>
-          <!-- /.module-heading -->
-          
+            <h4 class="module-title">Tại sao chọn chúng tôi</h4>
+          </div>          
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a href="#" title="About us">Shopping Guide</a></li>
-              <li><a href="#" title="Blog">Blog</a></li>
-              <li><a href="#" title="Company">Company</a></li>
-              <li><a href="#" title="Investor Relations">Investor Relations</a></li>
-              <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a></li>
+              <li class="first"><a title="Your Account" href="#">Về chúng tôi</a></li>
+              <li><a href="{{route('frontend.baiviet')}}" title="Tin công nghệ">Tin công nghệ</a></li>
+              <li class=" last"><a href="{{route('frontend.lienhe')}}" title="Liên hệ">Liên hệ</a></li>
+              <li class="last"><a href="#" title="Trung tâm trợ giúp?">Trung tâm trợ giúp</a></li>
             </ul>
           </div>
-          <!-- /.module-body --> 
         </div>
       </div>
     </div>
@@ -405,11 +382,6 @@
 </footer>
 <!-- ============================================================= FOOTER : END============================================================= --> 
 
-<!-- For demo purposes – can be removed on production --> 
-
-<!-- For demo purposes – can be removed on production : End --> 
-
-<!-- JavaScripts placed at the end of the document so the pages load faster --> 
   <script src="{{ asset('public/frontend/js/jquery-1.11.1.min.js')}}"></script> 
   <script src="{{ asset('public/frontend/js/bootstrap.min.js')}}"></script> 
   <script src="{{ asset('public/frontend/js/bootstrap-hover-dropdown.min.js')}}"></script> 
