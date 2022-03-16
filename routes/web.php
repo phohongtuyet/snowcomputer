@@ -80,6 +80,10 @@ Route::get('/khach-hang/dang-nhap', [HomeController::class, 'getDangNhap'])->nam
 Route::get('/login/google', [HomeController::class, 'getGoogleLogin'])->name('google.login');
 Route::get('/login/google/callback', [HomeController::class, 'getGoogleCallback'])->name('google.callback');
 
+// Facebook OAuth
+Route::get('/login/facebook', [HomeController::class, 'getFacebookLogin'])->name('facebook.login');
+Route::get('/login/facebook/callback', [HomeController::class, 'getFacebookCallback'])->name('facebook.callback');
+
 // Trang tài khoản khách hàng
 Route::prefix('khach-hang')->group(function() {
     // Trang chủ tài khoản khách hàng
