@@ -439,9 +439,9 @@ class HomeController extends Controller
         $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
         $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
         $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
-        $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
+        $danhgia = DanhGiaSanPham::where([['sanpham_id',$sp->id],['hienthi',1]])->get();
 		$hangsanxuat = HangSanXuat::all();
-
+        $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
         //san pham cung danh muc
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                             ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
@@ -459,7 +459,7 @@ class HomeController extends Controller
             $all_files[] = pathinfo($file);
 		
 
-        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','danhgiasao'));
     }
 
     public function getGioHang()
@@ -815,8 +815,9 @@ class HomeController extends Controller
         $loaisanpham = LoaiSanPham::where('id',$sp->loaisanpham_id)->first();
         $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
         $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
-        $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
+        $danhgia = DanhGiaSanPham::where([['sanpham_id',$sp->id],['hienthi',1]])->get();
 		$hangsanxuat = HangSanXuat::all();
+        $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
 
         //san pham cung danh muc
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
@@ -842,10 +843,11 @@ class HomeController extends Controller
         $orm->user_id = Auth::user()->id;
         $orm->sanpham_id = $sanpham->id;
         $orm->noidung = $request->noidung;
+        $orm->sao = $request->star;
         $orm->save();
         session()->flash('status', 'Đánh giá của bạn đã được ghi nhận');
 
-        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+        return view('frontend.sanpham_chitiet',compact('danhgiasao','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
 
     }
 

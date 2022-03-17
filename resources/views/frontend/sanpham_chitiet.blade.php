@@ -151,7 +151,69 @@
                                     <div class="row">
                                     <div class="col-lg-12">
                                         <div class="pull-left">
-                                            <div class="rating rateit-small"></div>
+                                            <div class="rating rateit-small">
+                                                @if($danhgiasao->sao <= 10)
+                                                    <i class="icon fa fa-star-half-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 10 && $danhgiasao->sao<= 20)
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 20 && $danhgiasao->sao <= 30)
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa-star-half-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 30 && $danhgiasao->sao <= 40)
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 40 && $danhgiasao->sao <= 50)
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa-star-half-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 50 && $danhgiasao->sao <= 60)
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 60 && $danhgiasao->sao <= 70)
+                                                    <i class="icon fa fa fa-star">f</i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa-star-half-o"></i>
+                                                    <i class="icon fa fal fa-star"></i>
+                                                @elseif($danhgiasao->sao > 70 && $danhgiasao->sao <= 80)
+                                                    <i class="icon fa fa fa-star">g</i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
+                                                @elseif($danhgiasao->sao > 80 && $danhgiasao->sao <= 90)
+                                                    <i class="icon fa fa fa-star">h</i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa-star-half-o"></i>
+                                                @elseif($danhgiasao->sao > 100)
+                                                    <i class="icon fa fa fa-star">da</i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                    <i class="icon fa fa fa-star"></i>
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="pull-left">
                                             <div class="reviews">
@@ -270,7 +332,9 @@
                                         @if(Auth::check())																			
                                             <div class="product-add-review">
                                                 <h4 class="title">Đánh giá của bạn</h4>	
-                                                <div class="review-table">
+                                                <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="get">
+                                                     @csrf
+                                                    <div class="review-table">
                                                         <div class="table-responsive">
                                                             <table class="table">
                                                                 <thead>
@@ -287,19 +351,19 @@
                                                                     <tr>
                                                                         <td class="cell-label">Bạn cảm thấy sản phẩm này như thế nào? (chọn sao nhé):</td>
                                                                         <td>
-                                                                            <input type="radio" name="quality" class="radio" value="1"/>
+                                                                            <input type="radio" name="star" class="radio" value="1"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="radio" name="quality" class="radio" value="2"/>
+                                                                            <input type="radio" name="star" class="radio" value="2"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="radio" name="quality" class="radio" value="3"/>
+                                                                            <input type="radio" name="star" class="radio" value="3"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="radio" name="quality" class="radio" value="4"/>
+                                                                            <input type="radio" name="star" class="radio" value="4"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="radio" name="quality" class="radio" value="5"/>
+                                                                            <input type="radio" name="star" class="radio" value="5"/>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -310,8 +374,6 @@
                                                     </div>																				
                                                     <div class="review-form">
                                                         <div class="form-container">
-                                                            <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="get">
-                                                            @csrf
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
                                                                         <div class="form-group">
@@ -325,13 +387,13 @@
                                                                     </div>
                                                                 </div><!-- /.row -->
                                                                 
-                                                                <div class="action text-right">
-                                                                    <button class="btn btn-primary btn-upper">Gửi đánh giá</button>
-                                                                </div><!-- /.action -->
-
-                                                            </form><!-- /.cnt-form -->
                                                         </div><!-- /.form-container -->
                                                     </div><!-- /.review-form -->
+                                                    <div class="action text-right">
+                                                        <button class="btn btn-primary btn-upper">Gửi đánh giá</button>
+                                                    </div><!-- /.action -->
+
+                                                </form><!-- /.cnt-form -->
                                             </div><!-- /.product-add-review -->	
                                         @else
                                         <div class="product-add-review">

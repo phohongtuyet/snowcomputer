@@ -19,6 +19,7 @@ class CreateDanhGiaSanPhamsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('noidung');
             $table->unsignedTinyInteger('hienthi')->default(0);
+            $table->unsignedInteger('sao')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';
