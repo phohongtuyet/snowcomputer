@@ -97,7 +97,7 @@
                 <ul class="categories-filter ">
                    <a href="">Tìm kiếm </a>
                 </ul>
-                <input class="search-field typeahead" name="search" placeholder="Bạn tìm gì..." />
+                <input class="search-field typeahead" name="search" placeholder="Bạn muốn tìm sản phẩm..." />
                 <a href="{{route('frontend.timkiemsanpham')}}" class="search-button" onclick="event.preventDefault();document.getElementById('search').submit();"></a>
               </div>
             </form>
@@ -118,6 +118,8 @@
                 </div>
               </div>
             </a>
+            @if( Cart::count() != 0)
+
             <ul class="dropdown-menu">
               <li>
                 @foreach(Cart::content() as $value)
@@ -137,16 +139,15 @@
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
-                  <div class="clearfix cart-total">
-                    <div class="pull-right"> <span class="text">Tổng tiền  :</span><span class='price'>{{ Cart::priceTotal() }}</span> </div>
-                    <div class="clearfix"></div>
-                        <a href="{{ route('frontend.giohang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Giỏ hàng </a> 
-                        <a href="{{ route('frontend.dathang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Thanh Toán</a> 
-                  </div>
-                  <!-- /.cart-total-->    
+                    <div class="clearfix cart-total">
+                      <div class="pull-right"><span class="text">Tổng tiền  :</span><span class='price'>{{ Cart::priceTotal() }}</span> </div>
+                      <div class="clearfix"></div>
+                          <a href="{{ route('frontend.giohang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Giỏ hàng </a> 
+                          <a href="{{ route('frontend.dathang') }}" class="btn btn-upper btn-primary btn-block m-t-20">Thanh Toán</a> 
+                    </div>
               </li>
-            </ul>
-            <!-- /.dropdown-menu--> 
+            </ul>                  
+            @endif
           </div>
           <!-- /.dropdown-cart --> 
           

@@ -418,7 +418,7 @@ img[src="assets/images/blank.gif"] {
   margin-top: 0px;
 }
 
-.brand-slider img {opacity:0.0; width:130px;}
+.brand-slider img { width:130px;}
 
 .brand-slider .owl-item { text-align:center}
 
@@ -5243,7 +5243,7 @@ font-family: FontAwesome;
 }
 .shopping-cart .shopping-cart-table table tbody tr .romove-item a:hover,
 .shopping-cart .shopping-cart-table table tbody tr .romove-item a:focus {
-  color: #ff000 !important;
+  color: #ff0000 !important;
 }
 .shopping-cart .shopping-cart-table table tbody tr .cart-image .entry-thumbnail {
   display: block;

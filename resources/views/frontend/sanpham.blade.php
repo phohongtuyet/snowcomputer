@@ -5,16 +5,20 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li style="width: 80px;"><a href="{{route('frontend')}}">Trang chủ</a></li>
-        @if(empty($tenloaisanpham) && empty($tennhomsanpham))
-          <li class='active' ><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
-        @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
-          <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
-          <li class='active'>{{$tennhomsanpham}}</li>
+        @if(empty($tenhangsanxuat))
+          @if(empty($tenloaisanpham) && empty($tennhomsanpham))
+            <li class='active' ><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
+          @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
+            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">{{$sesion_title_menu}}</a></li>
+            <li class='active'>{{$tennhomsanpham}}</li>
+          @else
+            <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($tendanhmuc) ]) }}">{{$tendanhmuc}}</a></li>
+            <li style="width: 173px;"><a href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' =>Str::slug($tennhomsanpham) ]) }}">{{$tennhomsanpham}}</a></li>
+            <li class='active'>{{ $tenloaisanpham }}</li>
+          @endif 
         @else
-          <li style="width: 168px;"><a href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($tendanhmuc) ]) }}">{{$tendanhmuc}}</a></li>
-          <li style="width: 173px;"><a href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' =>Str::slug($tennhomsanpham) ]) }}">{{$tennhomsanpham}}</a></li>
-          <li class='active'>{{ $tenloaisanpham }}</li>
-        @endif 
+          <li class='active'><a href="{{ route('frontend.hangsanxuat',['hangsanxuat' => Str::slug($tenhangsanxuat) ]) }}">{{$tenhangsanxuat}}</a></li>
+        @endif
       </ul>
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -69,12 +73,14 @@
           <div class="sidebar-filter"> 
             <!-- ============================================== SIDEBAR CATEGORY ============================================== -->
             <div class="sidebar-widget">
-              <h3 class="section-title">Shop by</h3>
+              <h3 class="section-title">Bộ lọc</h3>
               <div class="widget-header">
                 <h4 class="widget-title">Category</h4>
               </div>
               <div class="sidebar-widget-body">
                 <div class="accordion">
+
+
                   <div class="accordion-group">
                     <div class="accordion-heading"> <a href="#collapseOne" data-toggle="collapse" class="accordion-toggle collapsed"> Camera </a> </div>
                     <!-- /.accordion-heading -->
@@ -91,97 +97,6 @@
                     </div>
                     <!-- /.accordion-body --> 
                   </div>
-                  <!-- /.accordion-group -->
-                  
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseTwo" data-toggle="collapse" class="accordion-toggle collapsed"> Desktops </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.accordion-inner --> 
-                    </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  <!-- /.accordion-group -->
-                  
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseThree" data-toggle="collapse" class="accordion-toggle collapsed"> Pants </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseThree" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.accordion-inner --> 
-                    </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  <!-- /.accordion-group -->
-                  
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseFour" data-toggle="collapse" class="accordion-toggle collapsed"> Bags </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseFour" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.accordion-inner --> 
-                    </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  <!-- /.accordion-group -->
-                  
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseFive" data-toggle="collapse" class="accordion-toggle collapsed"> Hats </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseFive" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.accordion-inner --> 
-                    </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  <!-- /.accordion-group -->
-                  
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseSix" data-toggle="collapse" class="accordion-toggle collapsed"> Accessories </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseSix" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.accordion-inner --> 
-                    </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  <!-- /.accordion-group --> 
                   
                 </div>
                 <!-- /.accordion --> 

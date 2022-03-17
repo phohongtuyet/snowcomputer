@@ -802,7 +802,7 @@ class HomeController extends Controller
         }
     }
 
-    public function postDanhGia(Request $request, $tensanpham_slug)
+    public function getDanhGia(Request $request, $tensanpham_slug)
     {
         $this->validate($request, [
             'noidung' => ['required','string'],
@@ -843,15 +843,15 @@ class HomeController extends Controller
         $orm->sanpham_id = $sanpham->id;
         $orm->noidung = $request->noidung;
         $orm->save();
-        //session()->flash('success', 'Đánh giá của bạn đã được ghi nhận');
+        session()->flash('status', 'Đánh giá của bạn đã được ghi nhận');
 
         return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
 
     }
 
-    public function getGioHang_ThemChiTiet(Request $request, $tensanpham_slug)
+    public function getGioHang_ThemChiTiet(Request $request)
     {
-        $sanpham = SanPham::where('tensanpham_slug', $tensanpham_slug)->first();
+        $sanpham = SanPham::where('tensanpham_slug', $request->name)->first();
        
         $img='';
         $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
@@ -862,14 +862,14 @@ class HomeController extends Controller
             'id' => $sanpham->id,
             'name' => $sanpham->tensanpham,
             'price' => $sanpham->dongia,
-            'qty' => $request->quantity,
+            'qty' => $request->qty_chitiet,
             'weight' => 0,
             'options' => [
                 'image' => $img,
                 'name_slug'=>$sanpham->tensanpham_slug
                 ]
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Đã thêm sản phẩm vào giỏ hàng!');
     }
 
     public function selectSearch(Request $request)
@@ -959,8 +959,8 @@ class HomeController extends Controller
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $sesion_title_menu = $hsx->tenhangsanxuat;
-
-            return view('frontend.sanpham',compact('sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+            $name='';
+            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
                 
     
         }
@@ -970,9 +970,10 @@ class HomeController extends Controller
             $tennhomsanpham = $hsx->tenhangsanxuat;
             $tendanhmuc = '$namedanhmuc->tendanhmuc';
             $hangsanxuat = HangSanXuat::all();
-            $sesion_title_menu =$hsx->tenhangsanxuat; 
+            $tenhangsanxuat =$hsx->tenhangsanxuat; 
             $sesion_title = 'Hiện tại chưa có sản phẩm thuộc hãng <strong>'. $hsx->tenhangsanxuat.'</strong>';
-            return view('frontend.sanpham',compact('sesion_title_menu','sesion_title','tendanhmuc','tennhomsanpham','danhmuc','hangsanxuat'));
+            $name='';
+            return view('frontend.sanpham',compact('name','tenhangsanxuat','sesion_title','tendanhmuc','tennhomsanpham','danhmuc','hangsanxuat'));
         }     
     }
 }

@@ -210,27 +210,31 @@
                                     </div><!-- /.row -->
                                 </div><!-- /.price-container -->
                                 <div class="quantity-container info-container">
-                                    <form method="get" action="{{ route('frontend.giohang.them.chitiet',['tensanpham_slug' => $sp->tensanpham_slug]) }}">
-                                    @csrf
-                                        <div class="row">                                   
-                                            <div class="qty">
-                                                <span class="label">Số lượng :</span>
-                                            </div>                                   
-                                            <div class="qty-count">
-                                                <div class="cart-quantity">
-                                                    <div class="quant-input">
-                                                        <div class="arrows">
-                                                        </div>
-                                                        <input type="number" value="1" id="quantity" name="quantity" min="1" max="{{ $sp->soluong}}">
+                                <div class="row">
+                                    <form action="{{route('frontend.giohang.them.chitiet',['tensanpham_slug' =>$sp->tensanpham_slug ])}}" id="form-them" method="GET">
+                                        @csrf
+                                        <input name="name" id="name" type="text" hidden  value="{{$sp->tensanpham_slug}}"/>
+                                        <div class="qty">
+                                            <span class="label">Số lượng :</span>
+                                        </div>
+                                        <div class="qty-count">
+                                            <div class="cart-quantity">
+                                                <div class="quant-input">
+                                                    <div class="arrows">
                                                     </div>
+                                                    <input name="qty_chitiet" id="qty_chitiet" type="number" value="1" min="1" max="{{$sp->soluong}}"/>
                                                 </div>
                                             </div>
-                                            <div class="add-btn">
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>Thêm vào giỏ hàng   </button>
-                                            </div>				
-                                        </div><!-- /.row -->
-                                    </from>
-                                </div><!-- /.quantity-container -->							
+                                        </div>
+                                        <div class="add-btn">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>Thêm</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.row -->
+                                </div>
+                                <!-- /.quantity-container -->						
                             </div><!-- /.product-info -->
                         </div><!-- /.col-sm-7 -->
                     </div><!-- /.row -->
@@ -265,10 +269,48 @@
 										</div><!-- /.product-reviews -->	
                                         @if(Auth::check())																			
                                             <div class="product-add-review">
-                                                <h4 class="title">Đánh giá của bạn</h4>																					
+                                                <h4 class="title">Đánh giá của bạn</h4>	
+                                                <div class="review-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="cell-label">&nbsp;</th>
+                                                                        <th>1 sao</th>
+                                                                        <th>2 sao</th>
+                                                                        <th>3 sao</th>
+                                                                        <th>4 sao</th>
+                                                                        <th>5 sao</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="cell-label">Bạn cảm thấy sản phẩm này như thế nào? (chọn sao nhé):</td>
+                                                                        <td>
+                                                                            <input type="radio" name="quality" class="radio" value="1"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="radio" name="quality" class="radio" value="2"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="radio" name="quality" class="radio" value="3"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="radio" name="quality" class="radio" value="4"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="radio" name="quality" class="radio" value="5"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <!-- /.table .table-bordered -->
+                                                        </div>
+                                                        <!-- /.table-responsive -->
+                                                    </div>																				
                                                     <div class="review-form">
                                                         <div class="form-container">
-                                                            <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="post">
+                                                            <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="get">
                                                             @csrf
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
