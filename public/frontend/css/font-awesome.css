@@ -11,6 +11,9 @@
   font-weight: normal;
   font-style: normal;
 }
+.fa-star{
+  font-size:10px;
+}
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -197,9 +200,13 @@
 }
 .fa-star:before {
   content: "\f005";
+  color: #fdd922;
+  font-size: 15px;
 }
 .fa-star-o:before {
   content: "\f006";
+  color: #fdd922;
+  font-size: 15px;
 }
 .fa-user:before {
   content: "\f007";
@@ -993,6 +1000,8 @@
 .fa-star-half-full:before,
 .fa-star-half-o:before {
   content: "\f123";
+  color: #fdd922;
+  font-size: 15px;
 }
 .fa-location-arrow:before {
   content: "\f124";

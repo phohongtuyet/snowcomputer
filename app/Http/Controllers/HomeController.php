@@ -34,19 +34,21 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
-                                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug')
-                                ->distinct()->get();
+                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                ->groupBy('sanpham.id')
+                ->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         
-		
-
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+		$danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $collectionsao = collect($danhgiasao);
+        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars->toArray(); 
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
     }
 
 
