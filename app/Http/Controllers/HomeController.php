@@ -96,6 +96,8 @@ class HomeController extends Controller
                 'username' => Str::before($user->email, '@'),
                 'email' => $user->email,
                 'password' => Hash::make('snowcomputer@2022'), // Gán mật khẩu tự do
+                'email_verified_at' =>Carbon::now(),
+
             ]);
         
             // Sau đó đăng nhập
