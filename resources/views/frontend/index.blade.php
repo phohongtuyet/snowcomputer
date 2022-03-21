@@ -265,6 +265,12 @@
                                       <i class="icon fa fa fa-star"></i>
                                   @endif
                                 </div>
+                              @else
+                                  <i class="icon fa fal fa-star-o"></i>
+                                  <i class="icon fa fal fa-star-o"></i>
+                                  <i class="icon fa fal fa-star-o"></i>
+                                  <i class="icon fa fal fa-star-o"></i>
+                                  <i class="icon fa fal fa-star-o"></i>
                               @endif      
                             <div class="description"></div>
                             <div class="product-price"> 

@@ -70,7 +70,7 @@ Route::post('/lien-he/ho-tro', [HomeController::class, 'postHoTro'])->name('fron
 Route::post('/khuyen-mai', [HomeController::class, 'postKhuyenMai'])->name('frontend.khuyenmai');
 
 //Đánh giá sản phẩm
-Route::get('/danh-gia/{tensanpham_slug}', [HomeController::class, 'getDanhGia'])->name('frontend.danhgia');
+Route::post('/danh-gia/{tensanpham_slug}', [HomeController::class, 'postDanhGia'])->name('frontend.danhgia');
 
 // Trang khách hàng
 Route::get('/khach-hang/dang-ky', [HomeController::class, 'getDangKy'])->name('khachhang.dangky');

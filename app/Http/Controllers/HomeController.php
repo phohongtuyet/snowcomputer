@@ -284,9 +284,10 @@ class HomeController extends Controller
         $orm->baiviet_id = $baiviet->id;
         $orm->noidung = $request->noidung;
         $orm->save();
-        session()->flash('status', 'Bình luận của bạn đã được ghi nhận');
+        //session()->flash('status', 'Bình luận của bạn đã được ghi nhận');
+        //return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
+        return redirect()->back()->with('status', 'Bình luận của bạn đã được ghi nhận!');
 
-        return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
     }
 
 
@@ -446,11 +447,17 @@ class HomeController extends Controller
         $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
         //san pham cung danh muc
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                            ->where('hienthi',1)
-                            ->select('sanpham.*','tendanhmuc')
-                            ->distinct()->get();
+                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                ->groupBy('sanpham.id')
+                ->get();
+
+        $danhgiasaosp = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $collectionsao = collect($danhgiasaosp);
+        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars->toArray(); 
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         //anh san pham
@@ -461,7 +468,7 @@ class HomeController extends Controller
             $all_files[] = pathinfo($file);
 		
 
-        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','danhgiasao'));
+        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','danhgiasao','stars'));
     }
 
     public function getGioHang()
@@ -804,7 +811,7 @@ class HomeController extends Controller
         }
     }
 
-    public function getDanhGia(Request $request, $tensanpham_slug)
+    public function postDanhGia(Request $request, $tensanpham_slug)
     {
         $this->validate($request, [
             'noidung' => ['required','string'],
@@ -823,11 +830,17 @@ class HomeController extends Controller
 
         //san pham cung danh muc
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                            ->where('hienthi',1)
-                            ->select('sanpham.*','tendanhmuc')
-                            ->distinct()->get();
+                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                ->groupBy('sanpham.id')
+                ->get();
+
+        $danhgiasaosp = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $collectionsao = collect($danhgiasaosp);
+        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars->toArray(); 
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
 
@@ -847,9 +860,10 @@ class HomeController extends Controller
         $orm->noidung = $request->noidung;
         $orm->sao = $request->star;
         $orm->save();
-        session()->flash('status', 'Đánh giá của bạn đã được ghi nhận');
+       // session()->flash('status', 'Đánh giá của bạn đã được ghi nhận');
+        return redirect()->back()->with('status', 'Đánh giá của bạn đã được ghi nhận!');
 
-        return view('frontend.sanpham_chitiet',compact('danhgiasao','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+        //return view('frontend.sanpham_chitiet',compact('danhgiasao','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','stars'));
 
     }
 

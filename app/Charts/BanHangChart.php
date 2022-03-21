@@ -23,7 +23,7 @@ class BanHangChart extends BaseChart
                     ->where('donhang.tinhtrang_id',10)
                     ->groupBy('sanpham.id')
                     ->get();
-        if(!empty($doanhthu))
+        if($doanhthu->count() <= 0)
         {
             return Chartisan::build()
             ->labels(['Chưa có sản phẩm nào được bán hôm nay']);

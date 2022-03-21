@@ -76,10 +76,10 @@
                                 
                                 <div class="cart clearfix animate-effect">
                                     <div class="action">
-                                        <div class="add-cart-button btn-group">
-                                        <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                        <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                                        </div>
+                                        
+                                        <a class="btn btn-primary cart-btn" href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}"title="Giỏ hàng"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+
+                                        
                                     </div>
                                     <!-- /.action --> 
                                 </div>
@@ -229,7 +229,7 @@
                                     <div class="col-lg-12">
                                         <div class="pull-left">
                                             <div class="stock-box">
-                                                <span class="label">Số lượng</span>
+                                                <span class="label">Số lượng:</span>
                                             </div>	
                                         </div>
                                         <div class="pull-left">
@@ -242,8 +242,8 @@
                                 </div><!-- /.stock-container -->
 
                                 <div class="description-container m-t-20">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <p>Hãng sản xuất: <strong>{{$sp->HangSanXuat->tenhangsanxuat}}</strong> </p>
+                                    <p>Bảo hành: <strong>{{$sp->baohanh}}</strong> </p>
                                 </div><!-- /.description-container -->
 
                                 <div class="price-container info-container m-t-30">
@@ -257,11 +257,11 @@
                                         <div class="col-sm-6 col-xs-6">
                                             <div class="favorite-button m-t-5">
                                                 @if(Auth::check())
-                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $sp->tensanpham_slug]) }}">
+                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Yêu thích" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $sp->tensanpham_slug]) }}">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
                                                 @endif
-                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Add to Compare" href="#">
+                                                <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="So sánh" href="#">
                                                 <i class="fa fa-signal"></i>
                                                 </a>
                                                 <a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="mailto:snowcomputershop@gmail.com">
@@ -289,7 +289,7 @@
                                             </div>
                                         </div>
                                         <div class="add-btn">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>Thêm</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>Thêm vào giỏ hàng</button>
 
                                         </div>
                                     </form>
@@ -332,7 +332,7 @@
                                         @if(Auth::check())																			
                                             <div class="product-add-review">
                                                 <h4 class="title">Đánh giá của bạn</h4>	
-                                                <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="get">
+                                                <form class="cnt-form" action="{{ route('frontend.danhgia',['tensanpham_slug'=>$sp->tensanpham_slug])}}" method="POST">
                                                      @csrf
                                                     <div class="review-table">
                                                         <div class="table-responsive">
@@ -451,12 +451,82 @@
                                                         
                                                 <div class="product-info text-left">
                                                     <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{$value->tensanpham}}</a></h3>
-                                                    <div class="rating rateit-small"></div>
+                                                        @if(array_key_exists($value->id, $stars->toArray()))
+                                                            <div class="rating rateit-small">
+                                                            @if($value->sao <= 10)
+                                                                <i class="icon fa fa-star-half-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 10 && $value->sao<= 20)
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 20 && $value->sao <= 30)
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa-star-half-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 30 && $value->sao <= 40)
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 40 && $value->sao <= 50)
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa-star-half-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 50 && $value->sao <= 60)
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 60 && $value->sao <= 70)
+                                                                <i class="icon fa fa fa-star">f</i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa-star-half-o"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                            @elseif($value->sao > 70 && $value->sao <= 80)
+                                                                <i class="icon fa fa fa-star">g</i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao > 80 && $value->sao <= 90)
+                                                                <i class="icon fa fa fa-star">h</i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa-star-half-o"></i>
+                                                            @elseif($value->sao > 100)
+                                                                <i class="icon fa fa fa-star">da</i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                                <i class="icon fa fa fa-star"></i>
+                                                            @endif
+                                                            </div>
+                                                        @else
+                                                            <i class="icon fa fal fa-star-o"></i>
+                                                            <i class="icon fa fal fa-star-o"></i>
+                                                            <i class="icon fa fal fa-star-o"></i>
+                                                            <i class="icon fa fal fa-star-o"></i>
+                                                            <i class="icon fa fal fa-star-o"></i>
+                                                        @endif 
                                                     <div class="description"></div>
 
                                                     <div class="product-price">	
-                                                        <span class="price">{{$value->dongia}}	</span>
-                                                        <span class="price-before-discount">$ 800</span>                          
+                                                        <span class="price">{{ number_format($value->dongia - ($value->dongia * ($value->phantramgia/100))) }} VNĐ</span>
+                                                        <span class="price-before-discount">@if(!empty($value->phantramgia)) {{ number_format($value->dongia)}} @endif</span>                          
                                                     </div><!-- /.product-price -->
                                                     
                                                 </div><!-- /.product-info -->
@@ -464,10 +534,8 @@
                                                     <div class="action">
                                                         <ul class="list-unstyled">
                                                             <li class="add-cart-button btn-group">
-                                                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-                                                                    <i class="fa fa-shopping-cart"></i>													
-                                                                </button>
-                                                                <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng</button>                                                                   
+                                                                <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
+                                                                <a class="btn btn-primary icon" href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}"title="Giỏ hàng"><i class="fa fa-shopping-cart"></i></a>
                                                             </li>
                                                             @if(Auth::check())
                                                                 <li class="lnk wishlist">
