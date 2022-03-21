@@ -421,13 +421,12 @@
     });
 
     $(document).ready(function() {
-      $('.thongbao').addClass("show");
-      $('.thongbao').removeClass("hide");
-      $('.thongbao').addClass("showAlert");
+      $('.toast').addClass("active");
+      $('.progress').addClass("active");
       setTimeout(function(){
-            $('.thongbao').removeClass("show");
-            $('.thongbao').addClass("hide");
-           },2000);
+            $('.toast').removeClass("active");
+            $('.progress').removeClass("active");
+           },3000);
     });
   </script>
   @yield('javascript')
