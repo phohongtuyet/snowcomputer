@@ -100,71 +100,20 @@
               </div>
             </div>
           </li>
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown"class="nav-link dropdown-toggle nav-link-lg nav-link-user"> 
+              <img alt="image" src="{{ asset('public/admin/img/user.png')}}"class="user-img-radious-style"> 
+              <span class="d-sm-none d-lg-inline-block"></span>
             </a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-              <div class="dropdown-header">
-                Notifications
-                <div class="float-right">
-                  <a href="#">Mark All As Read</a>
-                </div>
-              </div>
-              <div class="dropdown-list-content dropdown-list-icons">
-                <a href="#" class="dropdown-item dropdown-item-unread"> <span
-                    class="dropdown-item-icon bg-primary text-white"> <i class="fas
-												fa-code"></i>
-                  </span> <span class="dropdown-item-desc"> Template update is
-                    available now! <span class="time">2 Min
-                      Ago</span>
-                  </span>
-                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="far
-												fa-user"></i>
-                  </span> <span class="dropdown-item-desc"> <b>You</b> and <b>Dedik
-                      Sugiharto</b> are now friends <span class="time">10 Hours
-                      Ago</span>
-                  </span>
-                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-success text-white"> <i
-                      class="fas
-												fa-check"></i>
-                  </span> <span class="dropdown-item-desc"> <b>Kusnaedi</b> has
-                    moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
-                      Hours
-                      Ago</span>
-                  </span>
-                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-danger text-white"> <i
-                      class="fas fa-exclamation-triangle"></i>
-                  </span> <span class="dropdown-item-desc"> Low disk space. Let's
-                    clean it! <span class="time">17 Hours Ago</span>
-                  </span>
-                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="fas
-												fa-bell"></i>
-                  </span> <span class="dropdown-item-desc"> Welcome to Otika
-                    template! <span class="time">Yesterday</span>
-                  </span>
-                </a>
-              </div>
-              <div class="dropdown-footer text-center">
-                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-              </div>
-            </div>
-          </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
-                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
-              <div class="dropdown-title">Hello Sarah Smith</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Profile
-              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                Activities
-              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                Settings
-              </a>
+              <div class="dropdown-title">{{Auth::user()->name}}</div>
+                <a href="{{route('admin.nguoidung.info',['name' => Auth::user()->name ])}}" class="dropdown-item has-icon"> <i class="farfa-user"></i> Thông tin cá nhân</a> 
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                Logout
-              </a>
+              <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                  @csrf
+              </form>
             </div>
           </li>
         </ul>
@@ -205,12 +154,12 @@
                   <li><a class="nav-link" href="{{ route('admin.baiviet') }}">Bài viết</a></li>  
                 </ul>
               </li>
-
+              @if(Auth::user()->role === 'admin')
               <li class="menu-header">Người dùng</li>
               <li class="dropdown">
                 <a href="{{ route('admin.nguoidung') }}" ><i data-feather="users"></i><span>Quản lý người dùng</span></a>     
               </li>
-
+              @endif
               <li class="menu-header">Sản phẩm</li>
               <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i class="fas fa-boxes"></i><span>Quản lý sản phẩm</span></a>
@@ -220,7 +169,8 @@
                   <li><a class="nav-link" href="{{ route('admin.khuyenmai') }}">Khuyễn mãi</a></li>
                 </ul>
               </li>
-              
+
+              @if(Auth::user()->role === 'admin')
               <li class="menu-header">Đặt hàng</li>
               <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shopping-cart"></i><span>Quản lý đặt hàng</span></a>
@@ -249,12 +199,14 @@
 
                 </ul>
               </li>
-            
+              @endif
               <li class="menu-header">Tài khoản</li>
               <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i
                     data-feather="user-check"></i><span>{{Auth::user()->name}}</span></a>
                 <ul class="dropdown-menu">
+                <li><a href="{{route('admin.nguoidung.info',['name' => Auth::user()->name ])}}">Thông tin cá nhân</a></li>
+
                   <li>
                       <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Đăng xuất</a>
                       <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">

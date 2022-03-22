@@ -125,7 +125,7 @@ class UserController extends Controller
 
     public function getInfo()
     {
-        $baiviet = BaiViet::where('nguoidung_id',Auth::user()->id)->get();
+        $baiviet = BaiViet::where('user_id',Auth::user()->id)->get();
         
         foreach($baiviet as $value)
         {
@@ -143,11 +143,11 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:nguoidung,email,' . $request->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $request->id],
             'password' => ['confirmed'],
         ]);
         
-        $orm = NguoiDung::find($request->id);
+        $orm = User::find($request->id);
         $orm->name = $request->name;
         $orm->username = Str::before($request->email, '@');
         $orm->email = $request->email;
