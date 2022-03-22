@@ -426,7 +426,7 @@
       setTimeout(function(){
             $('.toast').removeClass("active");
             $('.progress').removeClass("active");
-           },3000);
+           },4000);
     });
   </script>
   @yield('javascript')

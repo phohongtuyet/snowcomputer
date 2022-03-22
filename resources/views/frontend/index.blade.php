@@ -97,10 +97,8 @@
                   
                   <div class="cart clearfix animate-effect">
                     <div class="action">
-                      <div class="add-cart-button btn-group">
-                        <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                        <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
-                      </div>
+                        <a class="btn btn-primary cart-btn" href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}"title="Giỏ hàng"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+
                     </div>
                     <!-- /.action --> 
                   </div>
