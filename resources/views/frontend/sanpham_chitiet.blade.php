@@ -124,7 +124,7 @@
                                     @foreach($all_files as $value)    
                                         <div class="single-product-gallery-item" id="{{ $value['basename'] }}">
                                             <a data-lightbox="image-1" data-title="Gallery" href="#{{ $value['basename'] }}">
-                                                <img class="img-responsive" alt="" src="{{ url($dir . $value['basename']) }}" data-echo="{{ url($dir . $value['basename']) }}" />
+                                                <img class="img-responsive" alt="" src="{{ url('/storage/app/' . $sp->thumuc . '/images/' . $value['basename']) }}" data-echo="{{ url('/storage/app/' . $sp->thumuc  . '/images/' . $value['basename']) }}" />
                                             </a>
                                         </div><!-- /.single-product-gallery-item -->
                                     @endforeach                   
@@ -134,7 +134,7 @@
                                         @foreach($all_files as $value)
                                             <div class="item">
                                                 <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#{{ $value['basename'] }}">
-                                                    <img class="img-responsive" alt="" src="{{ url($dir . $value['basename']) }}" data-echo="{{ url($dir . $value['basename']) }}"/>
+                                                    <img class="img-responsive" alt="" src="{{ url('/storage/app/ . $sp->thumuc . /images/' . $value['basename']) }}" data-echo="{{ url('/storage/app/' . $sp->thumuc . '/images/' . $value['basename']) }}"/>
                                                 </a>
                                             </div>
                                         @endforeach
@@ -305,13 +305,13 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-3 col-lg-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
-								<li class="active"><a data-toggle="tab" href="#description">Mô tả sản phẩm</a></li>
+								<li class=""><a data-toggle="tab" href="#description">Mô tả sản phẩm</a></li>
 								<li><a data-toggle="tab" href="#review">Đánh giá sản phẩm</a></li>
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
 						<div class="col-sm-12 col-md-9 col-lg-9">
     						<div class="tab-content">
-								<div id="description" class="tab-pane in active">
+								<div id="description" class="tab-pane">
 									<div class="product-tab">
 										<p class="text">{!! $sp->motasanpham !!}</p>
 									</div>	

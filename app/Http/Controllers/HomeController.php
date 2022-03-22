@@ -467,13 +467,13 @@ class HomeController extends Controller
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         //anh san pham
         $all_files = array();
-        $dir = '/storage/app/' . $sp->thumuc . '/images/';
+        //$dir = '/storage/app/' . $sp->thumuc . '/images/';
         $files = Storage::files($sp->thumuc . '/images/');
         foreach($files as $file)
             $all_files[] = pathinfo($file);
 		
 
-        return view('frontend.sanpham_chitiet',compact('sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','danhgiasao','stars'));
+        return view('frontend.sanpham_chitiet',compact('sp','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale','danhgiasao','stars'));
     }
 
     public function getGioHang()
