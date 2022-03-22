@@ -345,8 +345,11 @@ class HomeController extends Controller
                                 ->distinct()->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+        $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $collectionsao = collect($danhgiasao);
+        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars->toArray(); 
+        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
     }
 
     public function getSanPham($danhmuc_slug)

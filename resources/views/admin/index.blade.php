@@ -7,20 +7,20 @@
         <div class="card">
         <div class="card-statistic-4">
             <div class="align-items-center justify-content-between">
-            <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                <div class="card-content">
-                    <h5 class="font-15">Đơn hàng mới </h5>
-                    <h2 class="mb-3 font-18">{{$donhang->count()}}</h2>
-                    <p class="mb-0"><span class="col-green">10%</span> Increase</p>
+                <div class="row ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                            <h5 class="font-15">Đơn hàng mới </h5>
+                            <h2 class="mb-3 font-18">{{$donhang->count()}}</h2>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                            <img src="{{ asset('public/admin/img/banner/1.png')}}" alt="">
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                <div class="banner-img">
-                    <img src="{{ asset('public/admin/img/banner/1.png')}}" alt="">
-                </div>
-                </div>
-            </div>
             </div>
         </div>
         </div>
@@ -29,20 +29,20 @@
         <div class="card">
         <div class="card-statistic-4">
             <div class="align-items-center justify-content-between">
-            <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                <div class="card-content">
-                    <h5 class="font-15">Khách hàng</h5>
-                    <h2 class="mb-3 font-18">{{$user->count()}}</h2>
-                    <p class="mb-0"><span class="col-orange">09%</span> Decrease</p>
+                <div class="row ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                            <h5 class="font-15">Khách hàng</h5>
+                            <h2 class="mb-3 font-18">{{$user->count()}}</h2>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                            <img src="{{ asset('public/admin/img/banner/2.png')}}" alt="">
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                <div class="banner-img">
-                    <img src="{{ asset('public/admin/img/banner/2.png')}}" alt="">
-                </div>
-                </div>
-            </div>
             </div>
         </div>
         </div>
@@ -51,45 +51,44 @@
         <div class="card">
         <div class="card-statistic-4">
             <div class="align-items-center justify-content-between">
-            <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                <div class="card-content">
-                    <h5 class="font-15">New Project</h5>
-                    <h2 class="mb-3 font-18">{{$donhang->count()}}</h2>
-                    <p class="mb-0"><span class="col-green">18%</span>
-                    Increase</p>
+                <div class="row ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                            <h5 class="font-15">Sản phẩm</h5>
+                            <h2 class="mb-3 font-18">{{$sp->count()}}</h2>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                            <img src="{{ asset('public/admin/img/banner/3.png')}}" alt="">
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                <div class="banner-img">
-                    <img src="{{ asset('public/admin/img/banner/3.png')}}" alt="">
-                </div>
-                </div>
-            </div>
             </div>
         </div>
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="card">
-        <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-            <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                <div class="card-content">
-                    <h5 class="font-15">Doanh thu</h5>
-                    <h2 class="mb-3 font-18">{{$doanhthu->count()}}</h2>
-                    <p class="mb-0"><span class="col-green">42%</span> Increase</p>
-                </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                <div class="banner-img">
-                    <img src="{{ asset('public/admin/img/banner/4.png')}}" alt="">
-                </div>
+            <div class="card-statistic-4">
+                <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                            <div class="card-content">
+                                <h5 class="font-15">Doanh thu</h5>
+                                <h2 class="mb-3 font-18">{{$doanhthu->count()}}</h2>
+                                <p class="mb-0"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                            <div class="banner-img">
+                                <img src="{{ asset('public/admin/img/banner/4.png')}}" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
-        </div>
         </div>
     </div>
     </div>
@@ -112,6 +111,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h4>Sản phẩm hết hàng</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="table_id" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="10%" class="text-center">#</th>
+                                <th width="90%" class="text-center">Tên sản phẩm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sanpham as $value)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $value->tensanpham }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

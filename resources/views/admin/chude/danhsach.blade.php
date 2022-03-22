@@ -34,6 +34,7 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
 </div>
 <form action="{{ route('admin.chude.xoa') }}" method="post">

@@ -26,6 +26,7 @@ class AdminController extends Controller
             $user = User::all();
             $sanpham = SanPham::where('soluong',0)->get();
             $date = Carbon::today();//lay ngay hien tai
+            $sp = SanPham::all();
 
             $doanhthu = DonHang_ChiTiet::leftJoin('donhang', 'donhang.id', '=', 'donhang_chitiet.donhang_id')
                 ->leftJoin('sanpham', 'sanpham.id', '=', 'donhang_chitiet.sanpham_id')
@@ -39,7 +40,7 @@ class AdminController extends Controller
                 ->get();
 
             $binhluan = BinhLuan::all();
-            return view('admin.index',compact('donhang','user','sanpham','doanhthu','binhluan'));
+            return view('admin.index',compact('donhang','user','sanpham','doanhthu','binhluan','sp'));
         } 
         elseif(Auth::user()->khoa === 1)
         {
