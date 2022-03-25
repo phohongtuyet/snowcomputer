@@ -72,32 +72,66 @@
         <div class="sidebar-module-container">
           <div class="sidebar-filter"> 
             <!-- ============================================== SIDEBAR CATEGORY ============================================== -->
+            <form action="{{route('frontend.locsanpham')}}" method="get" class="needs-validation" novalidate>
+              <input type="text" name="catelogary" hidden value="{{Str::slug($sesion_title_menu)}}">
             <div class="sidebar-widget">
               <h3 class="section-title">Bộ lọc</h3>
               <div class="widget-header">
-                <h4 class="widget-title">Category</h4>
+                <h4 class="widget-title">Danh mục</h4>
               </div>
               <div class="sidebar-widget-body">
                 <div class="accordion">
-
-
-                  <div class="accordion-group">
-                    <div class="accordion-heading"> <a href="#collapseOne" data-toggle="collapse" class="accordion-toggle collapsed"> Camera </a> </div>
-                    <!-- /.accordion-heading -->
-                    <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
-                      <div class="accordion-inner">
-                        <ul>
-                          <li><a href="#">gaming</a></li>
-                          <li><a href="#">office</a></li>
-                          <li><a href="#">kids</a></li>
-                          <li><a href="#">for women</a></li>
-                        </ul>
+                  @foreach($nhomsp as $value)
+                    <div class="accordion-group">
+                      <div class="accordion-heading"> 
+                        <a href="#{{ $value->tennhomsanpham_slug}}" data-toggle="collapse" class="accordion-toggle collapsed">  {{$value->tennhomsanpham}} </a> 
                       </div>
-                      <!-- /.accordion-inner --> 
+                      <!-- /.accordion-heading -->
+                      <div class="accordion-body collapse" id="{{ $value->tennhomsanpham_slug}}" style="height: 0px;">
+                        <div class="accordion-inner">
+                          <ul>
+                            @foreach($value->LoaiSanPham as $loai)
+                            <li>
+                              <input type="checkbox" name="loai" value="{{$loai->tenloai_slug}}"> {{$loai->tenloai}} 
+                            </li>
+                            @endforeach
+                          </ul>
+                        </div>
+                        <!-- /.accordion-inner --> 
+                      </div>
+                      <!-- /.accordion-body --> 
                     </div>
-                    <!-- /.accordion-body --> 
-                  </div>
-                  
+                  @endforeach
+                </div>
+                <!-- /.accordion --> 
+              </div>
+
+              <div class="widget-header">
+                <h4 class="widget-title" class="accordion-toggle collapsed"> 
+                  <a href="#thuonghieu" data-toggle="collapse">Thương hiệu</a> 
+                </h4>
+              </div>
+              <div class="sidebar-widget-body">
+                <div class="accordion">
+                    <div class="accordion-group">
+                      <div class="accordion-heading"> 
+                      </div>
+                      <!-- /.accordion-heading -->
+                      <div class="accordion-body collapse" id="thuonghieu" style="height: 0px;">
+                        <div class="accordion-inner">
+                          <ul>
+                            @foreach($hangsanxuat as $value)
+                            <li>
+                              <input type="checkbox" name="hangsanxuat" value="{{$value->tenhangsanxuat_slug}}">
+                              <img src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt="" style="width: 100px;">
+                            </li>
+                            @endforeach
+                          </ul>
+                        </div>
+                        <!-- /.accordion-inner --> 
+                      </div>
+                      <!-- /.accordion-body --> 
+                    </div>
                 </div>
                 <!-- /.accordion --> 
               </div>
@@ -109,58 +143,29 @@
             <!-- ============================================== PRICE SILDER============================================== -->
             <div class="sidebar-widget">
               <div class="widget-header">
-                <h4 class="widget-title">Price Slider</h4>
+                <h4 class="widget-title">Giá </h4>
               </div>
               <div class="sidebar-widget-body m-t-10">
-                <div class="price-range-holder"> <span class="min-max"> <span class="pull-left">$200.00</span> <span class="pull-right">$800.00</span> </span>
-                  <input type="text" id="amount" style="border:0; color:#666666; font-weight:bold;text-align:center;">
-                  <input type="text" class="price-slider" value="" >
+                <div class="price-range-holder"> 
+               
+                  
+                  <div class="price-range-slider">
+                    <p class="range-value">
+                      <input type="text" name="pricefiller" id="amount" readonly>
+                    </p>
+                    <div id="slider-range" class="range-bar" data-min="0" data-max="100" data-step="5"></div>      
+                  </div>
+
                 </div>
                 <!-- /.price-range-holder --> 
-                <a href="#" class="lnk btn btn-primary">Show Now</a> </div>
+                <button class="lnk btn btn-primary btn-loc" type="submit">Hiển thị</button>
+
+              </div>
               <!-- /.sidebar-widget-body --> 
             </div>
             <!-- /.sidebar-widget --> 
             <!-- ============================================== PRICE SILDER : END ============================================== --> 
-            <!-- ============================================== MANUFACTURES============================================== -->
-            <div class="sidebar-widget">
-              <div class="widget-header">
-                <h4 class="widget-title">Manufactures</h4>
-              </div>
-              <div class="sidebar-widget-body">
-                <ul class="list">
-                  <li><a href="#">Forever 18</a></li>
-                  <li><a href="#">Nike</a></li>
-                  <li><a href="#">Dolce & Gabbana</a></li>
-                  <li><a href="#">Alluare</a></li>
-                  <li><a href="#">Chanel</a></li>
-                  <li><a href="#">Other Brand</a></li>
-                </ul>
-                <!--<a href="#" class="lnk btn btn-primary">Show Now</a>--> 
-              </div>
-              <!-- /.sidebar-widget-body --> 
-            </div>
-            <!-- /.sidebar-widget --> 
-            <!-- ============================================== MANUFACTURES: END ============================================== --> 
-            <!-- ============================================== COLOR============================================== -->
-            <div class="sidebar-widget">
-              <div class="widget-header">
-                <h4 class="widget-title">Colors</h4>
-              </div>
-              <div class="sidebar-widget-body">
-                <ul class="list">
-                  <li><a href="#">Red</a></li>
-                  <li><a href="#">Blue</a></li>
-                  <li><a href="#">Yellow</a></li>
-                  <li><a href="#">Pink</a></li>
-                  <li><a href="#">Brown</a></li>
-                  <li><a href="#">Teal</a></li>
-                </ul>
-              </div>
-              <!-- /.sidebar-widget-body --> 
-            </div>
-            <!-- /.sidebar-widget --> 
-            <!-- ============================================== COLOR: END ============================================== --> 
+            </form>
             <!-- ============================================== COMPARE============================================== -->
             <div class="sidebar-widget outer-top-vs">
               <h3 class="section-title">So sánh sản phẩm</h3>
@@ -243,32 +248,37 @@
             <!-- /.col -->
             <div class="col col-sm-12 col-md-5 col-lg-5 hidden-sm" style="width: 521px;">
               <div class="col col-sm-6 col-md-6 no-padding">
+              @if(empty($sesion_fitler))
                 <div class="lbl-cnt"> <span class="lbl">Sắp xếp</span>
                   <div class="fld inline">
                     <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
                       <button data-toggle="dropdown" type="button" class="btn dropdown-toggle sapxep"> Mặc định <span class="caret"></span> </button>
                       <ul role="menu" class="dropdown-menu menu-sapxep">
-                        @if(empty($tenloaisanpham) && empty($tennhomsanpham))
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">Mặc định</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                        @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham) ]) }}">Mặc định</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                        @else
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham)]) }}">Mặc định</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceUp']) }}">Giá: Thấp nhất đầu tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceDown']) }}">Giá: Cao nhất trước tiên</a></li>
-                          <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                        @endif 
+                       
+                          @if(empty($tenloaisanpham) && empty($tennhomsanpham))
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">Mặc định</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                          @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham) ]) }}">Mặc định</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                          @else
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham)]) }}">Mặc định</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceUp']) }}">Giá: Thấp nhất đầu tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceDown']) }}">Giá: Cao nhất trước tiên</a></li>
+                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                          @endif 
+                          
                       </ul>
                     </div>
                   </div>
                   <!-- /.fld --> 
                 </div>
+                @endif
+
                 <!-- /.lbl-cnt --> 
               </div>
               <!-- 
@@ -347,7 +357,77 @@
                                 
                                 <div class="product-info text-left">
                                 <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{ $value->tensanpham}}</a></h3>
-                                <div class="rating rateit-small"></div>
+                                  @if(array_key_exists($value->id, $stars->toArray()))
+                                    <div class="rating rateit-small">
+                                      @if($value->sao <= 10)
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 10 && $value->sao<= 20)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 20 && $value->sao <= 30)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 30 && $value->sao <= 40)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 40 && $value->sao <= 50)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 50 && $value->sao <= 60)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 60 && $value->sao <= 70)
+                                          <i class="icon fa fa fa-star">f</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star"></i>
+                                      @elseif($value->sao > 70 && $value->sao <= 80)
+                                          <i class="icon fa fa fa-star">g</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($value->sao > 80 && $value->sao <= 90)
+                                          <i class="icon fa fa fa-star">h</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                      @elseif($value->sao > 100)
+                                          <i class="icon fa fa fa-star">da</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                      @endif
+                                    </div>
+                                  @else
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                  @endif                                  
                                 <div class="description"></div>
                                 <div class="product-price"> <span class="price"> {{ number_format($value->dongia - ($value->dongia * ($value->phantramgia/100))) }} VNĐ </span> <span class="price-before-discount">@if(!empty($value->phantramgia)) {{ number_format($value->dongia)}} @endif</span> </div>
                                 <!-- /.product-price --> 
@@ -512,14 +592,73 @@
   
 </div>
 <!-- /.body-content --> 
-
+<style>  
+  .price-range-slider {
+    width: 100%;
+    float: left;
+    padding: 10px 20px;
+  }
+  .price-range-slider .range-value {
+    margin: 0;
+  }
+  .price-range-slider .range-value input {
+    width: 100%;
+    background: none;
+    color: #000;
+    font-size: 16px;
+    font-weight: initial;
+    box-shadow: none;
+    border: none;
+    margin: 0px 0 20px 0;
+  }
+  .price-range-slider .range-bar {
+    border: none;
+    background: #000;
+    height: 3px;
+    width: 96%;
+    margin-left: 8px;
+  }
+  .price-range-slider .range-bar .ui-slider-range {
+    background: #06b9c0;
+  }
+  .price-range-slider .range-bar .ui-slider-handle {
+    border: none;
+    border-radius: 25px;
+    background: #fff;
+    border: 2px solid #06b9c0;
+    height: 17px;
+    width: 17px;
+    top: -0.52em;
+    cursor: pointer;
+  }
+  .price-range-slider .range-bar .ui-slider-handle + span {
+    background: #06b9c0;
+  }
+</style>
 @endsection
 @section('javascript')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script>
   const name = '<?php echo $name ;?>';
     $(".menu-sapxep li a").ready(function(){ 
       $(".sapxep.btn:first-child").text(name);
       $(".sapxep.btn:first-child").val($(this).text());
     });  
+
+  let giacao = '<?php echo $spgiacao->dongia ;?>';
+  $(function() {
+	$( "#slider-range" ).slider({
+	  range: true,
+	  min: 0,
+	  max: parseInt(giacao),
+	  values: [ 0,  parseInt(giacao)],
+	  slide: function( event, ui ) {
+		$( "#amount" ).val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
+	  }
+	});
+	$( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +"-" + $( "#slider-range" ).slider( "values", 1 ) );
+});
+
 </script>
 @endsection

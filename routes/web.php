@@ -38,6 +38,7 @@ Route::get('/san-pham/{danhmuc_slug}/{nhomsanpham}/{loaisanpham}', [HomeControll
 Route::get('/ajax-search', [HomeController::class, 'selectSearch'])->name('frontend.selectSearch');
 Route::get('/tim-kiem', [HomeController::class, 'getTimKiemSanPham'])->name('frontend.timkiemsanpham');
 Route::get('/hang-san-xuat/{hangsanxuat}', [HomeController::class, 'getSanPham_HangSanXuat'])->name('frontend.hangsanxuat');
+Route::get('/sanpham', [HomeController::class, 'getLocSanPham'])->name('frontend.locsanpham');
 
 
 // Trang giỏ hàng

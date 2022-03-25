@@ -367,12 +367,19 @@ class HomeController extends Controller
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
                                     ->select('sanpham.*','tendanhmuc')
                                     ->paginate(16);
-    
+
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray(); 
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Mặc định';
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
+            return view('frontend.sanpham',compact('stars','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
         }
         elseif(request()->orderby === 'priceUp')
         {
@@ -388,12 +395,14 @@ class HomeController extends Controller
                                     ->select('sanpham.*','tendanhmuc')
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
-    
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Thấp nhất đầu tiên';
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            return view('frontend.sanpham',compact('nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -410,12 +419,14 @@ class HomeController extends Controller
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
     
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Cao nhất đầu tiên';
 
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            return view('frontend.sanpham',compact('nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
         elseif(request()->orderby === 'name')
         {
@@ -432,11 +443,13 @@ class HomeController extends Controller
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
     
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Tên sản phẩm: A đến Z';
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            return view('frontend.sanpham',compact('nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
 		
     }
@@ -618,16 +631,18 @@ class HomeController extends Controller
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
                                     ->select('sanpham.*','tendanhmuc')
                                     ->paginate(16);
-    
+
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
-            $tennhomsanpham = $nhomsp->tennhomsanpham;
-            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nhom_sp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhom_sp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhom_sp->danhmuc_id);
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Mặc định';
 
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
         elseif(request()->orderby === 'priceUp')
         {
@@ -646,14 +661,16 @@ class HomeController extends Controller
     
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             
-            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
-            $tennhomsanpham = $nhomsp->tennhomsanpham;
-            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nhom_sp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhom_sp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhom_sp->danhmuc_id);
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Thấp nhất đầu tiên';
 
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));        
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -672,14 +689,16 @@ class HomeController extends Controller
     
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             
-            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
-            $tennhomsanpham = $nhomsp->tennhomsanpham;
-            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nhom_sp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhom_sp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhom_sp->danhmuc_id);
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Cao nhất đầu tiên';
 
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
         elseif(request()->orderby === 'name')
         {
@@ -698,14 +717,16 @@ class HomeController extends Controller
     
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             
-            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
-            $tennhomsanpham = $nhomsp->tennhomsanpham;
-            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nhom_sp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();        
+            $tennhomsanpham = $nhom_sp->tennhomsanpham;
+            $namedanhmuc = DanhMuc::find($nhom_sp->danhmuc_id);
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Tên sản phẩm từ: A đến Z';
 
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
     }
 
@@ -725,15 +746,19 @@ class HomeController extends Controller
                                     ->paginate(16);
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-            $nhomsp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
-            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $nhom_sp = NhomSanPham::where('tennhomsanpham_slug',$nhomsanpham)->first();
+            $namedanhmuc = DanhMuc::find($nhom_sp->danhmuc_id);
             $nameloai = LoaiSanPham::where('tenloai_slug',$loaisanpham)->first();
             $tenloaisanpham = $nameloai->tenloai;
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
-            $tennhomsanpham = $nhomsp->tennhomsanpham;
+            $tennhomsanpham = $nhom_sp->tennhomsanpham;
             $name = 'Mặc định';
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'priceUp')
         {
@@ -759,7 +784,10 @@ class HomeController extends Controller
             $tenloaisanpham = $nameloai->tenloai;
             $sesion_title_menu = $nameloai->tenloai;
             $name = 'Giá: Thấp nhất đầu tiên';
-            return view('frontend.sanpham',compact('tenloaisanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -785,7 +813,10 @@ class HomeController extends Controller
             $sesion_title_menu = $nameloai->tenloai;
             $name = 'Giá: Cao nhất đầu tiên';
 
-            return view('frontend.sanpham',compact('tenloaisanpham','tennhomsanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'name')
         {
@@ -812,7 +843,10 @@ class HomeController extends Controller
             $tenloaisanpham = $nameloai->tenloai;
             $sesion_title_menu = $nameloai->tenloai;
             $name = 'Tên sản phẩm: A đến Z';
-            return view('frontend.sanpham',compact('tenloaisanpham','tennhomsanpham','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
     }
 
@@ -931,7 +965,8 @@ class HomeController extends Controller
             $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
             $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
             $hangsanxuat = HangSanXuat::all();
-    
+            $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
+
             //san pham cung danh muc
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
@@ -940,7 +975,14 @@ class HomeController extends Controller
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
     
-            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $sanphamsale = SanPham::where([
+                                                ['trangthaisanpham', '=', '3'],
+                                                ['hienthi', '=', '1'],
+                                            ])->get();
+            $danhgiasaosp = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasaosp);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray(); 
     
             //anh san pham
             $all_files = array();
@@ -950,7 +992,7 @@ class HomeController extends Controller
                 $all_files[] = pathinfo($file);
             
             $sesion_title_menu='';
-            return view('frontend.sanpham_chitiet',compact('sesion_title_menu','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
+            return view('frontend.sanpham_chitiet',compact('stars','danhgiasao','sesion_title_menu','sp','dir','all_files','danhmuc','danhgia','hangsanxuat','sanpham','sanphamsale'));
         }
         else
         {
@@ -971,7 +1013,7 @@ class HomeController extends Controller
             $slides = Slides::where('hienthi', 1)->get();
             $hangsanxuat = HangSanXuat::all();
             $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-
+            $nhomsp = NhomSanPham::all();
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
@@ -983,8 +1025,12 @@ class HomeController extends Controller
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
             $sesion_title_menu = $hsx->tenhangsanxuat;
             $name='';
-            return view('frontend.sanpham',compact('name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));
-                
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray(); 
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
     
         }
         else
@@ -996,7 +1042,162 @@ class HomeController extends Controller
             $tenhangsanxuat =$hsx->tenhangsanxuat; 
             $sesion_title = 'Hiện tại chưa có sản phẩm thuộc hãng <strong>'. $hsx->tenhangsanxuat.'</strong>';
             $name='';
-            return view('frontend.sanpham',compact('name','tenhangsanxuat','sesion_title','tendanhmuc','tennhomsanpham','danhmuc','hangsanxuat'));
+            $sesion_title_menu = $hsx->tenhangsanxuat;
+            $nhomsp = NhomSanPham::all();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+
+            return view('frontend.sanpham',compact('spgiacao','nhomsp','sesion_title_menu','name','tenhangsanxuat','sesion_title','tendanhmuc','tennhomsanpham','danhmuc','hangsanxuat'));
         }     
+    }
+
+    public function getLocSanPham(Request $request)
+    {     
+       
+        //Lấy giá
+        $variable = explode("-", $_GET["pricefiller"]);
+        $arrprice = array();
+        foreach($variable as $value)
+        {
+            array_push($arrprice, $value); 
+        }
+
+        //Lấy loại
+        $query  = explode('&', $_SERVER['QUERY_STRING']);
+        $arrloai = array();
+        foreach($query as $param)
+        {
+            $a = explode("=", $param);
+            if($a[0] == 'loai')
+            {
+                $loaiquery = LoaiSanPham::where('tenloai_slug',$a[1])->first();
+                array_push($arrloai, $loaiquery->id);
+            }
+        }
+
+        //Lấy hãng sản xuất
+        $band = explode('&', $_SERVER['QUERY_STRING']);
+        $arrband = array();
+        foreach($band as $value)
+        {
+            $b = explode("=", $value);
+            if($b[0] == 'hangsanxuat')
+            {
+                $bandquery = HangSanXuat::where('tenhangsanxuat_slug',$b[1])->first();
+                array_push($arrband, $bandquery->id);
+            }
+        }
+
+        if($request['loai'] != '' && $request['hangsanxuat'] != '')
+        {
+            $loaisp = LoaiSanPham::find($arrloai[0]);
+            $nhomsp = NhomSanPham::find($loaisp->nhomsanpham_id);
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::find($nhomsp->danhmuc_id);
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->whereIn('loaisanpham_id', $arrloai)
+                                    ->whereIn('hangsanxuat_id', $arrband)
+                                    ->where([
+                                                ['dongia','>=',$variable[0]],
+                                                ['dongia','<=',$variable[1]]
+                                            ])                                       
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+                            
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
+            $sesion_fitler = 'loc';
+            return view('frontend.sanpham',compact('sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
+        
+        }
+        elseif($request['hangsanxuat'] != '')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$request->catelogary)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where([
+                                        ['dongia','>=',$variable[0]],
+                                        ['dongia','<=',$variable[1]]
+                                    ])                                        
+                                    ->whereIn('hangsanxuat_id', $arrband)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
+            $sesion_fitler = 'loc';
+            return view('frontend.sanpham',compact('sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
+        
+        }
+        elseif($request['loai'] != '')
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$request->catelogary)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where([
+                                        ['dongia','>=',$variable[0]],
+                                        ['dongia','<=',$variable[1]]
+                                    ])                                        
+                                    ->whereIn('loaisanpham_id', $arrloai)
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
+            $sesion_fitler = 'loc';
+            return view('frontend.sanpham',compact('sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
+        }
+        else
+        {
+            $slides = Slides::where('hienthi', 1)->get();
+            $hangsanxuat = HangSanXuat::all();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $namedanhmuc = DanhMuc::where('tendanhmuc_slug',$request->catelogary)->first();
+            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                    ->where('hienthi',1)
+                                    ->where([
+                                        ['dongia','>=',$variable[0]],
+                                        ['dongia','<=',$variable[1]]
+                                    ])                                        
+                                    ->select('sanpham.*','tendanhmuc')
+                                    ->paginate(16);
+
+            $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
+            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+            $tendanhmuc = $namedanhmuc->tendanhmuc;
+            $sesion_title_menu = $namedanhmuc->tendanhmuc;
+            $name = 'Mặc định';
+            $sesion_fitler = 'loc';
+            return view('frontend.sanpham',compact('sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
+        }
     }
 }
