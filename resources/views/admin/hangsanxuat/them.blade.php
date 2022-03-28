@@ -2,8 +2,8 @@
 @section('title', 'Hãng sản xuất')
 @section('content')
  <div class="card">
-    <div class="card-header">Thêm hãng sản xuất </div>
     <div class="card-body table-responsive">
+	<h4 class="card-title">Thêm hãng sản xuất </h4>
     <form action="{{ route('admin.hangsanxuat.them') }}" method="post">
         @csrf
         <div class="mb-3">

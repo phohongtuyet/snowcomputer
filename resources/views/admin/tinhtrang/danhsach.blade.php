@@ -8,7 +8,7 @@
                 {!! session('status') !!}
             </div>
         @endif
-    <h4 class="card-title">Danh sách chủ đề</h4>
+    <h4 class="card-title">Danh sách tình trạng đơn hàng</h4>
 
         
         <p><a href="{{ route('admin.tinhtrang.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>

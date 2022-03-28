@@ -2,10 +2,8 @@
 @section('title', 'Nơi sản xuất')
 @section('content')
  <div class="card">
- <div class="card-header"><h4>Thêm nơi sản xuất </h4></div>
-
     <div class="card-body table-responsive">
-
+	<h4 class="card-title">Thêm nơi sản xuất </h4>
     <form action="{{ route('admin.noisanxuat.them') }}" method="post">
         @csrf
         <div class="mb-3">

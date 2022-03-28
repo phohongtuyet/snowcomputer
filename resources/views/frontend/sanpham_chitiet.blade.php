@@ -153,7 +153,7 @@
                                         <div class="pull-left">
                                             <div class="rating rateit-small">
                                                 @if($danhgiasao->sao <= 10)
-                                                    <i class="icon fa fa-star-half-o"></i>
+                                                    <i class="icon fa fal fa-star-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
@@ -435,7 +435,10 @@
                                                             $img='';
                                                             $dir = 'storage/app/' . $value->thumuc . '/images/';
                                                             $files = scandir($dir); 
-                                                            $img = config('app.url') . '/'. $dir . $files[2];
+                                                            if(empty($files[2]))
+                                                                $img = env('APP_URL')."/public/frontend/images/noimage.png";
+                                                            else
+                                                                $img = config('app.url') . '/'. $dir . $files[2];
                                                         @endphp
                                                         <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}"><img  src="{{ $img }}" alt=""></a>
                                                     </div><!-- /.image -->			

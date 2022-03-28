@@ -160,7 +160,7 @@ class HomeController extends Controller
 		ob_end_clean();
 		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $strNoiDung, $matches);
 		if(empty($output))
-			return  env('APP_URL')."/public/admin/images/noimage.jpg";
+			return  env('APP_URL')."/public/frontend/images/no_image.png";
 		else
 			return $matches[1][0];
 	}
@@ -506,7 +506,10 @@ class HomeController extends Controller
         $img='';
         $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
         $files = scandir($dir); 
-        $img = config('app.url') . '/'. $dir . $files[2];
+        if(empty($files[2]))
+            $img = env('APP_URL')."/public/frontend/images/noimage.png";
+        else
+            $img = config('app.url') . '/'. $dir . $files[2];        
         Cart::add([
             'id' => $sanpham->id,
             'name' => $sanpham->tensanpham,
@@ -913,6 +916,9 @@ class HomeController extends Controller
         $img='';
         $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
         $files = scandir($dir); 
+        if(empty($files[2]))
+            $img = env('APP_URL')."/public/frontend/images/noimage.png";
+        else
         $img = config('app.url') . '/'. $dir . $files[2];
 
         Cart::add([

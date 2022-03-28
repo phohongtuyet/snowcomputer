@@ -113,7 +113,7 @@ Route::prefix('khach-hang')->group(function() {
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
 
     // Trang chủ quản trị
-    Route::get('/home', [AdminController::class, 'getHome'])->name('home');
+    Route::get('/', [AdminController::class, 'getHome'])->name('home');
     Route::get('/403', [AdminController::class, 'getForbidden'])->name('forbidden');
 
     // Quản lý Slide

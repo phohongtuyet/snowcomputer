@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Hãng sản xuất')
 @section('content')
-	<div class="card">
-	<div class="card-header"><h4>Thêm hảng sản xuất </h4></div>
-
-		<div class="card-body">
-			<form role="form" method="post" action="{{ route('admin.hangsanxuat.sua', ['id' => $hangsanxuat->id]) }}">
+<div class="card">
+	<div class="card-body table-responsive">
+	<h4 class="card-title">Cập nhật hãng sản xuất</h4>
+		<form role="form" method="post" action="{{ route('admin.hangsanxuat.sua', ['id' => $hangsanxuat->id]) }}">
 				@csrf
 				<input type="hidden" id="ID" name="ID" value="{{ $hangsanxuat->id }}" />
 				<div class="mb-3">
@@ -33,8 +32,8 @@
 					</div>
 				</div>
 
-        <button type="submit" class="btn btn-primary mt-3">Cập nhật	</button>
-    </form>
+			<button type="submit" class="btn btn-primary mt-3">Cập nhật	</button>
+		</form>
     </div>
  </div>
  

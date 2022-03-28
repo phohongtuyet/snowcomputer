@@ -1,11 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Loại sản phẩm')
 @section('content')
- <div class="card">
-
+<div class="card">
     <div class="card-body table-responsive">
-        <h4 class="card-title">Sửa loại sản phẩm </h4>
-
+    <h4 class="card-title">Cập nhật loại sản phẩm </h4>
     <form action="{{ route('admin.loaisanpham.sua',['id' => $loaisanpham -> id]) }}" method="post">
     @csrf
         <div class="mb-3">

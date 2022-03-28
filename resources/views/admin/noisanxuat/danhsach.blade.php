@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-body table-responsive">
-        <h4 class="card-title">Nơi sản xuất</h4>
+        <h4 class="card-title">Danh sách nơi sản xuất</h4>
             @if (session('status'))
                 <div id="AlertBox" class="alert alert-success hide" role="alert">
                     {!! session('status') !!}

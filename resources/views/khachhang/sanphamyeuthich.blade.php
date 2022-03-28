@@ -30,7 +30,10 @@
                                         $img='';
                                         $dir = 'storage/app/' . $value->SanPham->thumuc . '/images/';
                                         $files = scandir($dir); 
-                                        $img = config('app.url') . '/'. $dir . $files[2];
+                                        if(empty($files[2]))
+                                            $img =  env('APP_URL')."/public/frontend/images/noimage.png";
+                                        else
+                                            $img = config('app.url') . '/'. $dir . $files[2];
                                     @endphp
                                         <td class="col-md-2 col-sm-6 col-xs-6"><img src="{{$img}}" alt="imga"></td>
                                         <td class="col-md-7 col-sm-6 col-xs-6">
@@ -76,11 +79,19 @@
         </div><!-- /.logo-slider -->
     </div><!-- /.container -->
 </div><!-- /.body-content -->
-@if(session('status'))
-    <div id="thongbao" class="alert alert-success hde thongbao" role="alert">
-        <span class="fa fa-check-circle"></span>
-        <span class="msg">{!! session('status') !!}</span>           
-    </div>      
+@if(session('status'))   
+    <div class="toast">
+        <div class="toast-content">
+            <i class="fa fa-solid fa-check check"></i>
+
+            <div class="message">
+                <span class="text text-1">Success</span>
+                <span class="text text-2">{!! session('status') !!}</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
 @endif
 
 <form action="{{ route('khachhang.sanphamyeuthich.xoa') }}" method="post">

@@ -177,8 +177,15 @@
                               $img='';
                               $dir = 'storage/app/' . $value->thumuc . '/images/';
                               $files = scandir($dir); 
-                              $img = config('app.url') . '/'. $dir . $files[2];
-                              $img2 = config('app.url') . '/'. $dir . $files[3];        
+                              if(empty($files[2]) )
+                                $img = env('APP_URL')."/public/frontend/images/noimage.png";
+                              else
+                                $img = config('app.url') . '/'. $dir . $files[2];
+
+                              if(empty($files[3]) )
+                                $img2 = env('APP_URL')."/public/frontend/images/noimage.png";
+                              else
+                                $img2 = config('app.url') . '/'. $dir . $files[3];        
                             @endphp
                             <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
                               

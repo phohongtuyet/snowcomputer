@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Người dùng')
 @section('content')
-    <div class="card">
-        <div class="card-header">Thêm tài khoản</div>
-        <div class="card-body">
+<div class="card">
+    <div class="card-body table-responsive">
+        <h4 class="card-title">Thêm người dùng</h4>
             <form action="{{ route('admin.nguoidung.them') }}" method="post">
             @csrf
 

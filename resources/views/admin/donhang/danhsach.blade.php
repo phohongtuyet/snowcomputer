@@ -3,6 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-body table-responsive">
+       <h4>Danh sách đơn hàng</h4>
             <table id="table_id" class="table table-bordered table-hover table-sm ">
                 <thead>
                     <tr>

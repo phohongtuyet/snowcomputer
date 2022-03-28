@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Slides')
 @section('content')
-	<div class="card">
-		<div class="card-body">
+<div class="card">
+    <div class="card-body table-responsive">
 
-		<h4>Slides</h4>
+		<h4>Danh sách hình ảnh trình chiếu</h4>
 		@if (session('status'))
             <div id="AlertBox" class="alert alert-success hide" role="alert">
                 {!! session('status') !!}

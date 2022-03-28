@@ -8,7 +8,7 @@
                 {!! session('status') !!}
             </div>
         @endif
-        <h4 class="card-title">Danh sách liên hệ hỗ trợ  </h4>
+        <h4 class="card-title">Danh sách nhận khuyễn mãi  </h4>
 
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>

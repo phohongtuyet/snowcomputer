@@ -2,8 +2,8 @@
 @section('title', 'Người dùng')
 @section('content')
 <div class="card">
-    <div class="card-header">Cập nhật tài khoản</div>
-        <div class="card-body">
+    <div class="card-body table-responsive">
+        <h4 class="card-title">Cập nhật người dùng</h4>
         <form action="{{ route('admin.nguoidung.sua', ['id' => $nguoidung->id]) }}" method="post">
         @csrf
             <div class="mb-3">

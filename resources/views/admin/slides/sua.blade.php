@@ -2,9 +2,8 @@
 @section('title', 'Slides')
 @section('content')
 <div class="card">
-	<div class="card-body">
-	<h4 class="card-title">Sửa slides</h4>		
-
+	<div class="card-body table-responsive">
+		<h4 class="card-title">Cập nhật hình ảnh trình chiếu</h4>		
 		<form role="form" method="post" action="{{ route('admin.slides.sua', ['id' => $slides->id]) }}">
 			@csrf
 			<input type="hidden" id="ID" name="ID" value="{{ $slides->id }}" />

@@ -31,7 +31,7 @@
                 @if($baiviet->count() == 0)
                     <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Thông tin cá nhân</a></li>
                   @else
-                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Bài viết của tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Bài viết của tôi</a></li>
                     <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Thông tin cá nhân</a></li>
                   @endif
                 </ul>
@@ -39,7 +39,7 @@
 
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="active tab-pane" id="activity">
+                  <div class="tab-pane" id="activity">
                     @foreach($baiviet as $value)
 
                       <div class="post">
