@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\HangSanXuat;
+use App\Models\DanhGiaSanPham;
+use Illuminate\Support\Facades\DB;
 
 class KhachHangController extends Controller
 {
@@ -74,9 +76,14 @@ class KhachHangController extends Controller
     public function getSanPhamYeuThich()
     {
         $hangsanxuat = HangSanXuat::all();
-        $sanphamyeuthich = SanPhamYeuThich::all();
+        $sanphamyeuthich = SanPhamYeuThich::where('user_id',Auth::user()->id)->get();
 
-        return view('khachhang.sanphamyeuthich',compact('hangsanxuat','sanphamyeuthich'));
+        $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $collectionsao = collect($danhgiasao);
+        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars->toArray(); 
+
+        return view('khachhang.sanphamyeuthich',compact('stars','hangsanxuat','sanphamyeuthich'));
     }
 
     public function getThemSanPhamYeuThich ($tensanpham_slug)

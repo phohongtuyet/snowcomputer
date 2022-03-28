@@ -645,7 +645,12 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
         elseif(request()->orderby === 'priceUp')
         {
@@ -673,7 +678,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));        
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));        
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -701,7 +710,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
         elseif(request()->orderby === 'name')
         {
@@ -729,7 +742,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
     }
 
@@ -760,8 +777,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'priceUp')
         {
@@ -789,8 +809,11 @@ class HomeController extends Controller
             $name = 'Giá: Thấp nhất đầu tiên';
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -818,8 +841,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
         elseif(request()->orderby === 'name')
         {
@@ -848,8 +874,11 @@ class HomeController extends Controller
             $name = 'Tên sản phẩm: A đến Z';
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-
-            return view('frontend.sanpham',compact('spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray();
+            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
     }
 
