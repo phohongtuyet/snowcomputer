@@ -248,35 +248,35 @@
             <!-- /.col -->
             <div class="col col-sm-12 col-md-5 col-lg-5 hidden-sm" style="width: 521px;">
               <div class="col col-sm-6 col-md-6 no-padding">
-              @if(empty($sesion_fitler))
-                <div class="lbl-cnt"> <span class="lbl">Sắp xếp</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle sapxep"> Mặc định <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu menu-sapxep">
-                       
-                          @if(empty($tenloaisanpham) && empty($tennhomsanpham))
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">Mặc định</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                          @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham) ]) }}">Mặc định</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                          @else
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham)]) }}">Mặc định</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceUp']) }}">Giá: Thấp nhất đầu tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceDown']) }}">Giá: Cao nhất trước tiên</a></li>
-                            <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
-                          @endif 
-                          
-                      </ul>
+                @if(empty($sesion_fitler))
+                  <div class="lbl-cnt"> <span class="lbl">Sắp xếp</span>
+                    <div class="fld inline">
+                      <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
+                        <button data-toggle="dropdown" type="button" class="btn dropdown-toggle sapxep"> Mặc định <span class="caret"></span> </button>
+                        <ul role="menu" class="dropdown-menu menu-sapxep">
+                        
+                            @if(empty($tenloaisanpham) && empty($tennhomsanpham))
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu) ]) }}">Mặc định</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham',['danhmuc_slug' => Str::slug($sesion_title_menu),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                            @elseif(!empty($tendanhmuc) && !empty($tennhomsanpham) && empty($tenloaisanpham))
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham) ]) }}">Mặc định</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceUp' ]) }}">Giá: Thấp nhất đầu tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'priceDown' ]) }}">Giá: Cao nhất trước tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.nhom',['danhmuc_slug' => Str::slug($sesion_title_menu),'nhomsanpham' => Str::slug($tennhomsanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                            @else
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham)]) }}">Mặc định</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceUp']) }}">Giá: Thấp nhất đầu tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'priceDown']) }}">Giá: Cao nhất trước tiên</a></li>
+                              <li role="presentation"><a class="sapxep" href="{{ route('frontend.sanpham.loai',['danhmuc_slug' => Str::slug($tendanhmuc),'nhomsanpham' => Str::slug($tennhomsanpham),'loaisanpham' => Str::slug($tenloaisanpham),'orderby' =>'name' ]) }}">Tên sản phẩm: A đến Z</a></li>
+                            @endif 
+                            
+                        </ul>
+                      </div>
                     </div>
+                    <!-- /.fld --> 
                   </div>
-                  <!-- /.fld --> 
-                </div>
                 @endif
 
                 <!-- /.lbl-cnt --> 
