@@ -149,18 +149,24 @@
         <!-- ========================================= SECTION – HERO : END ========================================= --> 
         <!-- ============================================== SCROLL TABS ============================================== -->
         @php 
-          $collection = collect($sanpham);
-          $items= $collection->groupBy('tendanhmuc');
-          $items->toArray();
+          $arr = array();
         @endphp
-        @foreach($items as $sp => $product_list) 
+
+        @foreach($items as $sp => $product_list)
         <div id="product-tabs-slider" class="scroll-tabs outer-top-vs">
           <div class="more-info-tab clearfix ">
             <h3 class="new-product-title pull-left">{{ $sp }}</h3> 
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
               <li class="active"><a href="{{ route('frontend.sanpham',['danhmuc_slug' =>Str::slug($sp,'-')]) }}" >Tất cả</a></li>
+              @foreach($product_list as $value)
+                @if(in_array($value->tennhomsanpham, $arr) == false)<!-- check sự tồn tại biến trong mảng, nếu false không tồn tại thì tạo tag ngược lại không tạo --> 
+                  @php array_push($arr,$value->tennhomsanpham); @endphp<!-- thêm phần từ vào mảng --> 
+                  <li>
+                    <a data-transition-type="backSlide" href="#{{Str::slug($value->tennhomsanpham,'-')}}" data-toggle="tab">{{$value->tennhomsanpham}}  </a>
+                  </li>
+                @endif
+              @endforeach
             </ul>
-            <!-- /.nav-tabs --> 
           </div>
           <div class="tab-content outer-top-xs">
             <div class="tab-pane in active" id="all">
@@ -314,11 +320,160 @@
               <!-- /.product-slider --> 
             </div>
             <!-- /.tab-pane -->  
+
+            <!-- nhom san pham theo tag --> 
+            @foreach($arr as $value)
+            <div class="tab-pane" id="{{Str::slug($value,'-')}}">
+              <div class="product-slider">
+                <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
+                  @foreach($item as $nsp => $pd_list) 
+                    @foreach($pd_list as $valuetag)
+                      @if(strcmp($valuetag->tennhomsanpham, $value) == 0)<!-- kiểm tra nhóm sản phẩm có cùng tag không để đổ sản phẩm đúng nhóm-->
+                        <div class="item item-carousel">
+                          <div class="products">
+                            <div class="product">
+                              <div class="product-image">
+                                <div class="image"> 
+                                  @php 
+                                    $img='';
+                                    $dir = 'storage/app/' . $valuetag->thumuc . '/images/';
+                                    $files = scandir($dir); 
+                                    if(empty($files[2]) )
+                                      $img = env('APP_URL')."/public/frontend/images/noimage.png";
+                                    else
+                                      $img = config('app.url') . '/'. $dir . $files[2];
+                                    if(empty($files[3]) )
+                                      $img2 = env('APP_URL')."/public/frontend/images/noimage.png";
+                                    else
+                                      $img2 = config('app.url') . '/'. $dir . $files[3];        
+                                  @endphp
+                                  <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $valuetag->tensanpham_slug]) }}">
+                                      <img src="{{ $img }}" alt=""> 
+                                      <img src="{{ $img2 }}" alt="" class="hover-image">
+                                  </a> 
+                              </div>
+                                <!-- /.image -->
+                                @if($valuetag->trangthaisanpham == 1)
+                                  <div class="tag new"><span>New</span></div>
+                                @elseif($valuetag->trangthaisanpham == 2)
+                                  <div class="tag sale"><span>Sale</span></div>
+                                @elseif($valuetag->trangthaisanpham == 3)
+                                  <div class="tag hot"><span>Hot</span></div>
+                                @endif
+                              </div>
+                              <!-- /.product-image -->                      
+                              <div class="product-info text-left">
+                                <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $valuetag->tensanpham_slug]) }}">{{ $valuetag->tensanpham }}</a></h3>
+                                  @if(array_key_exists($valuetag->id, $stars->toArray()))
+                                    <div class="rating rateit-small">
+                                      @if($valuetag->sao <= 10)
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 10 && $valuetag->sao<= 20)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 20 && $valuetag->sao <= 30)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 30 && $valuetag->sao <= 40)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 40 && $valuetag->sao <= 50)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 50 && $valuetag->sao <= 60)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 60 && $valuetag->sao <= 70)
+                                          <i class="icon fa fa fa-star">f</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star"></i>
+                                      @elseif($valuetag->sao > 70 && $valuetag->sao <= 80)
+                                          <i class="icon fa fa fa-star">g</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($valuetag->sao > 80 && $valuetag->sao <= 90)
+                                          <i class="icon fa fa fa-star">h</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                      @elseif($valuetag->sao > 100)
+                                          <i class="icon fa fa fa-star">da</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                      @endif
+                                    </div>
+                                  @else
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                      <i class="icon fa fal fa-star-o"></i>
+                                  @endif      
+                                <div class="description"></div>
+                                <div class="product-price"> 
+                                  <span class="price">{{ number_format($valuetag->dongia - ($valuetag->dongia * ($valuetag->phantramgia/100))) }} VNĐ </span> 
+                                  <span class="price-before-discount">@if(!empty($valuetag->phantramgia)) {{ number_format($valuetag->dongia)}} @endif</span> 
+                                </div>
+                                <!-- /.product-price -->      
+                              </div>
+                              <!-- /.product-info -->
+                              <div class="cart clearfix animate-effect">
+                                <div class="action">
+                                  <ul class="list-unstyled">
+                                    <li class="add-cart-button btn-group">
+                                      <button class="btn btn-primary cart-btn" type="button">Thêm vào giỏ hàng  </button>
+                                      <a class="btn btn-primary icon" href="{{ route('frontend.giohang.them', ['tensanpham_slug' => $valuetag->tensanpham_slug]) }}"title="Giỏ hàng"><i class="fa fa-shopping-cart"></i></a>
+                                    </li>
+                                    @if(Auth::check())
+                                    <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $valuetag->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
+                                    @endif
+                                    <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                                  </ul>
+                                </div>
+                                <!-- /.action --> 
+                              </div>
+                              <!-- /.cart --> 
+                            </div>
+                            <!-- /.product -->                       
+                          </div>
+                          <!-- /.products --> 
+                        </div>
+                      @endif   
+                    @endforeach 
+                  @endforeach
+                </div>
+              </div>
+            </div>
+            @endforeach
           </div>
-          <!-- /.tab-content --> 
         </div>
         @endforeach
-        <!-- /.scroll-tabs --> 
         <!-- ============================================== SCROLL TABS : END ============================================== --> 
       </div>
       <!-- /.homebanner-holder --> 

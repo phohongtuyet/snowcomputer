@@ -38,7 +38,7 @@ class HomeController extends Controller
                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
                 ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
-                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'),'tennhomsanpham','danhmuc.id')
                 ->groupBy('sanpham.id')
                 ->get();
 
@@ -48,7 +48,18 @@ class HomeController extends Controller
         $collectionsao = collect($danhgiasao);
         $stars = $collectionsao->groupBy('sanpham_id');
         $stars->toArray(); 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
+
+        //gom nhom theo tendanhmuc
+        $collection = collect($sanpham);
+        $items = $collection->groupBy('tendanhmuc');
+        $items->toArray();  
+        
+        //gom nhom theo tennhomsanpham
+        $collections = collect($sanpham);
+        $item = $collections->groupBy('tennhomsanpham');
+        $item->toArray(); 
+
+        return view('frontend.index',compact('items','item','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
     }
 
 
