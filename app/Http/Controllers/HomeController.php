@@ -516,7 +516,10 @@ class HomeController extends Controller
         if(empty($files[2]))
             $img = env('APP_URL')."/public/frontend/images/noimage.png";
         else
-            $img = config('app.url') . '/'. $dir . $files[2];        
+            $img = config('app.url') . '/'. $dir . $files[2];    
+        
+        $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sanpham->id)->first();
+        $danhgia = DanhGiaSanPham::where([['sanpham_id',$sanpham->id],['hienthi',1]])->get();
         Cart::add([
             'id' => $sanpham->id,
             'name' => $sanpham->tensanpham,
@@ -525,7 +528,9 @@ class HomeController extends Controller
             'weight' => 0,
             'options' => [
                 'image' => $img,
-                'name_slug'=>$sanpham->tensanpham_slug
+                'name_slug'=>$sanpham->tensanpham_slug,
+                'stars' => $danhgiasao->sao,
+                'comment' => ($danhgia->count() === 0) ? 0 : $danhgia->count()
                 ]
         ]);
         return redirect()->back()->with('status', 'Đã thêm sản phẩm vào giỏ hàng!');
@@ -956,7 +961,8 @@ class HomeController extends Controller
             $img = env('APP_URL')."/public/frontend/images/noimage.png";
         else
         $img = config('app.url') . '/'. $dir . $files[2];
-
+        $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sanpham->id)->first();
+        $danhgia = DanhGiaSanPham::where([['sanpham_id',$sanpham->id],['hienthi',1]])->get();
         Cart::add([
             'id' => $sanpham->id,
             'name' => $sanpham->tensanpham,
@@ -965,7 +971,9 @@ class HomeController extends Controller
             'weight' => 0,
             'options' => [
                 'image' => $img,
-                'name_slug'=>$sanpham->tensanpham_slug
+                'name_slug'=>$sanpham->tensanpham_slug,
+                'stars' => $danhgiasao->sao,
+                'comment' => ($danhgia->count() === 0) ? 0 : $danhgia->count()
                 ]
         ]);
         return redirect()->back()->with('status', 'Đã thêm sản phẩm vào giỏ hàng!');

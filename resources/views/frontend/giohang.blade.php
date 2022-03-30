@@ -43,16 +43,77 @@
                                         <h4 class='cart-product-description'><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' =>Str::slug($value->name,'-')]) }}">{{$value->name}}</a></h4>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <div class="rating rateit-small"></div>
+                                                <div class="rating rateit-small">
+                                                    @if($value->options->stars <= 10)
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 10 && $value->options->stars<= 20)
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 20 && $value->options->stars <= 30)
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa-star-half-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 30 && $value->options->stars <= 40)
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 40 && $value->options->stars <= 50)
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa-star-half-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 50 && $value->options->stars <= 60)
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 60 && $value->options->stars <= 70)
+                                                        <i class="icon fa fa fa-star">f</i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa-star-half-o"></i>
+                                                        <i class="icon fa fal fa-star"></i>
+                                                    @elseif($value->options->stars > 70 && $value->options->stars <= 80)
+                                                        <i class="icon fa fa fa-star">g</i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars > 80 && $value->options->stars <= 90)
+                                                        <i class="icon fa fa fa-star">h</i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa-star-half-o"></i>
+                                                    @elseif($value->options->stars > 100)
+                                                        <i class="icon fa fa fa-star">da</i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                        <i class="icon fa fa fa-star"></i>
+                                                    @endif
+                                                </div>                                            
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="reviews">
-                                                    (06 Reviews)
+                                                 ({{ $value->options->comment}} Đánh giá)
                                                 </div>
                                             </div>
                                         </div><!-- /.row -->
                                         <div class="cart-product-info">
-                                            <span class="product-color">COLOR:<span>Blue</span></span>
                                         </div>
                                     </td>
                                     <td class="cart-product-quantity">
@@ -103,6 +164,8 @@
                     </div>
                 </div><!-- /.shopping-cart-table -->				
                 
+                <div class="col-md-4 col-sm-12 estimate-ship-tax">
+                </div>
 
                 <div class="col-md-4 col-sm-12 estimate-ship-tax">
                     <table class="table">
@@ -134,7 +197,6 @@
                         <thead>
                             <tr>
                                 <th>
-                                   
                                     <div class="cart-grand-total">
                                         Tổng cộng<span class="inner-left-md">{{ Cart::priceTotal() }}</span>
                                     </div>
@@ -142,15 +204,14 @@
                             </tr>
                         </thead><!-- /thead -->
                         <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="cart-checkout-btn pull-right">
-                                            <button type="submit" class="btn btn-primary checkout-btn">
-                                                <a href="{{route('frontend.dathang')}}">Thanh toán </a>    
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <div class="cart-checkout-btn pull-right">
+                                        <a href="{{route('frontend.dathang')}}"class="btn btn-primary checkout-btn">Thanh toán </a>    
+                                        <span style="">Bạn đã gần hoàn tất, một tí nữa thôi.</span>
+                                    </div>                                           
+                                </td>
+                            </tr>
                         </tbody><!-- /tbody -->
                     </table><!-- /table -->
                 </div><!-- /.cart-shopping-total -->			
