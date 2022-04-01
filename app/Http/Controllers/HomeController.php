@@ -616,6 +616,7 @@ class HomeController extends Controller
         $dh -> diachigiaohang = $request->diachigiaohang;
         $dh -> dienthoaigiaohang = $request->dienthoaigiaohang;
         $dh -> chitietgiaohang = $request->chitietgiaohang;
+        $dh -> khuyenmai = $request->giagiam;
         $dh ->save();
     
         // Lưu vào đơn hàng chi tiết

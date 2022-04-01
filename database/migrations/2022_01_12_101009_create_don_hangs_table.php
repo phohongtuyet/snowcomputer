@@ -20,6 +20,7 @@ class CreateDonHangsTable extends Migration
             $table->string('dienthoaigiaohang', 20);
             $table->string('diachigiaohang');
             $table->string('chitietgiaohang')->nullable();
+            $table->integer('khuyenmai')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

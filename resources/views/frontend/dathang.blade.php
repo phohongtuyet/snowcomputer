@@ -103,6 +103,8 @@
                                             <p class="text title-tag-line">Thông tin giao hàng:</p>
                                             <form class="register-form" role="form" id="checkoutform" action="{{ route('frontend.dathang') }}" method="post"  >
                                                 @csrf
+                                                <div id="giagiam">
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="info-title" for="exampleInputEmail1">Họ và tên <span>*</span></label>
                                                     <input type="text" class="form-control unicase-form-control text-input @error('nguoidung_id') is-invalid @enderror" name="name" id="exampleInputEmail1" placeholder="">
@@ -257,6 +259,7 @@ $(document).ready(function(){
     temp = tamtinh.replace(/,/g, '');
     if (sessionStorage.giamgia > 0)
     { 
+        $('#giagiam').append('<input type="hidden" name="giagiam" value="'+ sessionStorage.giamgia +'">');
         $('#giamgia').empty();
         $('#giamgia').append('<strong>'+sessionStorage.giamgia+'%</strong>');
         $('#tongtien').append('<strong>'+ (parseFloat(temp) - ((parseFloat(sessionStorage.giamgia)/100) * parseFloat(temp) )).toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) +'</strong>');    
