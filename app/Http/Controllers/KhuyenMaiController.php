@@ -28,19 +28,22 @@ class KhuyenMaiController extends Controller
         $this->validate($request, [
             'tensukien' => ['required', 'max:255', 'unique:khuyenmai'],
             'phantram' => ['required', 'numeric'],
+            'soluong' => ['required', 'numeric'],
 
         ], 
         $messages = [
             'tensukien.required' => 'Tên sự kiện không được bỏ trống.',
             'unique' => 'Tên sự kiện đã có trong hệ thống.',
             'phantram.required' => 'Phần trăm giảm không được bỏ trống.',
-
+            'soluong.required' => 'Số lượng mã giảm giá không được bỏ trống.',
         ]);
-
         $orm = new KhuyenMai();
         $orm->tensukien = $request->tensukien;
         $orm->makhuyenmai = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10));
         $orm->phantram = $request->phantram;
+        $orm->soluong = $request->soluong;
+        $orm->ngaybatdau = $request->ngaybatdau;
+        $orm->ngayketthuc = $request->ngayketthuc;
         $orm->save();
 
         return redirect()->route('admin.khuyenmai')->with('status', 'Thêm mới thành công');

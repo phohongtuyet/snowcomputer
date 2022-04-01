@@ -18,6 +18,9 @@ class CreateKhuyenMaisTable extends Migration
             $table->string('tensukien');
             $table->string('makhuyenmai');
             $table->integer('phantram');
+            $table->integer('soluong');
+            $table->datetime('ngaybatdau');
+            $table->datetime('ngayketthuc');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';   

@@ -69,6 +69,7 @@ Route::post('/lien-he/ho-tro', [HomeController::class, 'postHoTro'])->name('fron
 
 //khuyễn mãi
 Route::post('/khuyen-mai', [HomeController::class, 'postKhuyenMai'])->name('frontend.khuyenmai');
+Route::post('/giam-gia', [HomeController::class, 'postGiamGia'])->name('frontend.magiamgia');
 
 //Đánh giá sản phẩm
 Route::post('/danh-gia/{tensanpham_slug}', [HomeController::class, 'postDanhGia'])->name('frontend.danhgia');

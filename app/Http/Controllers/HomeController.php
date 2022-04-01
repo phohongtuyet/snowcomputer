@@ -15,6 +15,7 @@ use App\Models\DanhGiaSanPham;
 use App\Models\User;
 use App\Models\DonHang;
 use App\Models\DonHang_ChiTiet;
+use App\Models\KhuyenMai;
 use App\Mail\DatHangEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -1417,5 +1418,37 @@ class HomeController extends Controller
         }
 
         
+    }
+
+    public function postGiamGia(Request $request)
+    {
+        $khuyenmai = KhuyenMai::where('makhuyenmai',$request->giamgia)->first();
+        //co ma khuyen mai
+        if(!empty($khuyenmai))
+        {
+            $makhuyenmai =  DB::table('khuyenmai')
+            ->where('makhuyenmai',$khuyenmai->makhuyenmai)
+            ->where('soluong', '>', 0)
+            ->whereBetween('ngaybatdau', [ $khuyenmai->ngaybatdau, $khuyenmai->ngayketthuc])
+            ->whereBetween('ngayketthuc', [ $khuyenmai->ngaybatdau, $khuyenmai->ngayketthuc])
+            ->first();
+            
+            $idKM = 'KM' . $makhuyenmai->id;
+            if(!session()->has($idKM))
+            {
+                $orm = KhuyenMai::find($makhuyenmai->id);
+                $orm->soluong -= 1;
+                $orm->save();
+                session()->put($idKM, 1);
+            }
+            return response()->json([
+                'code'=>200,
+                'phantram'=>$makhuyenmai->phantram
+            ]);
+        }
+            
+        //khong co khuyen mai
+        else 
+            return response()->json(['status' => 'Không tìm thấy mã giảm giá!!!']);
     }
 }

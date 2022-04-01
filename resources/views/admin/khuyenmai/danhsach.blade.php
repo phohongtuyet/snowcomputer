@@ -17,9 +17,12 @@
                 <thead>
                     <tr>
                         <th width="5%">#</th>
-                        <th width="35%">Tên sự kiện</th>
-                        <th width="25%">Mã khuyến mãi</th>
-                        <th width="25%">Phần trâm giảm</th>
+                        <th width="20%">Tên sự kiện</th>
+                        <th width="15%">Mã khuyến mãi</th>
+                        <th width="15%">Phần trâm giảm</th>
+                        <th width="15%">Số lượng mã giảm</th>
+                        <th width="15%">Bắt đầu</th>
+                        <th width="15%">Kết thúc</th>
                         <th width="5%">Sửa</th>
                         <th width="5%">Xóa</th>
                     </tr>
@@ -30,8 +33,10 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $value->tensukien }}</td>
                             <td>{{ $value->makhuyenmai }}</td>
-                            <td>{{ $value->phantram }}</td>
-
+                            <td class="text-center">{{ $value->phantram }}</td>
+                            <td class="text-center">{{ $value->soluong }}</td>
+                            <td>{{ date("d-m-Y", strtotime( $value->ngaybatdau))}}</td>
+                            <td>{{ date("d-m-Y", strtotime( $value->ngayketthuc)) }}</td>
                             <td class="text-center"><a href="{{ route('admin.khuyenmai.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
                             <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                         </tr>
@@ -48,7 +53,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa danh mục</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa khuyến mãi </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>	            

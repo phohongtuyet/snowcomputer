@@ -204,8 +204,16 @@
                                                 </tr>
                                             @endforeach
                                             <tr>
+                                                <td><strong >Tạm tính</strong>  </td>
+                                                <td><strong id="tamtinh">{{number_format( $value->price * $value->qty)}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Giảm giá</strong>  </td>
+                                                <td id="giamgia"></td>
+                                            </tr>
+                                            <tr>
                                                 <td><strong>Tổng tiền</strong>  </td>
-                                                <td><strong>{{number_format( $value->price * $value->qty)}}</strong>  </td>
+                                                <td id="tongtien"></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -241,4 +249,24 @@
         <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
 
+@endsection
+@section('javascript')
+<script>
+$(document).ready(function(){
+    let tamtinh = $(this).find('#tamtinh').text();
+    temp = tamtinh.replace(/,/g, '');
+    if (sessionStorage.giamgia > 0)
+    { 
+        $('#giamgia').empty();
+        $('#giamgia').append('<strong>'+sessionStorage.giamgia+'%</strong>');
+        $('#tongtien').append('<strong>'+ (parseFloat(temp) - ((parseFloat(sessionStorage.giamgia)/100) * parseFloat(temp) )).toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) +'</strong>');    
+    } 
+    else 
+    {
+        $('#giamgia').empty();
+        $('#tongtien').empty();
+        $('#tongtien').append('<strong>'+ tamtinh +'</strong>');
+    } 
+});
+</script>
 @endsection

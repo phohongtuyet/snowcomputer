@@ -180,12 +180,16 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control unicase-form-control text-input" placeholder="Mã giảm giá của bạn">
-                                    </div>
-                                    <div class="clearfix pull-right">
-                                        <button type="submit" class="btn-upper btn btn-primary">Áp dụng</button>
-                                    </div>
+                                    <form id="form-giamgia" action="" method="POST">
+                                    @csrf
+                                        <div class="form-group" >
+                                            <input type="text" id="giamgia" name="giamgia" class="form-control unicase-form-control text-input" placeholder="Mã giảm giá của bạn">
+                                            <div id="errorsgiamgia"></div>
+                                        </div>
+                                        <div class="clearfix pull-right">
+                                            <button type="submit" class="btn-upper btn btn-primary">Áp dụng</button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody><!-- /tbody -->
@@ -197,6 +201,8 @@
                         <thead>
                             <tr>
                                 <th>
+                                    <div class="cart-sub-total" id="thongbaogiamgia">
+                                    </div>
                                     <div class="cart-grand-total">
                                         Tổng cộng<span class="inner-left-md">{{ Cart::priceTotal() }}</span>
                                     </div>
@@ -235,4 +241,39 @@
 </div><!-- /.body-content -->
 
 
+@endsection
+@section('javascript')
+<script>
+$(document).ready(function(){
+    $('#form-giamgia').on('submit', function(e) {
+        e.preventDefault();
+        let url = "{{ route('frontend.magiamgia')}}";
+        let data = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            dataType: 'JSON',
+            success: function(response) {
+                if (response.code == 200)
+                {
+                    $('#thongbaogiamgia').empty();
+                    $('#errorsgiamgia').empty();
+                    $('#thongbaogiamgia').append('Giảm giá <span class="inner-left-md"> '+ response.phantram +'% </span>');
+                    sessionStorage.giamgia = response.phantram;
+                } 
+                else 
+                {
+                    $('#thongbaogiamgia').empty();
+                    $('#errorsgiamgia').empty();
+                    $('#errorsgiamgia').append('<span>'+ response.status +'</span>');
+                }
+            }
+        });
+        e.preventDefault();
+
+    });
+});
+
+</script>
 @endsection
