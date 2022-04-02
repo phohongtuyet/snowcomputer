@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-body">     
         <h4 class="card-title">Thống kê doanh thu theo thời gian</h4>    
-        <form action="{{ route('admin.donhang.doanhthu') }}" method="get" class="row row-cols-lg-auto g-3 align-items-center needs-validation" novalidate >
+        <form id="form_doanhthuaction" action="{{ route('admin.donhang.doanhthu') }}" method="get" class="row row-cols-lg-auto g-3 align-items-center needs-validation" novalidate >
         @csrf
             <div class="col-4">
                 <div class="input-group has-validation">
@@ -26,7 +26,8 @@
                 </div>
             </div>
             <div class="col-4">
-                <button type="submit" class="btn btn-primary">Thống kê <i class="fas fa-chart-line"></i></button>
+                <button type="submit" name="btndoanhthu" value="doanhthu" class="btn btn-primary">Thống kê</button>
+                <button type="submit" name="btndoanhthu" value="chartdoanhthu" class="btn btn-primary">Thống kê biểu đồ <i class="fas fa-chart-bar"></i></button>
             </div>
         </form>
     </div> 
@@ -43,26 +44,45 @@
                         <tr>
                             <th width="5%">#</th>
                             <th width="50%">Tên sản phẩm</th>
-                            <th width="15%">Số lượng bán  </th>
+                            <th width="15%">Số lượng bán </th>
                             <th width="15%">Đơn giá </th>
+                            <th width="15%">Đơn giá km </th>
                             <th width="15%">Tổng tiền </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php $tong = 0; @endphp
+                        @php $tong = 0; $tongkm = 0; @endphp
                         @foreach($doanhthu as $value)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $value->tensanpham }}</td>
                             <td class="text-center">{{number_format($value->tongsoluongban) }}</td>
-                            <td>{{number_format($value->dongia) }}</td>   
+                            <td>{{number_format($value->dongia) }}</td> 
+                            @if(!empty($value->khuyenmai))
+                                <td>{{ number_format(($value->dongia) - ( $value->khuyenmai/100 * $value->dongia )) }}</td>    
+                            @else
+                                <td>{{ number_format($value->dongia) }}</td>    
+                            @endif
                             <td>{{number_format($value->tongsoluongban * $value->dongia) }}</td>                
                         </tr>
-                        @php $tong += $value->tongsoluongban * $value->dongia; @endphp
+                        @php 
+                            $tong += $value->tongsoluongban * $value->dongia;
+                            if(!empty($value->khuyenmai))
+                                $tongkm += $value->tongsoluongban * ($value->dongia - ( $value->khuyenmai/100 * $value->dongia )) ;    
+                            else
+                                $tongkm += $value->tongsoluongban * $value->dongia;
+                            
+                        @endphp
                         @endforeach
                         <tr >
+                            <td colspan="4" class="fw-bold">Tổng</td>
+                            <td colspan="" class="fw-bold text-danger">{{number_format( $tongkm) }} </td>
+                            <td colspan="" class="fw-bold text-success text-info">{{number_format( $tong) }} </td>
+
+                        </tr>
+                        <tr >
                             <td colspan="4" class="fw-bold" >Tổng doanh thu</td>
-                            <td colspan="4" class="fw-bold">{{number_format( $tong) }} VNĐ</td>
+                            <td colspan="2" class="fw-bold text-success"> <span>{{number_format( $tong - $tongkm) }} VNĐ</span></td>
 
                         </tr>
                     </tbody>
@@ -70,10 +90,13 @@
             </div>
         @endif    
     @endif
+    <div id="chart" style="height: 250px;"></div>
 </div>
 @endsection
 
 @section('javascript')
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 <script>
     (function () {
         'use strict'
@@ -89,5 +112,19 @@
             }, false)
             })
     })()
+    var name;
+        if(typeof 'name = <?php echo json_encode($dh); ?>;' !== 'undefined')
+        {
+            let data = <?php echo $dh; ?>;
+            var chart = Morris.Bar({
+                element: 'chart',
+                data:data,    
+                parseTime: false,
+                xkey: 'tensanpham',
+                ykeys: [ 'tongsoluongban', 'dongia', 'tongtien' ],
+                labels: ['Số lượng bán', 'Đơn giá', 'Tổng tiền'],
+                barColors: ['#5CB7E4', '#F2C80F', '#01B8AA'],
+            });
+        }   
 </script>
 @endsection
