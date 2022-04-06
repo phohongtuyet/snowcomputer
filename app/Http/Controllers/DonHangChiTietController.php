@@ -15,7 +15,6 @@ class DonHangChiTietController extends Controller
     public function getDanhSach($id)
     {
         $donhang_chitiet = DonHang_ChiTiet::where('donhang_id',$id)->get();
-        
         return view('admin.donhang.chitiet', compact('donhang_chitiet'));
     }
     

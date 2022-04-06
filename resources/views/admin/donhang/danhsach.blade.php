@@ -177,7 +177,7 @@
                                 </div>
                             </form>                           
                         </td>
-                        <td class="text-center"><a href="{{ route('admin.donhang.chitiet', ['id' => $value->id]) }}"><i class="fas fa-info"></i></a></td>
+                        <td class="text-center"><a href="{{ route('admin.donhang.chitiet', ['id' => $value->id]) }}" class="btn-xem"><i class="fas fa-info"></i></a></td>
                         <td class="text-center"><a href="{{ route('admin.donhang.sua', ['id' => $value->id]) }}"><i class="fas fa-edit"></i></a></td>
                         <td class="text-center"><a href="{{ route('admin.donhang.xoa', ['id' => $value->id]) }}"><i class="fas fa-trash-alt text-danger"></i></a></td>
                     </tr>
@@ -186,4 +186,35 @@
             </table>
         </div>
     </div>
+
+<div class="modal fade" id="modal-xem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Đơn hàng chi tiết</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="xem" class="modal-body">
+						
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+			</div>
+    	</div>
+  	</div>
+</div>
+@endsection
+@section('javascript')
+<script>
+	$(document).on('click', '.btn-xem', function(e) {
+		e.preventDefault();
+		let url = $(this).attr('href');
+		$.get(url, function(res) {
+			$('#xem').html(res);
+			$('#modal-xem').modal('show');
+		})
+	});
+</script>
 @endsection

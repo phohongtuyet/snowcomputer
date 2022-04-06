@@ -1,8 +1,4 @@
-@extends('layouts.admin')
-@section('title', 'Đơn hàng chi tiết')
 
-@section('content')
-    <div class="card">
         <div class="card-body table-responsive">
             <table id="table_id" class="table table-bordered table-hover table-sm ">
                 <thead>
@@ -34,4 +30,3 @@
             </table>
         </div>
     </div>
-@endsection
