@@ -22,7 +22,7 @@
 					<th width="35%">Tên hãng sản xuất</th>
 					<th width="25%">Tên hãng sản xuất không dấu </th>
 					<th width="25%">Hình ảnh</th>
-					<th width="5%">Sửa</th>
+					<th width="10%">Cập nhật</th>
 					<th width="5%">Xóa</th>
 				</tr>
 			</thead>
@@ -34,7 +34,7 @@
 						<td>{{ $value['tenhangsanxuat'] }}</td>
 						<td>{{ $value['tenhangsanxuat_slug'] }}</td>
 						<td>
-							<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 200px; height:auto;">
+							<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 150px; height:auto;">
 									
 						</td>
 						<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>

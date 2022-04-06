@@ -18,23 +18,23 @@
 				<thead>
 					<tr>
 						<th width="5%">#</th>
-						<th width="35%">Hình ảnh</th>
-						<th width="25%">Hiển thị(O/F)</th>
-						<th width="5%">Sửa</th>
-						<th width="5%">Xóa</th>
+						<th class="text-center" width="35%">Hình ảnh</th>
+						<th class="text-center" width="25%">Hiển thị(O/F)</th>
+						<th class="text-center" width="10%">Cập nhật</th>
+						<th class="text-center" width="5%">Xóa</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($slides as $value)
 						<tr>
 							<td>{{ $loop->iteration }}</td>
-							<td>
+							<td class="text-center">
 								<img src="{{ $path.'images/'. $value['hinhanh'] }}"style="width: 200px; height:auto;">
-							<td> 
+							<td class="text-center"> 
 								@if($value['hienthi'] == 1)
-                                    <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-check-circle"></i></a>
+                                    <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-check-circle" style="font-size: 20px;"></i></a>
                                 @else
-                                    <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-ban text-danger"></i></a>           
+                                    <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-ban text-danger" style="font-size: 20px;"></i></a>           
                                 @endif
 							</td>
 

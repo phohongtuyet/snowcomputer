@@ -3,7 +3,11 @@
 @section('content')
 <div class="card">
     <div class="card-body table-responsive">
-        <h4 class="card-title">Sửa khuyễn mãi </h4>		
+        <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                    data-toggle="tooltip">
+                    <i class="material-icons">keyboard_return</i>
+        </a>
+        <h4 class="card-title">Cập nhật khuyễn mãi </h4>		
 
         <form action="{{ route('admin.khuyenmai.sua',['id' => $khuyenmai -> id]) }}" method="post">
             @csrf

@@ -2,8 +2,11 @@
 @section('title', 'Sản phẩm')
 @section('content')
 <div class="card">
-    <div class="card-header"><h4>Thêm sản phẩm </h4> </div>
     <div class="card-body">
+    <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+    </a><h4>Thêm sản phẩm </h4> 
         <form action="{{ route('admin.sanpham.them') }}" method="post">
             @csrf          
             <div class="form-row">

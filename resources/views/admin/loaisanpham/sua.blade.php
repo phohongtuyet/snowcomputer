@@ -3,6 +3,10 @@
 @section('content')
 <div class="card">
     <div class="card-body table-responsive">
+    <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+    </a>
     <h4 class="card-title">Cập nhật loại sản phẩm </h4>
     <form action="{{ route('admin.loaisanpham.sua',['id' => $loaisanpham -> id]) }}" method="post">
     @csrf

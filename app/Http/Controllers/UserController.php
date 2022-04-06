@@ -6,7 +6,7 @@ use App\Models\BinhLuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Exports\NguoiDungExport;
+use App\Exports\UsersExport;
 use Excel;
 use Auth;
 
@@ -26,9 +26,19 @@ class UserController extends Controller
     // Xuất ra Excel
     public function postXuat(Request $request)
     {
-       
+        if($request->select == 'staff') // Mua nhiều nhất
+        {
+            return (new UsersExport)->Role('staff')->download('danh-sach-nhan-vien.xlsx');
 
-
+        }
+        elseif($request->select == 'admin') // Mới nhất
+        {
+            return (new UsersExport)->Role('admin')->download('danh-sach-quan-ly.xlsx');
+        }
+        else
+        {
+            return (new UsersExport)->Role('user')->download('danh-sach-khach-hang.xlsx');
+        }
     }
     
     public function getDanhSach()
@@ -125,18 +135,8 @@ class UserController extends Controller
 
     public function getInfo()
     {
-        $baiviet = BaiViet::where('user_id',Auth::user()->id)->get();
-        
-        foreach($baiviet as $value)
-        {
-            $binhluan = BinhLuan::where('baiviet_id', $value->id)->get();
-        }
-
-        if(!empty($binhluan))
-            return view('admin.nguoidung.info',compact('baiviet','binhluan'));
-        else
-            return view('admin.nguoidung.info',compact('baiviet'));
-
+        $baiviet = BaiViet::where('user_id',Auth::user()->id)->get();       
+        return view('admin.nguoidung.info',compact('baiviet'));
     }
 
     public function postSuaInfo(Request $request)

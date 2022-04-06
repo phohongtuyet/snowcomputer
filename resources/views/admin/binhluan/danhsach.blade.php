@@ -8,6 +8,10 @@
             </div>
         @endif
         <div class="card-body table-responsive">
+            <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+            </a><h4 class="card-title">Danh sách bình luận</h4>
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>
                 <tr>

@@ -31,9 +31,9 @@
                     <th width="20%">Họ và tên</th>
                     <th width="20%">Tên đăng nhập</th>
                     <th width="20%">Email</th>
-                    <th width="20%">Khóa</th>
+                    <th width="5%">Khóa</th>
                     <th width="10%">Quyền hạn</th>
-                    <th width="5%">Sửa</th>
+                    <th width="10%">Cập nhật</th>
                     <th width="5%">Xóa</th>
                 </tr>
             </thead>
@@ -44,20 +44,20 @@
                     <td>{{ $value->name }}</td>
                     <td>{{ $value->username }}</td>
                     <td>{{ $value->email }}</td>
-                    <td>
+                    <td class="text-center">
                         @if($value->khoa == 0)
                             <a href="{{ route('admin.nguoidung.khoa',['id' => $value->id]) }}"><i class="fas fa-toggle-on"></i></a>
                         @else
-                            <a href="{{ route('admin.nguoidung.khoa',['id' => $value->id]) }}"><i class="fas fa-toggle-off"></i></a>
+                            <a href="{{ route('admin.nguoidung.khoa',['id' => $value->id]) }}"><i class="fas fa-toggle-off text-danger"></i></a>
                         @endif
                     </td>
                     <td class="text-center">
                         @if($value->role == 'admin')
-                            <span class="badge badge-danger">{{ $value->role }}</span>
+                            <span class="badge badge-danger">Quản trị viên</span>
                         @elseif($value->role == 'staff')
-                            <span class="badge badge-warning ">{{ $value->role }}</span>
+                            <span class="badge badge-warning ">Nhân viên</span>
                         @else
-                            <span class="badge badge-info ">{{ $value->role }}</span>
+                            <span class="badge badge-info ">Khách hàng</span>
 
                         @endif
                     </td>

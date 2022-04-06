@@ -18,7 +18,7 @@
                     <th width="30%">Danh mục </th>
                     <th width="25%">Tên nhóm </th>
                     <th width="25%">Tên nhóm không dấu</th>
-                    <th width="5%">Sửa</th>
+                    <th width="10%">Cập nhật</th>
                     <th width="5%">Xóa</th>
                 </tr>
             </thead>

@@ -1,9 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Chủ đề')
 @section('content')
- <div class="card">
-    <div class="card-header">Thêm chủ đề</div>
+<div class="card">
     <div class="card-body table-responsive">
+    <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+        <i class="material-icons">keyboard_return</i>
+    </a><h4 class="card-title">Thêm chủ đề</h4>
     <form action="{{ route('admin.chude.them') }}" method="post">
         @csrf
         <div class="mb-3">
@@ -17,5 +20,5 @@
         <button type="submit" class="btn btn-primary">Thêm vào CSDL</button>
     </form>
     </div>
- </div>
+</div>
 @endsection

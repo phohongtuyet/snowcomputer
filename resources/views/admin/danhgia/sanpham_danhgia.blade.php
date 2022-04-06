@@ -4,6 +4,10 @@
 
 <div class="card">
     <div class="card-body table-responsive">
+    <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+    </a>
         <h4 class="card-title">Danh sách của sản phẩm {{ $tensanpham}} </h4>
             @if (session('status'))
                 <div id="AlertBox" class="alert alert-success hide" role="alert">
@@ -49,7 +53,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa danh mục</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa đánh giá</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>	            

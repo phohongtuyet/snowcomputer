@@ -3,8 +3,11 @@
 @section('content')
  <div class="card">
     <div class="card-body table-responsive">
-	<h4 class="card-title">Thêm danh mục</h4>
-    <form action="{{ route('admin.danhmuc.them') }}" method="post">
+	<a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+    </a><h4 class="card-title">Thêm danh mục sản phẩm</h4>    
+	<form action="{{ route('admin.danhmuc.them') }}" method="post">
         @csrf
         <div class="mb-3">
             <label for="tendanhmuc" class="form-label" >Tên danh mục<span class="text-danger font-weight-bold">*</span> </label>

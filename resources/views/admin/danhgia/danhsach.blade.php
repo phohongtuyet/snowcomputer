@@ -14,16 +14,16 @@
                 <thead>
                     <tr>
                         <th width="10%">#</th>
-                        <th width="40%">Tên sản phẩm</th>
-                        <th width="40%">Xem chi tiết các đánh giá</th>      
+                        <th class="text-center" width="40%">Tên sản phẩm</th>
+                        <th class="text-center" width="40%">Xem chi tiết các đánh giá</th>      
                     </tr>
                 </thead>
                 <tbody>    
                     @foreach($danhgia as $value => $product_list)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $value }}</td>
-                            <td class="text-center"><a href="{{ route('admin.danhgia.danhsach', ['tensanpham_slug' => Str::slug($value)]) }}"><i class="fa fa-eye"></i></a></td>
+                            <td class="text-center">{{ $value }}</td>
+                            <td class="text-center" class="text-center"><a href="{{ route('admin.danhgia.danhsach', ['tensanpham_slug' => Str::slug($value)]) }}"><i class="fa fa-eye"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>

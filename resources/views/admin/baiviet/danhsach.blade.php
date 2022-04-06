@@ -8,7 +8,8 @@
             </div>
         @endif
         <div class="card-body table-responsive">
-        <p><a href="{{ route('admin.baiviet.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
+            <h4 class="card-title">Danh sách bài viết</h4>
+            <p><a href="{{ route('admin.baiviet.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a></p>
         @if(Auth::user()->role == 'admin')
             <table id="table_id" class="table table-bordered table-hover table-sm ">
                 <thead>

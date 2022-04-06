@@ -4,7 +4,11 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-        <h4 class="">Sửa sản phẩm   </h4>
+        <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+        </a>
+        <h4 class="">Cập nhật sản phẩm </h4>
 
             <form action="{{ route('admin.sanpham.sua', ['id' => $sanpham->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf  

@@ -21,9 +21,9 @@
                         <th width="15%">Mã khuyến mãi</th>
                         <th width="15%">Phần trâm giảm</th>
                         <th width="15%">Số lượng mã giảm</th>
-                        <th width="15%">Bắt đầu</th>
-                        <th width="15%">Kết thúc</th>
-                        <th width="5%">Sửa</th>
+                        <th width="10%">Bắt đầu</th>
+                        <th width="10%">Kết thúc</th>
+                        <th width="10%">Cập nhật</th>
                         <th width="5%">Xóa</th>
                     </tr>
                 </thead>

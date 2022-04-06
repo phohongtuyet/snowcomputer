@@ -2,8 +2,11 @@
 @section('title', 'Bài viết')
 @section('content')
  <div class="card">
-    <div class="card-header">Sửa bài viết</div>
     <div class="card-body table-responsive">
+    <a href="{{ URL::previous() }}" class="col-dark-gray waves-effect m-r-20" title="Trở về danh sách"
+                data-toggle="tooltip">
+                <i class="material-icons">keyboard_return</i>
+    </a><h4 class="card-title">Cập nhật bài viết</h4>
     <form action="{{ route('admin.baiviet.sua',['id' => $baiviet -> id]) }}" method="post">
         @csrf
         <div class="mb-3">

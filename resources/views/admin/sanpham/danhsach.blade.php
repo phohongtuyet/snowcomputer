@@ -20,12 +20,11 @@
                 <tr>
                     <th width="5%">#</th>
                     <th width="20%">Tên sản phẩm</th>
-                    <th width="20%">Tên sản phẩm không dấu</th>
                     <th width="20%">Thông tin sản phẩm</th>
                     <th width="7%">Số lượng</th>
                     <th width="10%">Đơn giá</th>
                     <th width="5%">O/F</th>
-                    <th width="5%">Sửa</th>
+                    <th width="10%">Cập nhật</th>
                     <th width="5%">Xóa</th>
                 </tr>
             </thead>
@@ -34,7 +33,6 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $value->tensanpham }}</td>
-                    <td>{{ $value->tensanpham_slug }}</td>
                     <td class="text-justify">
                         <span class="small">
                             @if(!empty($value->HangSanXuat->tenhangsanxuat))
