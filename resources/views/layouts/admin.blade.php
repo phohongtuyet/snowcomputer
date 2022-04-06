@@ -62,7 +62,7 @@
                 @endforeach
               </div>
               <div class="dropdown-footer text-center">
-                <a href="#">Xem tất cả<i class="fas fa-chevron-right"></i></a>
+                <a href="{{ route('admin.gmail')}}">Xem tất cả<i class="fas fa-chevron-right"></i></a>
               </div>
             </div>
           </li>
@@ -148,22 +148,15 @@
 
               <li class="menu-header">Gmail</li>
               <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Quản lý Gmail</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="{{ route('admin.lienhe') }}">Hỗ trợ</a></li>
-                  <li><a class="nav-link" href="{{ route('admin.lienhe.khuyenmai') }}">Khuyễn mãi  </a></li>
-                </ul>
+                <a href="{{ route('admin.gmail') }}"><i data-feather="mail"></i><span>Quản lý Gmail</span></a>
+               
               </li>
 
               <li class="menu-header">Thống kê báo cáo</li>
               <li class="dropdown">
-                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="bar-chart"></i><span>
-                    Thống kê doanh thu</span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="{{route('admin.donhang.doanhthu')}}">Doanh thu</a></li>
-                  <li><a href="{{route('admin.donhang.chart')}}">Doanh thu biểu đồ</a></li>
-
-                </ul>
+                <a href="{{route('admin.donhang.doanhthu')}}"><i data-feather="bar-chart"></i><span>
+                    Thống kê doanh thu</span>
+                </a>          
               </li>
               @endif
               <li class="menu-header">Tài khoản</li>

@@ -21,6 +21,7 @@ use App\Http\Controllers\NhomSanPhamController;
 use App\Http\Controllers\LienHeController;
 use App\Http\Controllers\KhuyenMaiController;
 use App\Http\Controllers\DanhGiaSanPhamController;
+use App\Http\Controllers\GmailController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -184,13 +185,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/tinhtrang/xoa', [TinhTrangController::class, 'postXoa'])->name('tinhtrang.xoa') ->middleware('nhanvien');
     
     // Quản lý Liên hệ
-    Route::get('/lienhe', [LienHeController::class, 'getDanhSach'])->name('lienhe')->middleware('nhanvien') ;
-    Route::get('/lienhe/phanhoi/{id}', [LienHeController::class, 'getPhanHoi'])->name('lienhe.phanhoi')->middleware('nhanvien');
-    Route::post('/lienhe/phanhoi/{id}', [LienHeController::class, 'postPhanHoi'])->name('lienhe.phanhoi')->middleware('nhanvien') ;
-    Route::post('/lienhe/xoa', [LienHeController::class, 'postXoa'])->name('lienhe.xoa')->middleware('nhanvien') ;
-    Route::get('/lienhe/khuyenmai', [LienHeController::class, 'getDanhSachLienHeKhuyenMai'])->name('lienhe.khuyenmai')->middleware('nhanvien') ;
-    Route::get('/lienhe/khuyenmai/{id}', [LienHeController::class, 'getKhuyenMai'])->name('lienhe.repkhuyenmai')->middleware('nhanvien') ;
-    Route::post('/lienhe/khuyenmai/{id}', [LienHeController::class, 'postKhuyenMai'])->name('lienhe.repkhuyenmai')->middleware('nhanvien') ;
+    Route::get('/gmail', [GmailController::class, 'getDanhSach'])->name('gmail')->middleware('nhanvien');
+    Route::get('/gmail/phanhoi/{id}', [LienHeController::class, 'getPhanHoi'])->name('lienhe.phanhoi')->middleware('nhanvien');
+    Route::post('/gmail/phanhoi/{id}', [LienHeController::class, 'postPhanHoi'])->name('lienhe.phanhoi')->middleware('nhanvien') ;
+    Route::post('/gmail/xoa', [LienHeController::class, 'postXoa'])->name('lienhe.xoa')->middleware('nhanvien') ;
+    Route::get('/gmail/khuyenmai', [LienHeController::class, 'getDanhSachLienHeKhuyenMai'])->name('lienhe.khuyenmai')->middleware('nhanvien') ;
+    Route::get('/gmail/khuyenmai/{id}', [LienHeController::class, 'getKhuyenMai'])->name('lienhe.repkhuyenmai')->middleware('nhanvien') ;
+    Route::post('/gmail/khuyenmai/{id}', [LienHeController::class, 'postKhuyenMai'])->name('lienhe.repkhuyenmai')->middleware('nhanvien') ;
     
     // Quản lý khuyến mãi
     Route::get('/khuyenmai', [KhuyenMaiController::class, 'getDanhSach'])->name('khuyenmai')->middleware('nhanvien') ;
@@ -254,14 +255,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/binhluan/sua/{id}', [BinhLuanController::class, 'postSua'])->name('binhluan.sua')->middleware('nhanvien');
     Route::get('/binhluan/xoa/{id}', [BinhLuanController::class, 'getXoa'])->name('binhluan.xoa')->middleware('nhanvien');
     Route::get('/binhluan/OnOffDuyet/{id}', [BinhLuanController::class, 'getOnOffDuyet'])->name('binhluan.OnOffDuyet')->middleware('admin');
-
-    // Quản lý hình ảnh
-    Route::get('/hinhanh/{tensanpham_slug}', [HinhAnhController::class, 'getDanhSach'])->name('hinhanh')->middleware('nhanvien');
-    Route::get('/hinhanh/them/{tensanpham_slug}', [HinhAnhController::class, 'getThem'])->name('hinhanh.them')->middleware('nhanvien');
-    Route::post('/hinhanh/them/{tensanpham_slug}', [HinhAnhController::class, 'postThem'])->name('hinhanh.them')->middleware('nhanvien');
-    Route::get('/hinhanh/sua/{id}', [HinhAnhController::class, 'getSua'])->name('hinhanh.sua')->middleware('nhanvien');
-    Route::post('/hinhanh/sua/{id}', [HinhAnhController::class, 'postSua'])->name('hinhanh.sua')->middleware('nhanvien');
-    Route::get('/hinhanh/xoa/{id}', [HinhAnhController::class, 'getXoa'])->name('hinhanh.xoa')->middleware('nhanvien');
 
     // Quản lý Đơn hàng
     Route::get('/donhang', [DonHangController::class, 'getDanhSach'])->name('donhang')->middleware('nhanvien');

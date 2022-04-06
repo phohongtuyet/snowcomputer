@@ -46,7 +46,7 @@ class LienHeController extends Controller
         $orm->save();
 
         Mail::to($orm->email)->send(new HoTroEmail($orm));
-        return redirect()->route('admin.lienhe')->with('status', 'Phản hồi thành công');
+        return redirect()->route('admin.gmail')->with('status', 'Phản hồi thành công');
 
     }
     public function getKhuyenMai($id)
@@ -68,9 +68,10 @@ class LienHeController extends Controller
 
         Mail::to($orm->email)->send(new KhuyenMaiEmail($orm));
 
-        $lienhe = LienHe::where('tieude','Khuyễn mãi')->get();
+        $lienhe = LienHe::where('tieude','Hỗ trợ')->where('trangthai',0)->paginate(15);
+        $khuyenmai = LienHe::where('tieude','Khuyễn mãi')->where('trangthai',0)->paginate(15);
         session()->flash('status', 'Phản hồi thông tin khuyễn mãi thành công');
-        return view('admin.lienhe.danhsach_khuyenmai',compact('lienhe'));
+        return view('admin.gmail.danhsach',compact('lienhe','khuyenmai'));
 
     }
 	public function postXoa(Request $request)
@@ -78,6 +79,6 @@ class LienHeController extends Controller
         $orm = LienHe::find($request->ID_delete);
         $orm->delete();
 
-        return redirect()->route('admin.lienhe')->with('status', 'Xóa thành công');
+        return redirect()->route('admin.gmail')->with('status', 'Xóa thành công');
     }
 }
