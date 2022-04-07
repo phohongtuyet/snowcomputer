@@ -63,14 +63,12 @@ class HangSanXuatController extends Controller
     {
         $this->validate($request, [
             'tenhangsanxuat' => ['required', 'max:255', 'unique:hangsanxuat'],
-            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
+            'HinhAnh' => ['required'],
         ],
         $messages = [
             'tenhangsanxuat.required' => 'Tên hãng sản xuất không được bỏ trống.',
             'tenhangsanxuat.unique' => 'Tên hãng sản xuất đã có trong hệ thống.',
             'HinhAnh.required' => 'Hình ảnh hãng sản xuất không được bỏ trống.',
-            'HinhAnh.unique' => 'Hình ảnh hãng sản xuất đã có trong hệ thống.',
-
         ]);
 
        
@@ -96,10 +94,13 @@ class HangSanXuatController extends Controller
     {
         $this->validate($request, [
             'tenhangsanxuat' => ['required', 'max:255', 'unique:hangsanxuat,tenhangsanxuat,'.$id],
+            'HinhAnh' => ['required'],
+
         ],
         $messages = [
             'required' => 'Tên thương hiệu không được bỏ trống.',
             'unique' => 'Tên thương hiệu đã có trong hệ thống.',
+            'HinhAnh.required' => 'Hình ảnh hãng sản xuất không được bỏ trống.',
         ]);
 
         $orm = HangSanXuat::find($id);

@@ -57,12 +57,10 @@ class SlidesController extends Controller
     public function postThem(Request $request)
     {
         $this->validate($request, [
-            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
+            'HinhAnh' => ['required'],
         ],
         $messages = [
             'HinhAnh.required' => 'Hình ảnh trình chiếu không được bỏ trống.',
-            'HinhAnh.unique' => 'Hình ảnh trình chiếu đã có trong hệ thống.',
-
         ]);
         $orm = new Slides();
 		$orm->hinhanh = $request->HinhAnh;
@@ -84,7 +82,7 @@ class SlidesController extends Controller
     public function postSua(Request $request, $id)
     {
         $this->validate($request, [
-            'HinhAnh' => [ 'max:255', 'unique:hangsanxuat'],
+            'HinhAnh' => [ 'max:255', 'unique:slides'],
         ],
         $messages = [
             'HinhAnh.unique' => 'Hình ảnh trình chiếu đã có trong hệ thống.',

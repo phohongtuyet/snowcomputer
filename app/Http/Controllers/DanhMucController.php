@@ -44,13 +44,12 @@ class DanhMucController extends Controller
     {
         $this->validate($request, [
             'tendanhmuc' => ['required', 'max:255', 'unique:danhmuc'],
-            'HinhAnh' => ['required', 'max:255', 'unique:hangsanxuat'],
+            'HinhAnh' => ['required'],
         ], 
         $messages = [
             'required' => 'Tên danh mục không được bỏ trống.',
             'unique' => 'Tên danh mục đã có trong hệ thống.',
             'HinhAnh.required' => 'Hình ảnh danh mục không được bỏ trống.',
-            'HinhAnh.unique' => 'Hình ảnh danh mục đã có trong hệ thống.',
         ]);
            
         $orm = new DanhMuc();
@@ -73,10 +72,12 @@ class DanhMucController extends Controller
     {
         $this->validate($request, [
             'tendanhmuc' => ['required', 'max:255', 'unique:danhmuc,tendanhmuc,'.$id],
-        ],
+            'HinhAnh' => ['required'],
+        ], 
         $messages = [
-            'required' => 'Tên danh mục không được bỏ trống.',
-            'unique' => 'Tên danh mục đã có trong hệ thống.',
+            'tendanhmuc.required' => 'Tên danh mục không được bỏ trống.',
+            'tendanhmu.cunique' => 'Tên danh mục đã có trong hệ thống.',
+            'HinhAnh.required' => 'Hình ảnh danh mục không được bỏ trống.',
         ]);
            
         $orm = DanhMuc::find($id);
