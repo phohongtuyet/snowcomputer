@@ -35,13 +35,19 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
-                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'),'tennhomsanpham','danhmuc.id')
-                ->groupBy('sanpham.id')
-                ->get();
+        $sanpham = SanPham::leftJoin('loaisanpham','loaisanpham.id','=','sanpham.loaisanpham_id')
+                          ->leftJoin('nhomsanpham','nhomsanpham.id','=','loaisanpham.nhomsanpham_id')
+                          ->leftJoin('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                          ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                          ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                          ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'),'tennhomsanpham','danhmuc.id')
+                          ->groupBy('sanpham.id')
+                          ->groupBy('danhmuc.tendanhmuc')
+                          ->groupBy('danhmuc.tendanhmuc_slug')
+                          ->groupBy('nhomsanpham.tennhomsanpham')
+                          ->groupBy('danhmuc.id')
+
+                          ->distinct()->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         
@@ -54,7 +60,6 @@ class HomeController extends Controller
         $collection = collect($sanpham);
         $items = $collection->groupBy('tendanhmuc');
         $items->toArray();  
-        
         //gom nhom theo tennhomsanpham
         $collections = collect($sanpham);
         $item = $collections->groupBy('tennhomsanpham');
@@ -352,7 +357,7 @@ class HomeController extends Controller
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
+                                ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
 
@@ -375,9 +380,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')
                                     ->paginate(16);
 
             $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
@@ -402,11 +409,18 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
+
+            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $collectionsao = collect($danhgiasao);
+            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars->toArray(); 
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
@@ -414,7 +428,7 @@ class HomeController extends Controller
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Thấp nhất đầu tiên';
-            return view('frontend.sanpham',compact('nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
+            return view('frontend.sanpham',compact('stars','nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
         elseif(request()->orderby === 'priceDown')
         {
@@ -425,9 +439,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
     
@@ -452,9 +468,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')                                    
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
     
@@ -464,6 +482,7 @@ class HomeController extends Controller
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Tên sản phẩm: A đến Z';
+
             $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
             $collectionsao = collect($danhgiasao);
             $stars = $collectionsao->groupBy('sanpham_id');
@@ -487,6 +506,7 @@ class HomeController extends Controller
                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
                 ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                 ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
                 ->groupBy('sanpham.id')
                 ->get();
@@ -655,9 +675,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')                                     
                                     ->paginate(16);
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
@@ -686,9 +708,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id') 
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
     
@@ -718,9 +742,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id') 
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
     
@@ -750,9 +776,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id') 
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
     
@@ -785,9 +813,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')                                     
                                     ->paginate(16);
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
@@ -817,9 +847,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')  
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
 
@@ -848,9 +880,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')  
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
 
@@ -881,9 +915,11 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
+                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                                    ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc')
+                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
+                                    ->groupBy('sanpham.id')  
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
 
@@ -929,6 +965,7 @@ class HomeController extends Controller
                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
                 ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+                ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                 ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
                 ->groupBy('sanpham.id')
                 ->get();
@@ -1034,7 +1071,7 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                ->where('hienthi',1)
+                                ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                 ->select('sanpham.*','tendanhmuc')
                                 ->distinct()->get();
     
@@ -1073,27 +1110,110 @@ class HomeController extends Controller
 
         if(!empty($sp))
         {
-            $slides = Slides::where('hienthi', 1)->get();
-            $hangsanxuat = HangSanXuat::all();
-            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-            $nhomsp = NhomSanPham::all();
-            $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                                    ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
-                                    ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->where('hienthi',1)
-                                    ->where('hangsanxuat_id',$hsx->id)
-                                    ->select('sanpham.*','tendanhmuc')
-                                    ->paginate(16);
+            if(request()->orderby=='')
+            {
+                 $slides = Slides::where('hienthi', 1)->get();
+                $hangsanxuat = HangSanXuat::all();
+                $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+                $nhomsp = NhomSanPham::all();
+                $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                                        ->where('hangsanxuat_id',$hsx->id)
+                                        ->select('sanpham.*','tendanhmuc')
+                                        ->paginate(16);
 
-            $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
-            $sesion_title_menu = $hsx->tenhangsanxuat;
-            $name='';
-            $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
-            $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
-            $stars->toArray(); 
-            return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
+                $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+                $sesion_title_menu = $hsx->tenhangsanxuat;
+                $name='Mặc định';
+                $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $collectionsao = collect($danhgiasao);
+                $stars = $collectionsao->groupBy('sanpham_id');
+                $stars->toArray(); 
+                $hsx_name = $hsx->tenhangsanxuat_slug;
+                return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
+            }
+            elseif(request()->orderby === 'priceUp')
+            {
+                 $slides = Slides::where('hienthi', 1)->get();
+                $hangsanxuat = HangSanXuat::all();
+                $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+                $nhomsp = NhomSanPham::all();
+                $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                                        ->where('hangsanxuat_id',$hsx->id)
+                                        ->select('sanpham.*','tendanhmuc')
+                                        ->orderBy('dongia', 'asc')
+                                        ->paginate(16);
+
+                $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+                $sesion_title_menu = $hsx->tenhangsanxuat;
+                $name='Mặc định';
+                $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $collectionsao = collect($danhgiasao);
+                $stars = $collectionsao->groupBy('sanpham_id');
+                $stars->toArray(); 
+                $hsx_name = $hsx->tenhangsanxuat_slug;
+                return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
+            }
+            elseif(request()->orderby === 'priceDown')
+            {
+                 $slides = Slides::where('hienthi', 1)->get();
+                $hangsanxuat = HangSanXuat::all();
+                $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+                $nhomsp = NhomSanPham::all();
+                $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                                        ->where('hangsanxuat_id',$hsx->id)
+                                        ->select('sanpham.*','tendanhmuc')
+                                        ->orderBy('dongia', 'desc')
+                                        ->paginate(16);
+
+                $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+                $sesion_title_menu = $hsx->tenhangsanxuat;
+                $name='Mặc định';
+                $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $collectionsao = collect($danhgiasao);
+                $stars = $collectionsao->groupBy('sanpham_id');
+                $stars->toArray(); 
+                $hsx_name = $hsx->tenhangsanxuat_slug;
+                return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
+            }
+            elseif(request()->orderby === 'name')
+            {
+                $slides = Slides::where('hienthi', 1)->get();
+                $hangsanxuat = HangSanXuat::all();
+                $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+                $nhomsp = NhomSanPham::all();
+                $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
+                                        ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
+                                        ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                                        ->where('hangsanxuat_id',$hsx->id)
+                                        ->select('sanpham.*','tendanhmuc')
+                                        ->orderBy('dongia', 'desc')
+                                        ->paginate(16);
+
+                $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
+                $sesion_title_menu = $hsx->tenhangsanxuat;
+                $name='Mặc định';
+                $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
+                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $collectionsao = collect($danhgiasao);
+                $stars = $collectionsao->groupBy('sanpham_id');
+                $stars->toArray(); 
+                $hsx_name = $hsx->tenhangsanxuat_slug;
+                return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));         
+            }
+           
     
         }
         else
@@ -1167,7 +1287,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->whereIn('loaisanpham_id', $arrloai)
                                         ->whereIn('hangsanxuat_id', $arrband)
                                         ->where([
@@ -1200,7 +1320,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
@@ -1232,7 +1352,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
@@ -1263,7 +1383,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
@@ -1299,7 +1419,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->whereIn('loaisanpham_id', $arrloai)
                                         ->whereIn('hangsanxuat_id', $arrband)
                                         ->where([
@@ -1332,7 +1452,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
@@ -1364,7 +1484,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
@@ -1395,7 +1515,7 @@ class HomeController extends Controller
                 $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                         ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                         ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                        ->where('hienthi',1)
+                                        ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                         ->where([
                                             ['dongia','>=',$variable[0]],
                                             ['dongia','<=',$variable[1]]
