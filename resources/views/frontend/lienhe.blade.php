@@ -72,5 +72,18 @@
         </div><!-- /.row -->
     </div><!-- /.row -->
 </div><!-- /.row -->
+@if(session('status'))   
+    <div class="toast">
+        <div class="toast-content">
+            <i class="fa fa-solid fa-check check"></i>
 
+            <div class="message">
+                <span class="text text-1">Success</span>
+                <span class="text text-2">{!! session('status') !!}</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
+@endif  
 @endsection

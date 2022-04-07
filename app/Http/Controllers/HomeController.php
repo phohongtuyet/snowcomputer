@@ -331,7 +331,7 @@ class HomeController extends Controller
         $orm->noidung = $request->noidung;
         $orm->save();
 
-        return view('frontend.lienhe');
+        return redirect()->back()->with('status', 'Liên hệ hỗ trợ đã được ghi nhận!');
     }
     public function postKhuyenMai(Request $request)
     {
@@ -366,7 +366,7 @@ class HomeController extends Controller
         $collectionsao = collect($danhgiasao);
         $stars = $collectionsao->groupBy('sanpham_id');
         $stars->toArray(); 
-        return view('frontend.index',compact('slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
+        return redirect()->back()->with('status', 'Bạn đã đăng ký nhận thông tin khuyến mãi thành công!');
     }
 
     public function getSanPham($danhmuc_slug)
