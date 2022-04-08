@@ -41,7 +41,7 @@
 						<td>{{ $value['tenhangsanxuat'] }}</td>
 						<td>{{ $value['tenhangsanxuat_slug'] }}</td>
 						<td>
-							<img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 150px; height:auto;">
+							<img src="{{ $path. $value->hinhanh }}" style="width: 150px; height:auto;">
 									
 						</td>
 						<td class="text-center"><a href="{{ route('admin.hangsanxuat.sua', ['id' =>  $value['id'] ]) }}"><i class="fas fa-edit"></i></a></td>

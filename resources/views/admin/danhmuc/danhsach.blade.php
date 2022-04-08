@@ -29,7 +29,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $value->tendanhmuc }}</td>
                             <td>
-                                <img src="{{ $path.'images/'. $value->hinhanh }}" style="width: 130px; height:auto;">            
+                                <img src="{{ $path. $value->hinhanh }}" style="width: 130px; height:auto;">            
                             </td>                           
                             <td class="text-center"><a href="{{ route('admin.danhmuc.sua', ['id' => $value->id]) }}"><i class="fa fa-edit"></i></a></td>
                             <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>

@@ -29,7 +29,7 @@
 						<tr>
 							<td>{{ $loop->iteration }}</td>
 							<td class="text-center">
-								<img src="{{ $path.'images/'. $value['hinhanh'] }}"style="width: 200px; height:auto;">
+								<img src="{{ $path. $value['hinhanh'] }}"style="width: 200px; height:auto;">
 							<td class="text-center"> 
 								@if($value['hienthi'] == 1)
                                     <a href="{{ route('admin.slides.OnOffHienThi', ['id' => $value['id']]) }}"><i class="fas fa-check-circle" style="font-size: 20px;"></i></a>

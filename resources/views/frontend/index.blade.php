@@ -56,15 +56,41 @@
                   <div class="hot-deal-wrapper">
                     <div class="image"> 
                       <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
-                      @php 
-                        $img='';
-                        $dir = 'storage/app/' . $value->thumuc . '/images/';
-                        $files = scandir($dir); 
-                        $img = config('app.url') . '/'. $dir . $files[2];
-                        $img2 = config('app.url') . '/'. $dir . $files[2];        
-                      @endphp
-                        <img src="{{ $img }}" alt=""> 
-                        <img src="{{ $img2 }}" alt="" class="hover-image">
+                        @php 
+                          $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+                          $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+                          $dir = 'storage/app/' . $value->thumuc;
+                          if(file_exists($dir))
+                          {
+                              $files = scandir($dir);
+                              if(isset($files[3]))
+                              {
+                                  $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                                  if(in_array($extension2, $extensions))
+                                  {
+                                      $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                                      $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
+                                  }
+                                  else
+                                  {
+                                      $first_file = $no_image;
+                                      $two_file = $no_image;
+                                  }
+                              }
+                              else
+                              {
+                                  $first_file = $no_image;
+                                  $two_file = $no_image;
+                              }
+                          }
+                          else
+                          {
+                              $first_file = $no_image;
+                              $two_file = $no_image;
+                          }                 
+                        @endphp
+                        <img src="{{ $first_file }}" alt=""> 
+                        <img src="{{ $two_file }}" alt="" class="hover-image">
                       </a>
                     </div>
                     <div class="sale-offer-tag"><span>{{$value->phantramgia}}%<br>
@@ -141,7 +167,7 @@
         <div id="hero">
           <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
             @foreach($slides as $value)
-              <div class="item" style="background-image: url({{ env('APP_URL') . '/storage/app/slides/images/' . $value->hinhanh }});"></div>
+              <div class="item" style="background-image: url({{ env('APP_URL') . '/storage/app/slides/' . $value->hinhanh }});"></div>
             @endforeach  
           </div>
           <!-- /.owl-carousel --> 
@@ -180,23 +206,42 @@
                           <div class="product-image">
                             <div class="image"> 
                             @php 
-                              $img='';
-                              $dir = 'storage/app/' . $value->thumuc . '/images/';
-                              $files = scandir($dir); 
-                              if(empty($files[2]) )
-                                $img = env('APP_URL')."/public/frontend/images/noimage.png";
+                              $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+                              $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+                              $dir = 'storage/app/' . $value->thumuc;
+                              if(file_exists($dir))
+                              {
+                                  $files = scandir($dir);
+                                  if(isset($files[3]))
+                                  {
+                                      $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                                      if(in_array($extension2, $extensions))
+                                      {
+                                          $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                                          $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
+                                      }
+                                      else
+                                      {
+                                          $first_file = $no_image;
+                                          $two_file = $no_image;
+                                      }
+                                  }
+                                  else
+                                  {
+                                      $first_file = $no_image;
+                                      $two_file = $no_image;
+                                  }
+                              }
                               else
-                                $img = config('app.url') . '/'. $dir . $files[2];
-
-                              if(empty($files[3]) )
-                                $img2 = env('APP_URL')."/public/frontend/images/noimage.png";
-                              else
-                                $img2 = config('app.url') . '/'. $dir . $files[3];        
+                              {
+                                  $first_file = $no_image;
+                                  $two_file = $no_image;
+                              }                 
                             @endphp
                             <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">
                               
-                                <img src="{{ $img }}" alt=""> 
-                                <img src="{{ $img2 }}" alt="" class="hover-image">
+                                <img src="{{ $first_file }}" alt=""> 
+                                <img src="{{ $two_file }}" alt="" class="hover-image">
                             </a> 
                         </div>
                             <!-- /.image -->
@@ -334,22 +379,42 @@
                             <div class="product">
                               <div class="product-image">
                                 <div class="image"> 
-                                  @php 
-                                    $img='';
-                                    $dir = 'storage/app/' . $valuetag->thumuc . '/images/';
-                                    $files = scandir($dir); 
-                                    if(empty($files[2]) )
-                                      $img = env('APP_URL')."/public/frontend/images/noimage.png";
-                                    else
-                                      $img = config('app.url') . '/'. $dir . $files[2];
-                                    if(empty($files[3]) )
-                                      $img2 = env('APP_URL')."/public/frontend/images/noimage.png";
-                                    else
-                                      $img2 = config('app.url') . '/'. $dir . $files[3];        
-                                  @endphp
+                                @php
+                                  $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+                                  $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+                                  $dir = 'storage/app/' . $valuetag->thumuc;
+                                  if(file_exists($dir))
+                                  {
+                                      $files = scandir($dir);
+                                      if(isset($files[3]))
+                                      {
+                                          $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                                          if(in_array($extension2, $extensions))
+                                          {
+                                              $first_file = config('app.url') . '/'. $dir. '/'.$files[3];
+                                              $two_file = config('app.url') . '/'. $dir . '/'. $files[4];
+                                          }
+                                          else
+                                          {
+                                              $first_file = $no_image;
+                                              $two_file = $no_image;
+                                          }
+                                      }
+                                      else
+                                      {
+                                          $first_file = $no_image;
+                                          $two_file = $no_image;
+                                      }
+                                  }
+                                  else
+                                  {
+                                      $first_file = $no_image;
+                                      $two_file = $no_image;
+                                  }                 
+                                @endphp
                                   <a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $valuetag->tensanpham_slug]) }}">
-                                      <img src="{{ $img }}" alt=""> 
-                                      <img src="{{ $img2 }}" alt="" class="hover-image">
+                                      <img src="{{ $first_file }}" alt=""> 
+                                      <img src="{{ $two_file }}" alt="" class="hover-image">
                                   </a> 
                               </div>
                                 <!-- /.image -->
@@ -500,7 +565,7 @@
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
           @foreach($hangsanxuat as $value)
             <div class="item m-t-15"> <a href="{{route('frontend.hangsanxuat',['hangsanxuat' => $value->tenhangsanxuat_slug])}}" class="image"> 
-              <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt=""> </a> 
+              <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt=""> </a> 
             </div>
           @endforeach
         </div>
