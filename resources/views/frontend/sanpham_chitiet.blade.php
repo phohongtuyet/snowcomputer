@@ -324,6 +324,39 @@
                                                 @foreach($danhgia as $value)
                                                     <div class="review">
                                                         <div class="review-title"><strong class="summary">{{ $value->User->name}}</strong><span class="date"><i class="fa fa-calendar"></i><span>{{date_format($value->created_at, 'd/m/Y H:i:s')  }} </span></span></div>
+                                                        <div class="text">
+                                                            @if($value->sao == 1)
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao ==2)
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao ==3)
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @elseif($value->sao ==4)
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star-o"></i>
+                                                            @else
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                                <i class="icon fa fal fa-star"></i>
+                                                            @endif
+                                                        </div>
                                                         <div class="text">"{{ $value->noidung}}"</div>
                                                     </div>
                                                @endforeach
