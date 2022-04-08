@@ -40,10 +40,16 @@ class SanPhamController extends Controller
 
     // Nhập từ Excel
     public function postNhap(Request $request)
-    {
-        Excel::import(new SanPhamImport, $request->file('file_excel'));
-        
-        return redirect()->route('admin.sanpham');
+    {   
+        try 
+        {
+            Excel::import(new SanPhamImport, $request->file('file_excel'));
+            return redirect()->route('admin.sanpham');        
+        } 
+        catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $error = $e->failures();
+            return redirect()->route('admin.sanpham')->with('error','Không thể nhập excel do lỗi định dạng hoặc sai dữ liệu ');
+        } 
     }
     
     // Xuất ra Excel

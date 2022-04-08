@@ -6,8 +6,9 @@ use App\Models\SanPham;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class SanPhamImport implements ToModel, WithHeadingRow
+class SanPhamImport implements ToModel, WithHeadingRow, WithValidation
 {
     
     public function model(array $row)
@@ -23,5 +24,14 @@ class SanPhamImport implements ToModel, WithHeadingRow
             'dongia' => $row['don_gia'],
             'thumuc' => $row['thu_muc'],
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'loai_san_pham' => 'required',
+            'hang_san_xuat' => 'required',
+            'noi_san_xuat' => 'required',
+        ];
     }
 }
