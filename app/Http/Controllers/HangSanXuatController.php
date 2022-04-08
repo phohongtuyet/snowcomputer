@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\HangSanXuatImport;
 use App\Exports\HangSanXuatExport;
+use App\Exports\HangSanXuat_MauExport;
+
 use Excel;
 class HangSanXuatController extends Controller
 {
@@ -41,14 +43,28 @@ class HangSanXuatController extends Controller
     // Nhập từ Excel
     public function postNhap(Request $request)
     {
-        Excel::import(new HangSanXuatImport, $request->file('file_excel'));
-
-        return redirect()->route('admin.hangsanxuat');
+       
+        try 
+        {
+            Excel::import(new HangSanXuatImport, $request->file('file_excel'));
+            return redirect()->route('admin.hangsanxuat');        
+        } 
+        catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $error = $e->failures();
+            return redirect()->route('admin.hangsanxuat')->with('error','Không thể nhập excel do lỗi định dạng hoặc sai dữ liệu ');
+        } 
     }
 
     public function getXuat()
     {
         $response = Excel::download(new HangSanXuatExport, 'danh-sach-hang-san-xuat.xlsx');
+        ob_end_clean();
+        return $response;    
+    }
+
+    public function getXuatMau()
+    {
+        $response = Excel::download(new HangSanXuat_MauExport, 'danh-sach-hang-san-xuat.xlsx');
         ob_end_clean();
         return $response;    
     }

@@ -175,6 +175,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/hangsanxuat/nhap', [HangSanXuatController::class, 'postNhap'])->name('hangsanxuat.nhap')->middleware('nhanvien');
     Route::get('/hangsanxuat/xuat', [HangSanXuatController::class, 'getXuat'])->name('hangsanxuat.xuat')->middleware('nhanvien');
     Route::post('/hangsanxuat/ajax', [HangSanXuatController::class, 'postHinhAnhAjax'])->name('hangsanxuat.ajax')->middleware('nhanvien');
+    Route::get('/hangsanxuat/xuat/mau', [HangSanXuatController::class, 'getXuatMau'])->name('hangsanxuat.xuatdanhsachmau')->middleware('nhanvien');
 
     // Quản lý Tình trạng đơn hàng
     Route::get('/tinhtrang', [TinhTrangController::class, 'getDanhSach'])->name('tinhtrang')->middleware('nhanvien');
@@ -223,6 +224,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/sanphamdanhmuc', [SanPhamController::class, 'getNhomSanPhamSua'])->name('sanpham.nhom.sua')->middleware('nhanvien');
     Route::get('/sanphamnhomsanpham', [SanPhamController::class, 'getNhomSanPham'])->name('sanpham.nhomsanpham')->middleware('nhanvien');
     Route::get('/sanphamnhomsanphamsua', [SanPhamController::class, 'getDanhMucSua'])->name('sanpham.danhmuc.sua')->middleware('nhanvien');
+    Route::get('/sanpham/xuat/mau', [SanPhamController::class, 'getXuatMau'])->name('sanpham.xuatdanhsachmau')->middleware('nhanvien');
 
     // Quản lý chủ đề
     Route::get('/chude', [ChuDeController::class, 'getDanhSach'])->name('chude')->middleware('nhanvien');

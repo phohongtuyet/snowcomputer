@@ -6,8 +6,9 @@ use App\Models\HangSanXuat;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class HangSanXuatImport implements ToModel,WithHeadingRow
+class HangSanXuatImport implements ToModel, WithHeadingRow, WithValidation
 {
     /**
     * @param array $row
@@ -21,5 +22,13 @@ class HangSanXuatImport implements ToModel,WithHeadingRow
             'tenhangsanxuat_slug' =>Str::slug($row['ten_hang_san_xuat']),
             'hinhanh' => $row['hinh_anh'],
         ]);
+    }
+    public function rules(): array
+    {
+        return [
+            'tenhangsanxuat' => 'required',
+            'tenhangsanxuat_slug' => 'required',
+            'hinhanh' => 'required',
+        ];
     }
 }

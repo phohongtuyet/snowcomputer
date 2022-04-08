@@ -12,17 +12,15 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($sanpham as $value)
         <tr>
-            <td>{{ $value->hangsanxuat_id }}</td>
-            <td>{{ $value->noisanxuat_id }}</td>
-            <td>{{ $value->loaisanpham_id }}</td>
-            <td>{{ $value->tensanpham }}</td>
-            <td>{{ $value->baohanh }}</td>
-            <td>{{ $value->soluong }}</td>
-            <td>{{ $value->dongia }}</td>
-            <td>{{ $value->thumuc }}</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Sản phẩm A</td>
+            <td>24</td>
+            <td>100</td>
+            <td>10000000</td>
+            <td>sanpham/0000001</td>
         </tr>
-    @endforeach
     </tbody>
 </table>

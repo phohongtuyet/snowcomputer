@@ -10,10 +10,16 @@
                 {!! session('status') !!}
             </div>
         @endif
+        @if (session('error'))
+            <div id="AlertBox" class="alert alert-danger hide" role="alert">
+                {!! session('error') !!}
+            </div>
+        @endif
         <p>
             <a href="{{ route('admin.sanpham.them') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
             <a href="#nhap" class="btn btn-danger" data-toggle="modal" data-target="#importModal"><i class="fas fa-upload"></i> Nhập từ Excel</a>
             <a href="{{ route('admin.sanpham.xuat') }}" class="btn btn-success"><i class="fas fa-download"></i> Xuất ra Excel</a>
+            <a href="{{ route('admin.sanpham.xuatdanhsachmau') }}" class="btn btn-info"><i class="fas fa-download"></i> Mẫu Excel</a>
         </p>
         <table id="table_id" class="table table-bordered table-hover table-sm ">
             <thead>
