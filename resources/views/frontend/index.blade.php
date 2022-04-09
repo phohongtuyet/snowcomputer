@@ -256,78 +256,82 @@
                           <!-- /.product-image -->                      
                           <div class="product-info text-left">
                             <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $value->tensanpham_slug]) }}">{{ $value->tensanpham }}</a></h3>
-                           
-                              @if(array_key_exists($value->id, $stars->toArray()))
-                                <div class="rating rateit-small">
-                                  @if($value->sao <= 10)
-                                      <i class="icon fa fa-star-half-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 10 && $value->sao<= 20)
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 20 && $value->sao <= 30)
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa-star-half-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 30 && $value->sao <= 40)
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 40 && $value->sao <= 50)
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa-star-half-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 50 && $value->sao <= 60)
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 60 && $value->sao <= 70)
-                                      <i class="icon fa fa fa-star">f</i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa-star-half-o"></i>
-                                      <i class="icon fa fal fa-star"></i>
-                                  @elseif($value->sao > 70 && $value->sao <= 80)
-                                      <i class="icon fa fa fa-star">g</i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fal fa-star-o"></i>
-                                  @elseif($value->sao > 80 && $value->sao <= 90)
-                                      <i class="icon fa fa fa-star">h</i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa-star-half-o"></i>
-                                  @elseif($value->sao > 100)
-                                      <i class="icon fa fa fa-star">da</i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                      <i class="icon fa fa fa-star"></i>
-                                  @endif
-                                </div>
+                            <div class="rating rateit-small">
+                            @if(array_key_exists($value->tensanpham, $stars->toArray())) 
+                                @foreach($stars as $aaa => $list_sao)
+                                  @foreach($list_sao as $aa )           
+                                      @if($aa['sao'] <= 10)
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 10 && $aa['sao']<= 20)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 20 && $aa['sao'] <= 30)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 30 && $aa['sao'] <= 40)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 40 && $aa['sao'] <= 50)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 50 && $aa['sao'] <= 60)
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 60 && $aa['sao'] <= 70)
+                                          <i class="icon fa fa fa-star">f</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                          <i class="icon fa fal fa-star"></i>
+                                      @elseif($aa['sao'] > 70 && $aa['sao'] <= 80)
+                                          <i class="icon fa fa fa-star">g</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fal fa-star-o"></i>
+                                      @elseif($aa['sao'] > 80 && $aa['sao'] <= 90)
+                                          <i class="icon fa fa fa-star">h</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa-star-half-o"></i>
+                                      @elseif($aa > 100)
+                                          <i class="icon fa fa fa-star">da</i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                          <i class="icon fa fa fa-star"></i>
+                                      @endif 
+                                  @endforeach      
+                                @endforeach    
                               @else
                                   <i class="icon fa fal fa-star-o"></i>
                                   <i class="icon fa fal fa-star-o"></i>
                                   <i class="icon fa fal fa-star-o"></i>
                                   <i class="icon fa fal fa-star-o"></i>
                                   <i class="icon fa fal fa-star-o"></i>
-                              @endif      
+                              @endif                                    
+                            </div>                         
+
                             <div class="description"></div>
                             <div class="product-price"> 
                               <span class="price">{{ number_format($value->dongia - ($value->dongia * ($value->phantramgia/100))) }} VNĐ </span> 
@@ -346,7 +350,7 @@
                                 @if(Auth::check())
                                 <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                 @endif
-                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
                               </ul>
                             </div>
                             <!-- /.action --> 
@@ -429,77 +433,81 @@
                               <!-- /.product-image -->                      
                               <div class="product-info text-left">
                                 <h3 class="name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => $valuetag->tensanpham_slug]) }}">{{ $valuetag->tensanpham }}</a></h3>
-                                  @if(array_key_exists($valuetag->id, $stars->toArray()))
-                                    <div class="rating rateit-small">
-                                      @if($valuetag->sao <= 10)
-                                          <i class="icon fa fa-star-half-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 10 && $valuetag->sao<= 20)
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 20 && $valuetag->sao <= 30)
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa-star-half-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 30 && $valuetag->sao <= 40)
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 40 && $valuetag->sao <= 50)
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa-star-half-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 50 && $valuetag->sao <= 60)
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 60 && $valuetag->sao <= 70)
-                                          <i class="icon fa fa fa-star">f</i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa-star-half-o"></i>
-                                          <i class="icon fa fal fa-star"></i>
-                                      @elseif($valuetag->sao > 70 && $valuetag->sao <= 80)
-                                          <i class="icon fa fa fa-star">g</i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fal fa-star-o"></i>
-                                      @elseif($valuetag->sao > 80 && $valuetag->sao <= 90)
-                                          <i class="icon fa fa fa-star">h</i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa-star-half-o"></i>
-                                      @elseif($valuetag->sao > 100)
-                                          <i class="icon fa fa fa-star">da</i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                          <i class="icon fa fa fa-star"></i>
-                                      @endif
-                                    </div>
+                                <div class="rating rateit-small">
+                                  @if(array_key_exists($valuetag->tensanpham, $stars->toArray())) 
+                                    @foreach($stars as $aaa => $list_sao)
+                                      @foreach($list_sao as $aa )           
+                                          @if($aa['sao'] <= 10)
+                                              <i class="icon fa fa-star-half-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 10 && $aa['sao']<= 20)
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 20 && $aa['sao'] <= 30)
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa-star-half-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 30 && $aa['sao'] <= 40)
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 40 && $aa['sao'] <= 50)
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa-star-half-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 50 && $aa['sao'] <= 60)
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 60 && $aa['sao'] <= 70)
+                                              <i class="icon fa fa fa-star">f</i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa-star-half-o"></i>
+                                              <i class="icon fa fal fa-star"></i>
+                                          @elseif($aa['sao'] > 70 && $aa['sao'] <= 80)
+                                              <i class="icon fa fa fa-star">g</i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fal fa-star-o"></i>
+                                          @elseif($aa['sao'] > 80 && $aa['sao'] <= 90)
+                                              <i class="icon fa fa fa-star">h</i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa-star-half-o"></i>
+                                          @elseif($aa > 100)
+                                              <i class="icon fa fa fa-star">da</i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                              <i class="icon fa fa fa-star"></i>
+                                          @endif 
+                                      @endforeach      
+                                    @endforeach    
                                   @else
                                       <i class="icon fa fal fa-star-o"></i>
                                       <i class="icon fa fal fa-star-o"></i>
                                       <i class="icon fa fal fa-star-o"></i>
                                       <i class="icon fa fal fa-star-o"></i>
                                       <i class="icon fa fal fa-star-o"></i>
-                                  @endif      
+                                  @endif                                    
+                                </div>       
                                 <div class="description"></div>
                                 <div class="product-price"> 
                                   <span class="price">{{ number_format($valuetag->dongia - ($valuetag->dongia * ($valuetag->phantramgia/100))) }} VNĐ </span> 

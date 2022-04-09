@@ -35,25 +35,19 @@ class HomeController extends Controller
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
         $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
-        $sanpham = SanPham::leftJoin('loaisanpham','loaisanpham.id','=','sanpham.loaisanpham_id')
-                          ->leftJoin('nhomsanpham','nhomsanpham.id','=','loaisanpham.nhomsanpham_id')
-                          ->leftJoin('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                          ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
+        $sanpham = SanPham::Join('loaisanpham','loaisanpham.id','=','sanpham.loaisanpham_id')
+                          ->Join('nhomsanpham','nhomsanpham.id','=','loaisanpham.nhomsanpham_id')
+                          ->Join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')                    
                           ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
-                          ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'),'tennhomsanpham','danhmuc.id')
-                          ->groupBy('sanpham.id')
-                          ->groupBy('danhmuc.tendanhmuc')
-                          ->groupBy('danhmuc.tendanhmuc_slug')
-                          ->groupBy('nhomsanpham.tennhomsanpham')
-                          ->groupBy('danhmuc.id')
-
-                          ->distinct()->get();
+                          ->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         
-		$danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+		$danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                                    ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                                    ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
         $collectionsao = collect($danhgiasao);
-        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars = $collectionsao->groupBy('tensanpham');
         $stars->toArray(); 
 
         //gom nhom theo tendanhmuc
@@ -65,7 +59,7 @@ class HomeController extends Controller
         $item = $collections->groupBy('tennhomsanpham');
         $item->toArray(); 
 
-        return view('frontend.index',compact('items','item','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
+        return view('frontend.index',compact('danhgiasao','items','item','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','stars'));
     }
 
 
@@ -503,24 +497,23 @@ class HomeController extends Controller
         $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
         //san pham cung danh muc
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
-                ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
-                ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
-                ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
-                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                ->groupBy('sanpham.id')
-                ->get();
+                            ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
+                            ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
+                            ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                            ->get();
 
-        $danhgiasaosp = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+        $danhgiasaosp = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                                    ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                                    ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
         $collectionsao = collect($danhgiasaosp);
-        $stars = $collectionsao->groupBy('sanpham_id');
+        $stars = $collectionsao->groupBy('tensanpham');
         $stars->toArray(); 
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
         //anh san pham
         $all_files = array();
         //$dir = '/storage/app/' . $sp->thumuc . '/images/';
-        $files = Storage::files($sp->thumuc . '/images/');
+        $files = Storage::files($sp->thumuc);
         foreach($files as $file)
             $all_files[] = pathinfo($file);
 		
