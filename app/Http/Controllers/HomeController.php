@@ -374,17 +374,16 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')
                                     ->paginate(16);
 
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
-            $stars->toArray(); 
+            $stars = $collectionsao->groupBy('tensanpham');
+            $stars->toArray();
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
@@ -403,18 +402,17 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
 
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
-            $stars->toArray(); 
+            $stars = $collectionsao->groupBy('tensanpham');
+            $stars->toArray();
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
@@ -433,11 +431,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
     
@@ -447,9 +442,11 @@ class HomeController extends Controller
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Giá: Cao nhất đầu tiên';
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
@@ -462,11 +459,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tendanhmuc_slug',$danhmuc_slug)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')                                    
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
     
@@ -476,10 +470,11 @@ class HomeController extends Controller
             $tendanhmuc = $namedanhmuc->tendanhmuc;
             $sesion_title_menu = $namedanhmuc->tendanhmuc;
             $name = 'Tên sản phẩm: A đến Z';
-
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','nhomsp','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc'));
         }
@@ -668,11 +663,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')                                     
                                     ->paginate(16);
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
@@ -685,11 +677,12 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
-
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
         elseif(request()->orderby === 'priceUp')
@@ -701,11 +694,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id') 
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
     
@@ -720,9 +710,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));        
         }
@@ -735,11 +727,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id') 
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
     
@@ -754,9 +743,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
@@ -769,11 +760,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id')
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tennhomsanpham_slug',$nhomsanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id') 
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
     
@@ -788,9 +776,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham'));
         }
@@ -806,11 +796,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')                                     
                                     ->paginate(16);
 
             $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
@@ -825,9 +812,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
@@ -840,11 +829,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')  
                                     ->orderBy('dongia', 'asc')
                                     ->paginate(16);
 
@@ -859,9 +845,11 @@ class HomeController extends Controller
             $name = 'Giá: Thấp nhất đầu tiên';
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
@@ -873,11 +861,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')  
                                     ->orderBy('dongia', 'desc')
                                     ->paginate(16);
 
@@ -893,9 +878,11 @@ class HomeController extends Controller
 
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
@@ -908,11 +895,8 @@ class HomeController extends Controller
             $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                                     ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                                     ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                                    ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                                     ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
                                     ->where('tenloai_slug',$loaisanpham)
-                                    ->select('sanpham.*','tendanhmuc',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                                    ->groupBy('sanpham.id')  
                                     ->orderBy('tensanpham', 'asc')
                                     ->paginate(16);
 
@@ -928,9 +912,11 @@ class HomeController extends Controller
             $name = 'Tên sản phẩm: A đến Z';
             $nhomsp = NhomSanPham::where('danhmuc_id',$namedanhmuc->id)->get();
             $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-            $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+            $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+            ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+            ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
             $collectionsao = collect($danhgiasao);
-            $stars = $collectionsao->groupBy('sanpham_id');
+            $stars = $collectionsao->groupBy('tensanpham');
             $stars->toArray();
             return view('frontend.sanpham',compact('stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','tendanhmuc','tennhomsanpham','tenloaisanpham'));
         }
@@ -957,16 +943,15 @@ class HomeController extends Controller
         $sanpham = SanPham::join('loaisanpham', 'sanpham.loaisanpham_id', '=', 'loaisanpham.id')
                 ->join('nhomsanpham', 'loaisanpham.nhomsanpham_id', '=','nhomsanpham.id',)
                 ->join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')
-                ->leftjoin('danhgiasanpham', 'danhgiasanpham.sanpham_id', '=', 'sanpham.id')
                 ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
-                ->select('sanpham.*','tendanhmuc','tendanhmuc_slug',DB::raw('sum(danhgiasanpham.sao) AS sao'))
-                ->groupBy('sanpham.id')
                 ->get();
-
-        $danhgiasaosp = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
-        $collectionsao = collect($danhgiasaosp);
-        $stars = $collectionsao->groupBy('sanpham_id');
-        $stars->toArray(); 
+        $danhgiasaosp = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+        ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+        ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
+        $collectionsao = collect($danhgiasao);
+        $stars = $collectionsao->groupBy('tensanpham');
+        $stars->toArray();
+        
 
         $sanphamsale = SanPham::where([['trangthaisanpham',2],['hienthi',1]])->get();
 
@@ -1032,14 +1017,37 @@ class HomeController extends Controller
         // gán ảnh từ thư mục vào mảng
         foreach($sanpham as $item)
         {   
-            $img='';
-            $dir = 'storage/app/' . $item->thumuc . '/images/';
-            $files = scandir($dir); 
-            $img = config('app.url') . '/'. $dir . $files[2];
+            $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+            $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+            $dir = 'storage/app/' . $item->thumuc;
+            if(file_exists($dir))
+            {
+                $files = scandir($dir);
+                if(isset($files[3]))
+                {
+                    $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                    if(in_array($extension2, $extensions))
+                    {
+                        $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                    }
+                    else
+                    {
+                        $first_file = $no_image;
+                    }
+                }
+                else
+                {
+                    $first_file = $no_image;
+                }
+            }
+            else
+            {
+                $first_file = $no_image;
+            }                 
                     
             $data[] = array(
                                 'name'=> $item->tensanpham,
-                                'img'=> $img,
+                                'img'=> $first_file,
                                 'price'=> $item->dongia,
                             );
         }
@@ -1121,10 +1129,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $hsx->tenhangsanxuat;
                 $name='Mặc định';
                 $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 $hsx_name = $hsx->tenhangsanxuat_slug;
                 return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
             }
@@ -1147,10 +1157,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $hsx->tenhangsanxuat;
                 $name='Mặc định';
                 $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 $hsx_name = $hsx->tenhangsanxuat_slug;
                 return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
             }
@@ -1173,10 +1185,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $hsx->tenhangsanxuat;
                 $name='Mặc định';
                 $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 $hsx_name = $hsx->tenhangsanxuat_slug;
                 return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));        
             }
@@ -1199,10 +1213,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $hsx->tenhangsanxuat;
                 $name='Mặc định';
                 $spgiacao = SanPham::select('dongia')->orderBy('dongia','DESC')->first();
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 $hsx_name = $hsx->tenhangsanxuat_slug;
                 return view('frontend.sanpham',compact('hsx_name','stars','spgiacao','nhomsp','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale'));         
             }
@@ -1297,10 +1313,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $namedanhmuc->tendanhmuc;
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             
             }
@@ -1329,10 +1347,12 @@ class HomeController extends Controller
                 $sesion_title_menu = 'Tất cả';
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             
             }
@@ -1361,10 +1381,12 @@ class HomeController extends Controller
                 $sesion_title_menu = 'Tat ca';
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             }
             else
@@ -1391,10 +1413,12 @@ class HomeController extends Controller
                 $sesion_title_menu = 'Tất cả';
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             }
         }
@@ -1429,10 +1453,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $namedanhmuc->tendanhmuc;
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             
             }
@@ -1461,10 +1487,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $namedanhmuc->tendanhmuc;
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             
             }
@@ -1493,10 +1521,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $namedanhmuc->tendanhmuc;
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             }
             else
@@ -1523,10 +1553,12 @@ class HomeController extends Controller
                 $sesion_title_menu = $namedanhmuc->tendanhmuc;
                 $name = 'Mặc định';
                 $sesion_fitler = 'loc';
-                $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
+                $danhgiasao = DanhGiaSanPham::Join('sanpham','sanpham.id','=','danhgiasanpham.sanpham_id')
+                ->select('tensanpham',DB::raw('SUM(sao) as sao'))
+                ->where('danhgiasanpham.hienthi',1)->groupBy('tensanpham')->get();
                 $collectionsao = collect($danhgiasao);
-                $stars = $collectionsao->groupBy('sanpham_id');
-                $stars->toArray(); 
+                $stars = $collectionsao->groupBy('tensanpham');
+                $stars->toArray();
                 return view('frontend.sanpham',compact('stars','sesion_fitler','spgiacao','name','sesion_title_menu','slides','hangsanxuat','danhmuc','sanpham','sanphamsale','nhomsp'));
             }
         }

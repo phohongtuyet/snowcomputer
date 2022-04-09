@@ -199,7 +199,7 @@
                               $path = config('app.url') . '/storage/app/danhmuc/';
                             @endphp
                             <div class="col-xs-12 col-sm-6 col-md-4 col-menu banner-image"> 
-                              <img class="img-responsive" src="{{ $path.'images/'. $value->hinhanh }}" alt=""> 
+                              <img class="img-responsive" src="{{ $path. $value->hinhanh }}" alt=""> 
                             </div>
                             <!-- /.yamm-content --> 
                           </div>
