@@ -14,7 +14,8 @@ class HangSanXuat extends Model
     protected $fillable = [
         'tenhangsanxuat',
         'tenhangsanxuat_slug',
-        'hinhanh',       
+        'hinhanh',
+        'xoa'       
     ];
 
     public function SanPham()

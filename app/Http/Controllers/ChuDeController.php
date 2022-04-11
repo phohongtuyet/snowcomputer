@@ -15,7 +15,7 @@ class ChuDeController extends Controller
     
     public function getDanhSach()
     {
-        $chude = ChuDe::all();
+        $chude = ChuDe::where('xoa',0);
         return view('admin.chude.danhsach',compact('chude'));
     }
 
@@ -70,7 +70,8 @@ class ChuDeController extends Controller
     public function postXoa(Request $request )
     {
         $orm = ChuDe::find($request->ID_delete);
-        $orm->delete();
+        $orm->xoa = 1;
+        $orm->save();
     
         return redirect()->route('admin.chude')->with('status', 'Xóa thành công');
     }

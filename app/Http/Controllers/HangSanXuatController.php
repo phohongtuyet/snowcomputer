@@ -22,7 +22,7 @@ class HangSanXuatController extends Controller
     
     public function getDanhSach()
     {
-        $hangsanxuat = HangSanXuat::all();
+        $hangsanxuat = HangSanXuat::where('xoa',0)->get();
 		$no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
         if(session_status() == PHP_SESSION_NONE)
@@ -110,7 +110,7 @@ class HangSanXuatController extends Controller
     {
         $this->validate($request, [
             'tenhangsanxuat' => ['required', 'max:255', 'unique:hangsanxuat,tenhangsanxuat,'.$id],
-            'HinhAnh' => ['required'],
+           
 
         ],
         $messages = [
@@ -132,8 +132,9 @@ class HangSanXuatController extends Controller
 	public function postXoa(Request $request)
     {
         $orm = HangSanXuat::find($request->ID_delete);
-        $orm->delete();
-		Storage::deleteDirectory('hangsanxuat/' . str_pad($request->ID_delete, 7, '0', STR_PAD_LEFT));
+        $orm->xoa = 1;
+        $orm->save();
+		//Storage::deleteDirectory('hangsanxuat/' . str_pad($request->ID_delete, 7, '0', STR_PAD_LEFT));
 
         return redirect()->route('admin.hangsanxuat')->with('status', 'Xóa thành công');
     }

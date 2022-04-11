@@ -16,7 +16,7 @@
                         <th width="10%">#</th>
                         <th width="35%">Tên quốc gia </th>
                         <th width="35%">Tên quốc gia không dấu</th>
-                        <th class="text-center" width="10%">Sửa</th>
+                        <th class="text-center" width="10%">Cập nhật</th>
                         <th class="text-center" width="10%">Xóa</th>
                     </tr>
                 </thead>

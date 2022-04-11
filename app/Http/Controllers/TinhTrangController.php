@@ -14,7 +14,7 @@ class TinhTrangController extends Controller
     
     public function getDanhSach()
     {
-        $tinhtrang = TinhTrang::all();
+        $tinhtrang = TinhTrang::where('xoa',0)->get();
         return view('admin.tinhtrang.danhsach',compact('tinhtrang'));
     }
 
@@ -72,7 +72,8 @@ class TinhTrangController extends Controller
 	public function postXoa(Request $request)
     {
         $orm = TinhTrang::find($request->ID_delete);
-        $orm->delete();
+        $orm->xoa = 1;
+        $orm->save();
 
         return redirect()->route('admin.tinhtrang')->with('status', 'Xóa thành công');
     }

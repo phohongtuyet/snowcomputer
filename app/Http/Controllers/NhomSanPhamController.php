@@ -16,13 +16,13 @@ class NhomSanPhamController extends Controller
     
     public function getDanhSach()
     {
-        $nhomsanpham = NhomSanPham::all();
+        $nhomsanpham = NhomSanPham::where('xoa',0)->get();
         return view('admin.nhomsanpham.danhsach',compact('nhomsanpham'));
     }
 
     public function getThem()
     {
-        $danhmuc = DanhMuc::all();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
         return view('admin.nhomsanpham.them',compact('danhmuc'));
     }
 
@@ -51,7 +51,7 @@ class NhomSanPhamController extends Controller
 
     public function getSua($id)
     {
-        $danhmuc = DanhMuc::all();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
         $nhomsanpham = NhomSanPham::find($id);
         return view('admin.nhomsanpham.sua', compact('nhomsanpham','danhmuc'));
     }
@@ -82,7 +82,8 @@ class NhomSanPhamController extends Controller
     public function postXoa(Request $request)
     {
         $orm = NhomSanPham::find($request->ID_delete);
-        $orm->delete();
+        $orm->xoa = 1;
+        $orm->save();
     
         return redirect()->route('admin.nhomsanpham')->with('status', 'Xóa thành công');
     }

@@ -18,6 +18,7 @@ class CreateHangSanXuatsTable extends Migration
             $table->string('tenhangsanxuat');
             $table->string('tenhangsanxuat_slug');
             $table->string('hinhanh')->nullable();
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

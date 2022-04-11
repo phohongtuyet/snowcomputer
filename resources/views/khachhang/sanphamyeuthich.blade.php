@@ -27,15 +27,35 @@
                                 @foreach($sanphamyeuthich as $value)
                                     <tr>
                                     @php 
-                                        $img='';
-                                        $dir = 'storage/app/' . $value->SanPham->thumuc . '/images/';
-                                        $files = scandir($dir); 
-                                        if(empty($files[2]))
-                                            $img =  env('APP_URL')."/public/frontend/images/noimage.png";
+                                        $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+                                        $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+                                        $dir = 'storage/app/' . $value->SanPham->thumuc;
+                                        if(file_exists($dir))
+                                        {
+                                            $files = scandir($dir);
+                                            if(isset($files[3]))
+                                            {
+                                                $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                                                if(in_array($extension2, $extensions))
+                                                {
+                                                    $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                                                }
+                                                else
+                                                {
+                                                    $first_file = $no_image;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                $first_file = $no_image;
+                                            }
+                                        }
                                         else
-                                            $img = config('app.url') . '/'. $dir . $files[2];
+                                        {
+                                            $first_file = $no_image;
+                                        }   
                                     @endphp
-                                        <td class="col-md-2 col-sm-6 col-xs-6"><img src="{{$img}}" alt="imga"></td>
+                                        <td class="col-md-2 col-sm-6 col-xs-6"><img src="{{$first_file}}" alt="imga"></td>
                                         <td class="col-md-7 col-sm-6 col-xs-6">
                                             <div class="product-name"><a href="{{ route('frontend.sanpham.chitiet',['tensanpham_slug' => Str::slug($value->SanPham->tensanpham)]) }}">{{$value->SanPham->tensanpham}}</a></div>
                                             @if(array_key_exists($value->id, $stars->toArray()))

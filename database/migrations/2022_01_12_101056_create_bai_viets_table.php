@@ -25,6 +25,7 @@ class CreateBaiVietsTable extends Migration
             $table->unsignedInteger('binhluan')->default(0);
             $table->unsignedTinyInteger('kiemduyet')->default(0);
             $table->unsignedTinyInteger('hienthi')->default(0);
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';  

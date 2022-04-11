@@ -19,11 +19,11 @@ class BaiVietController extends Controller
     {        
         if(auth::user()->role == 'staff')
         {
-            $baiviet = BaiViet::orderBy('created_at', 'desc')->where('user_id',auth::user()->id)->get();
+            $baiviet = BaiViet::orderBy('created_at', 'desc')->where('xoa',0)->where('user_id',auth::user()->id)->get();
             return view('admin.baiviet.danhsach',compact('baiviet'));
         }
 
-        $baiviet = BaiViet::orderBy('created_at', 'desc')->get();
+        $baiviet = BaiViet::orderBy('created_at', 'desc')->where('xoa',0)->get();
         return view('admin.baiviet.danhsach',compact('baiviet'));
     }
 
@@ -56,7 +56,7 @@ class BaiVietController extends Controller
 
     public function getThem()
     {
-        $chude = ChuDe::all();
+        $chude = ChuDe::where('xoa',0)->get();
         return view('admin.baiviet.them',compact('chude'));
     }
 
@@ -136,8 +136,8 @@ class BaiVietController extends Controller
     public function postXoa(Request $request)
     {
         $orm = BaiViet::find($request->ID_delete);
-        $orm->delete();
-    
+        $orm->xoa = 1 ;
+        $orm->save();    
         return redirect()->route('admin.baiviet')->with('status','Xóa thành công');
     }
     
@@ -184,7 +184,8 @@ class BaiVietController extends Controller
     public function getXoaInfo($id)
     {
         $orm = BaiViet::find($id);
-        $orm->delete();
+        $orm->xoa = 1 ;
+        $orm->save();
     
         return redirect()->route('admin.nguoidung.info',Auth::user()->name)->with('status','Xóa thành công');
     }

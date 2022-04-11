@@ -54,7 +54,7 @@
                 var id = $(this).val();
                 if (id) {
                     $.ajax({
-                        url: '{{ route("admin.sanpham.nhomsanpham") }}',
+                        url: '{{ route("admin.loaisanpham.nhomsanpham") }}',
                         method: 'GET',
                         data: { _token: '{{ csrf_token() }}', id: id },
                         success: function(res) {

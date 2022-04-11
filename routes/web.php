@@ -152,9 +152,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::get('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'getSua'])->name('loaisanpham.sua')->middleware('nhanvien');
     Route::post('/loaisanpham/sua/{id}', [LoaiSanPhamController::class, 'postSua'])->name('loaisanpham.sua')->middleware('nhanvien');
     Route::post('/loaisanpham/xoa', [LoaiSanPhamController::class, 'postXoa'])->name('loaisanpham.xoa')->middleware('nhanvien');
-    Route::get('/loaisanpham/nhomsanpham', [SanPhamController::class, 'getNhomSanPham'])->name('loaisanpham.nhomsanpham')->middleware('nhanvien');
-    Route::get('/loaisanphamdanhmuc', [SanPhamController::class, 'getNhomSanPhamSua'])->name('loaisanpham.nhom.sua')->middleware('nhanvien');
-    Route::get('/loaisanphamnhomsua', [SanPhamController::class, 'getDanhMucSua'])->name('loaisanpham.danhmuc.sua')->middleware('nhanvien');
+    Route::get('/loaisanpham/nhomsanpham', [LoaiSanPhamController::class, 'getNhomSanPham'])->name('loaisanpham.nhomsanpham')->middleware('nhanvien');
+    Route::get('/loaisanphamdanhmuc', [LoaiSanPhamController::class, 'getNhomSanPhamSua'])->name('loaisanpham.nhom.sua')->middleware('nhanvien');
+    Route::get('/loaisanphamnhomsua', [LoaiSanPhamController::class, 'getDanhMucSua'])->name('loaisanpham.danhmuc.sua')->middleware('nhanvien');
 
     // Quản lý chất liệu
     Route::get('/noisanxuat', [NoiSanXuatController::class, 'getDanhSach'])->name('noisanxuat')->middleware('nhanvien');

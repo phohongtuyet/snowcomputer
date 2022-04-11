@@ -17,6 +17,7 @@ class CreateChuDesTable extends Migration
             $table->id();
             $table->string('tenchude');
             $table->string('tenchude_slug');
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';       

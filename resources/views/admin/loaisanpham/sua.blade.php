@@ -102,7 +102,7 @@
                         success: function(res) {
                             if (res) {
                                 $("#nhomsanpham_id").empty();
-                                $("#nhomsanpham_id").append('<option>-- Chọn Loại Sản Phẩm --</option>');
+                                $("#nhomsanpham_id").append('<option>-- Chọn Nhóm Sản Phẩm --</option>');
                                 $.each(res, function(key, value) {
                                     $("#nhomsanpham_id").append('<option value="' + key + '">' + value +'</option>');
                                 });

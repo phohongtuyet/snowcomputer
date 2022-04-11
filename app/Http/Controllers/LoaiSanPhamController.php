@@ -17,20 +17,20 @@ class LoaiSanPhamController extends Controller
     
     public function getDanhSach()
     {
-        $loaisanpham = LoaiSanPham::all();
+        $loaisanpham = LoaiSanPham::where('xoa',0)->get();
         return view('admin.loaisanpham.danhsach',compact('loaisanpham'));
     }
 
     public function getThem()
     {
-        $danhmuc = DanhMuc::all();
-        $nhomsanpham = NhomSanPham::all();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
+        $nhomsanpham = NhomSanPham::where('xoa',0)->get();
         return view('admin.loaisanpham.them',compact('nhomsanpham','danhmuc'));
     }
 
     public function getNhomSanPham(Request $request)
     {
-        $nhomsanpham = NhomSanPham::where("danhmuc_id", $request->id)->pluck("tennhomsanpham", "id");
+        $nhomsanpham = NhomSanPham::where([["danhmuc_id", $request->id],["xoa",0]])->pluck("tennhomsanpham", "id");
         return response()->json($nhomsanpham);
     }
 
@@ -59,8 +59,8 @@ class LoaiSanPhamController extends Controller
 
     public function getSua($id)
     {
-        $danhmuc = DanhMuc::all();
-        $nhomsanpham = NhomSanPham::all();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
+        $nhomsanpham = NhomSanPham::where('xoa',0)->get();
         $loaisanpham = LoaiSanPham::find($id);
         return view('admin.loaisanpham.sua', compact('loaisanpham','danhmuc','nhomsanpham'));
     }
@@ -74,8 +74,7 @@ class LoaiSanPhamController extends Controller
 
     public function getDanhMucSua(Request $request)
     {
-        $loaisanpham = LoaiSanPham::find($request->id);
-        $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
+        $nhomsanpham = NhomSanPham::find($request->id);
         $danhmuc = DanhMuc::where("id", $nhomsanpham->danhmuc_id)->pluck("tendanhmuc", "id");
         return response()->json($danhmuc);
     }
@@ -104,7 +103,8 @@ class LoaiSanPhamController extends Controller
     public function postXoa(Request $request)
     {
         $orm = LoaiSanPham::find($request->ID_delete);
-        $orm->delete();
+        $orm->xoa = 1;
+        $orm->save();
     
         return redirect()->route('admin.loaisanpham')->with('status', 'Xóa thành công');
     }

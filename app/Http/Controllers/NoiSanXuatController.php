@@ -15,7 +15,7 @@ class NoiSanXuatController extends Controller
     
     public function getDanhSach()
     {
-        $noisanxuat = NoiSanXuat::all();
+        $noisanxuat = NoiSanXuat::where('xoa',0)->get();
         return view('admin.noisanxuat.danhsach',compact('noisanxuat'));
     }
 
@@ -70,8 +70,8 @@ class NoiSanXuatController extends Controller
     public function postXoa(Request $request)
     {
         $orm = NoiSanXuat::find($request->ID_delete);
-        $orm->delete();
-    
+        $orm->xoa = 1;
+        $orm->save();
         return redirect()->route('admin.noisanxuat')->with('status', 'Xóa  thành công');
     }
 }

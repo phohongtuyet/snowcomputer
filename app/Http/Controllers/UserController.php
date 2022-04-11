@@ -135,7 +135,7 @@ class UserController extends Controller
 
     public function getInfo()
     {
-        $baiviet = BaiViet::where('user_id',Auth::user()->id)->get();       
+        $baiviet = BaiViet::where('user_id',Auth::user()->id)->where('xoa',0)->get();       
         return view('admin.nguoidung.info',compact('baiviet'));
     }
 

@@ -530,13 +530,33 @@ class HomeController extends Controller
     {
         $sanpham = SanPham::where('tensanpham_slug', $tensanpham_slug)->first();
        
-        $img='';
-        $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
-        $files = scandir($dir); 
-        if(empty($files[2]))
-            $img = env('APP_URL')."/public/frontend/images/noimage.png";
+        $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+        $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+        $dir = 'storage/app/' . $sanpham->thumuc;
+        if(file_exists($dir))
+        {
+            $files = scandir($dir);
+            if(isset($files[3]))
+            {
+                $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                if(in_array($extension2, $extensions))
+                {
+                    $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                }
+                else
+                {
+                    $first_file = $no_image;
+                }
+            }
+            else
+            {
+                $first_file = $no_image;
+            }
+        }
         else
-            $img = config('app.url') . '/'. $dir . $files[2];    
+        {
+            $first_file = $no_image;
+        }      
         
         $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sanpham->id)->first();
         $danhgia = DanhGiaSanPham::where([['sanpham_id',$sanpham->id],['hienthi',1]])->get();
@@ -547,7 +567,7 @@ class HomeController extends Controller
             'qty' => 1,
             'weight' => 0,
             'options' => [
-                'image' => $img,
+                'image' => $first_file,
                 'name_slug'=>$sanpham->tensanpham_slug,
                 'stars' => $danhgiasao->sao,
                 'comment' => ($danhgia->count() === 0) ? 0 : $danhgia->count()
@@ -982,13 +1002,33 @@ class HomeController extends Controller
     {
         $sanpham = SanPham::where('tensanpham_slug', $request->name)->first();
        
-        $img='';
-        $dir = 'storage/app/' . $sanpham->thumuc . '/images/';
-        $files = scandir($dir); 
-        if(empty($files[2]))
-            $img = env('APP_URL')."/public/frontend/images/noimage.png";
+        $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
+        $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+        $dir = 'storage/app/' . $sanpham->thumuc;
+        if(file_exists($dir))
+        {
+            $files = scandir($dir);
+            if(isset($files[3]))
+            {
+                $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
+                if(in_array($extension2, $extensions))
+                {
+                    $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
+                }
+                else
+                {
+                    $first_file = $no_image;
+                }
+            }
+            else
+            {
+                $first_file = $no_image;
+            }
+        }
         else
-        $img = config('app.url') . '/'. $dir . $files[2];
+        {
+            $first_file = $no_image;
+        }   
         $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sanpham->id)->first();
         $danhgia = DanhGiaSanPham::where([['sanpham_id',$sanpham->id],['hienthi',1]])->get();
         Cart::add([
@@ -998,7 +1038,7 @@ class HomeController extends Controller
             'qty' => $request->qty_chitiet,
             'weight' => 0,
             'options' => [
-                'image' => $img,
+                'image' => $first_file,
                 'name_slug'=>$sanpham->tensanpham_slug,
                 'stars' => $danhgiasao->sao,
                 'comment' => ($danhgia->count() === 0) ? 0 : $danhgia->count()

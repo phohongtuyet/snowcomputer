@@ -16,7 +16,7 @@ class DanhMucController extends Controller
     
     public function getDanhSach()
     {
-        $danhmuc = DanhMuc::all();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
 
         $no_image = config('app.url') . '/public/frontend/images/no-image.jpg';
 		$extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
@@ -72,7 +72,6 @@ class DanhMucController extends Controller
     {
         $this->validate($request, [
             'tendanhmuc' => ['required', 'max:255', 'unique:danhmuc,tendanhmuc,'.$id],
-            'HinhAnh' => ['required'],
         ], 
         $messages = [
             'tendanhmuc.required' => 'Tên danh mục không được bỏ trống.',
@@ -94,7 +93,8 @@ class DanhMucController extends Controller
     public function postXoa(Request $request )
     {
         $orm = danhmuc::find($request->ID_delete);
-        $orm->delete();
+        $orm->xoa = 1;
+        $orm->save();
     
         return redirect()->route('admin.danhmuc')->with('status', 'Xóa thành công');
     }

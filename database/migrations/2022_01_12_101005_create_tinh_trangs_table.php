@@ -17,6 +17,7 @@ class CreateTinhTrangsTable extends Migration
         Schema::create('tinhtrang', function (Blueprint $table) {
             $table->id();
             $table->string('tinhtrang');
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';   

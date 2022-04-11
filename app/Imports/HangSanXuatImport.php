@@ -26,9 +26,8 @@ class HangSanXuatImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'tenhangsanxuat' => 'required',
-            'tenhangsanxuat_slug' => 'required',
-            'hinhanh' => 'required',
+            'ten_hang_san_xuat' => 'required',
+            'hinh_anh' => 'required',
         ];
     }
 }

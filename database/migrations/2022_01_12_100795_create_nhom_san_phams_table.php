@@ -18,6 +18,7 @@ class CreateNhomSanPhamsTable extends Migration
             $table->foreignId('danhmuc_id')->constrained('danhmuc');
             $table->string('tennhomsanpham');
             $table->string('tennhomsanpham_slug');
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB'; 

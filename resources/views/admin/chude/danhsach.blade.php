@@ -17,8 +17,8 @@
                     <tr>
                         <th width="5%">#</th>
                         <th width="40%">Tên chủ đề </th>
-                        <th width="40%">Tên chủ đề</th>
-                        <th width="5%">Sửa</th>
+                        <th width="40%">Tên chủ đề không dấu</th>
+                        <th width="10%">Cập nhật</th>
                         <th width="5%">Xóa</th>
                     </tr>
                 </thead>

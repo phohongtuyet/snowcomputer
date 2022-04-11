@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DonHang;
 use App\Models\DonHang_ChiTiet;
+use App\Models\TinhTrang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -18,7 +19,8 @@ class DonHangController extends Controller
     public function getDanhSach()
     {
         $donhang = DonHang::orderBy('created_at', 'desc')->get();
-        return view('admin.donhang.danhsach', compact('donhang'));
+        $tinhtrang = TinhTrang::where('xoa',0)->get();
+        return view('admin.donhang.danhsach', compact('donhang','tinhtrang'));
     }
 
     public function getDanhSachNgay()

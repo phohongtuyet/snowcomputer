@@ -26,7 +26,7 @@ class SanPhamController extends Controller
     
     public function getDanhSach()
     {
-        $sanpham = SanPham::all();
+        $sanpham = SanPham::where('xoa',0)->get();
         return view('admin.sanpham.danhsach', compact('sanpham'));
     }
 
@@ -96,22 +96,22 @@ class SanPhamController extends Controller
 		
 		$folder = 'sanpham/' . str_pad($next_id, 7, '0', STR_PAD_LEFT);
 
-        $noisanxuat = NoiSanXuat::all();
-        $hangsanxuat = HangSanXuat::all();
-        $danhmuc = DanhMuc::all();
+        $noisanxuat = NoiSanXuat::where('xoa',0)->get();
+        $hangsanxuat = HangSanXuat::where('xoa',0)->get();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
 
         return view('admin.sanpham.them', compact('noisanxuat','hangsanxuat','folder','danhmuc'));
     }
 
     public function getNhomSanPham(Request $request)
     {
-        $nhomsanpham = NhomSanPham::where("danhmuc_id", $request->id)->pluck("tennhomsanpham", "id");
+        $nhomsanpham = NhomSanPham::where([["danhmuc_id", $request->id],['xoa',0]])->pluck("tennhomsanpham", "id");
         return response()->json($nhomsanpham);
     }
 
     public function getLoai(Request $request)
     {
-        $loai = LoaiSanPham::where("nhomsanpham_id", $request->id)->pluck("tenloai", "id");
+        $loai = LoaiSanPham::where([["nhomsanpham_id", $request->id],['xoa',0]])->pluck("tenloai", "id");
         return response()->json($loai);
     }
 
@@ -160,11 +160,11 @@ class SanPhamController extends Controller
     public function getSua($id)
     {
         $sanpham = SanPham::find($id);
-        $noisanxuat = NoiSanXuat::all();
-        $hangsanxuat = HangSanXuat::all();
-        $loaisanpham = LoaiSanPham::all();
-        $danhmuc = DanhMuc::all();
-        $nhomsanpham = NhomSanPham::all();
+        $noisanxuat = NoiSanXuat::where('xoa',0)->get();
+        $hangsanxuat = HangSanXuat::where('xoa',0)->get();
+        $loaisanpham = LoaiSanPham::where('xoa',0)->get();
+        $danhmuc = DanhMuc::where('xoa',0)->get();
+        $nhomsanpham = NhomSanPham::where('xoa',0)->get();
 
         if(session_status() == PHP_SESSION_NONE)
 		{
@@ -186,7 +186,7 @@ class SanPhamController extends Controller
     public function getNhomSanPhamSua(Request $request)
     {
         $loaisanpham = LoaiSanPham::find($request->id);
-        $nhomsanpham = NhomSanPham::where("id", $loaisanpham->nhomsanpham_id)->pluck("tennhomsanpham", "id");
+        $nhomsanpham = NhomSanPham::where([["id", $loaisanpham->nhomsanpham_id],['xoa',0]])->pluck("tennhomsanpham", "id");
         return response()->json($nhomsanpham);
     }
 
@@ -194,7 +194,7 @@ class SanPhamController extends Controller
     {
         $loaisanpham = LoaiSanPham::find($request->id);
         $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
-        $danhmuc = DanhMuc::where("id", $nhomsanpham->danhmuc_id)->pluck("tendanhmuc", "id");
+        $danhmuc = DanhMuc::where([["id", $nhomsanpham->danhmuc_id],['xoa',0]])->pluck("tendanhmuc", "id");
         return response()->json($danhmuc);
     }
 
@@ -231,9 +231,9 @@ class SanPhamController extends Controller
     public function postXoa(Request $request)
     {
         $orm = SanPham::find($request->ID_delete);
-        $orm->delete();   
-
-		Storage::deleteDirectory('sanpham/' . str_pad($request->ID_delete, 7, '0', STR_PAD_LEFT));
+        $orm->xoa = 1;
+        $orm->save();   
+		//Storage::deleteDirectory('sanpham/' . str_pad($request->ID_delete, 7, '0', STR_PAD_LEFT));
 
         return redirect()->route('admin.sanpham')->with('status', 'Xóa thành công');;
 

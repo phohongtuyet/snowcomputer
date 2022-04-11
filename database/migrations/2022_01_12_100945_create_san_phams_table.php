@@ -28,6 +28,7 @@ class CreateSanPhamsTable extends Migration
             $table->text('motasanpham')->nullable();
             $table->text('thumuc')->nullable();
             $table->unsignedTinyInteger('hienthi')->default(1);
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

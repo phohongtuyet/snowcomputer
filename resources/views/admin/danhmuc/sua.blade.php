@@ -20,7 +20,7 @@
             <div class="form-group">
 					<label for="ThuMuc">Hình ảnh đính kèm <span class="text-danger font-weight-bold">*</span></label>
 					@if(!empty($danhmuc->hinhanh))
-						<img class="d-block rounded" src="{{ $path.'images/'. $danhmuc->hinhanh }}" width="100" />
+						<img class="d-block rounded" src="{{ $path. $danhmuc->hinhanh }}" width="100" />
 						<span class="d-block small text-danger">Bỏ trống nếu muốn giữ nguyên ảnh cũ.</span>
 					@endif
 					<div class="input-group">
