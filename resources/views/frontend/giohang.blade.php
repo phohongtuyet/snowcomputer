@@ -240,7 +240,19 @@
         <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
 
-
+@if(session('status'))   
+    <div class="toast">
+        <div class="toast-content">
+            <i class="fa fa-times"></i>
+            <div class="message">
+                <span class="text text-1">Thất bại</span>
+                <span class="text text-2">{!! session('status') !!}</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
+@endif
 @endsection
 @section('javascript')
 <script>
