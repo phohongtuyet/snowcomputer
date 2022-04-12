@@ -26,6 +26,7 @@
                             <img class="img-responsive" src="assets/images/blog-post/blog_big_01.jpg" alt="">
                             <h1>{{ $baiviet->tieude }}</h1>
                             <span class="author">{{ $baiviet->User->name }}</span>
+                            <span class="eye"><i class="fa fa-eye"></i> {{$baiviet->luotxem}}</span>
                             <span class="review">{{$binhluan->count()}} bình luận</span>
                             <span class="date-time">{{ $baiviet->created_at }}</span>
                             <p>{!! $baiviet->noidung !!}</p>
@@ -41,7 +42,7 @@
                         <div class="blog-post-author-details wow fadeInUp">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <img src="{{asset('public/frontend/images/testimonials/member3.png')}}" alt="Responsive image" class="img-circle img-responsive">
+                                    <img src="{{asset('public/frontend/images/avatar.png')}}" alt="Responsive image" class="img-circle img-responsive">
                                 </div>
                                 <div class="col-md-10">
                                     <h4>{{ $baiviet->User->name }}</h4>
@@ -65,9 +66,6 @@
                                     <h3 class="title-review-comments">{{$binhluan->count()}} bình luận</h3>
                                 </div>
                                 @foreach($binhluan as $value)
-                                    <div class="col-md-2 col-sm-2">
-                                        <img src="assets/images/testimonials/member1.png" alt="Responsive image" class="img-rounded img-responsive">
-                                    </div>
                                     <div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
                                         <div class="blog-comments inner-bottom-xs">
                                             <h4>{{ $value->User->name }}</h4>
@@ -79,7 +77,11 @@
 
                                     </div>
                                 @endforeach
-                                <div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" href="#">Load more</a></div>
+                                <div class="post-load-more col-md-12">
+                                    <a class="btn btn-upper btn-primary load-more" >Xem thêm </a>
+                                    <input type="hidden" id="row" value="0">
+                                    <input type="hidden" id="all" value="{{$binhluan->count()}}">
+                                </div>
                             </div>
                         </div>	
 
@@ -141,7 +143,7 @@
 								<div class="blog-post inner-bottom-30 " >
 									<img class="img-responsive" src="{{ $img }}" alt="">
 									<h4><a href="blog-details.html">{{ $value->tieude}}</a></h4>
-										<span class="review"> </span>
+                                    <span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
 									<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 									<p>{{ $value->tomtat}}</p>
 								</div>
@@ -156,7 +158,7 @@
 								<div class="blog-post inner-bottom-30" >
 									<img class="img-responsive" src="{{ $img }}" alt="">
 									<h4><a href="blog-details.html">{{ $value->tieude}}</a></h4>
-									<span class="review">6 Comments</span>
+                                    <span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
 									<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 									<p>{{ $value->tomtat}}</p>
 									
@@ -217,6 +219,5 @@
 			return html;
       	}
     });
-
 </script>
 @endsection 

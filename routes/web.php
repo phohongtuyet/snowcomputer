@@ -64,6 +64,8 @@ Route::get('search', [HomeController::class, 'selectSearchBaiViet'])->name('fron
 Route::get('/tin-tuc-tim-kiem', [HomeController::class, 'getTimKiemBaiViet'])->name('frontend.timkiembaiviet');
 //Bình luận
 Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->name('frontend.binhluan');
+Route::post('/xem-them-binh-luan', [HomeController::class, 'postBinhLuanLoad'])->name('frontend.binhluan_load');
+
 
 // Liên hệ
 Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('frontend.lienhe');

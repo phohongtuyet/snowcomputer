@@ -27,7 +27,6 @@
 								<h1><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}">{{ $value->tieude}}</a></h1>
 								<span class="author">{{ $value->User->name}}</span>
 								<span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}} Lượt xem </span>
-								<span class="review">{{$value->BinhLuan->count()}} Bình luận</span>
 								<span class="date-time">{{ $value->created_at}}</span>
 								<p>{{ $value->tomtat}}</p>
 								<a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}" class="btn btn-upper btn-primary read-more">đọc thêm </a>
@@ -79,7 +78,6 @@
 								<img class="img-responsive" src="{{ $img }}" alt="">
 								<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}"">{{ $value->tieude}}</a></h4>
 								<span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
-								<span class="review">{{$value->BinhLuan->count()}}</span>
 								<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 								<p>{{ $value->tomtat}}</p>
 							</div>
@@ -95,7 +93,6 @@
 								<img class="img-responsive" src="{{ $img }}" alt="">
 								<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}">{{ $value->tieude}}</a></h4>
 								<span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
-								<span class="review">{{$value->BinhLuan->count()}}</span>
 								<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 								<p>{{ $value->tomtat}}</p>
 							</div>
