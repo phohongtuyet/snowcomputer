@@ -32,12 +32,17 @@ class KhachHangController extends Controller
     {
         $orm = DonHang::find($id);
         $orm->tinhtrang_id = 3 ;
-        $orm->save();
-
+        if($orm->save()){
+            $donhang_chitiet= DonHang_ChiTiet::where('donhang_id',$id)->get();
+            foreach($donhang_chitiet as $d){
+                $sanpham = SanPham::find($d->sanpham_id);
+                $sanpham->soluong += $d->soluongban;
+                $sanpham->save();       
+            }
+        }
         $donhang = DonHang::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
-        session()->flash('status', 'Khách hàng đã hủy đơn hàng thành công');
+        return redirect()->back()->with('status', 'Khách hàng đã hủy đơn hàng thành công');
 
-        return view('khachhang.index',compact('donhang'));
     }
 
     public function getDonHang_ChiTiet($id)
