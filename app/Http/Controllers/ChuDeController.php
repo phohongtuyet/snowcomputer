@@ -15,7 +15,7 @@ class ChuDeController extends Controller
     
     public function getDanhSach()
     {
-        $chude = ChuDe::where('xoa',0);
+        $chude = ChuDe::where('xoa',0)->get();
         return view('admin.chude.danhsach',compact('chude'));
     }
 
