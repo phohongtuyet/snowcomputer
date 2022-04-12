@@ -55,10 +55,10 @@
 				<div class="col-xs-12 col-sm-3 col-md-3 sidebar">
 					<div class="sidebar-module-container">
 						<div class="search-area outer-bottom-small">
-						<form>
+						<form autocomplete="off" id="search" method="get" action ="{{route('frontend.timkiembaiviet')}}">
 							<div class="control-group">
-							<input type="text" id='employee_search' placeholder="--search--">
-								<a href="#" class="search-button"></a>   
+								<input type="text" class="search"   name="search"  placeholder="--Tìm kiếm--">
+								<a href="{{route('frontend.timkiembaiviet')}}" class="search-button" onclick="event.preventDefault();document.getElementById('search').submit();"></a>
 							</div>
 						</form>
 					</div>		
@@ -120,3 +120,25 @@
 	</div>
 </div>
 @endsection
+@section('javascript')
+<script type="text/javascript">                      
+    var path = "{{ route('frontend.selectSearchbaiviet') }}";
+    $('input.search').typeahead({
+		source:  function (query, process) {
+			return $.get(path, { query: query }, function (data) {
+				return process(data);
+			});
+		},
+		highlighter: function (item, data) {
+			var parts = item.split('#'),
+				html = '<div class="row">';
+                  html += '<div class="col-4 pl-0">';
+                  html += '<span style="width=200px;word-break: break-all;">'+data.name+'</span>';
+                  html += '</div>';
+                  html += '</div>';
+			return html;
+      	}
+    });
+
+</script>
+@endsection 

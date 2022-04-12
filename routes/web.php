@@ -60,7 +60,8 @@ Route::get('/dat-hang-thanh-cong', [HomeController::class, 'getDatHangThanhCong'
 Route::get('/tin-tuc-cong-nghe', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet');
 Route::get('/tin-tuc/{tieude_slug}', [HomeController::class, 'getBaiViet_ChiTiet'])->name('frontend.baiviet_chitiet');
 Route::get('/tin-tuc/chu-de/{chude}', [HomeController::class, 'getBaiViet'])->name('frontend.baiviet_chude');
-
+Route::get('search', [HomeController::class, 'selectSearchBaiViet'])->name('frontend.selectSearchbaiviet');
+Route::get('/tin-tuc-tim-kiem', [HomeController::class, 'getTimKiemBaiViet'])->name('frontend.timkiembaiviet');
 //Bình luận
 Route::get('/binh-luan/{tieude_slug}', [HomeController::class, 'getBinhLuan'])->name('frontend.binhluan');
 

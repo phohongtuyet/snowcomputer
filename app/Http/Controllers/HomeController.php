@@ -1649,4 +1649,73 @@ class HomeController extends Controller
         else 
             return response()->json(['status' => 'Không tìm thấy mã giảm giá!!!']);
     }
+
+    public function selectSearchBaiViet(Request $request)
+    {
+        $baiviet = BaiViet::select("tieude")
+                ->where("tieude","LIKE","%{$request->input('query')}%")
+                ->where("noidung","LIKE","%{$request->input('query')}%")
+                ->where([['kiemduyet',1],['hienthi',1]])
+                ->get();
+        foreach($baiviet as $item)
+        {            
+            $data[] = array('name'=> $item->tieude);
+        }
+        return response()->json($data);
+    }
+
+    public function getTimKiemBaiViet(Request $request)
+    {
+
+        $baiviet = BaiViet::where('tieude_slug',Str::slug($request->search))->first();
+        if(!empty($baiviet))
+        {
+            $chude = ChuDe::where('xoa',0);
+            $binhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
+            $xemnhieu = BaiViet::orderBy('luotxem', 'desc')
+                ->where([
+                            ['hienthi',1],
+                            ['kiemduyet', 1],
+                        ])
+                ->paginate(2);
+            $moi = BaiViet::orderBy('created_at', 'desc')
+            ->where([
+                        ['hienthi',1],
+                        ['kiemduyet', 1],
+                    ])
+            ->paginate(2);
+    
+            // Cập nhật lượt xem
+            $idXem = 'BV' . $baiviet->id;
+            if(!session()->has($idXem))
+            {
+                $orm = BaiViet::find($baiviet->id);
+                $orm->LuotXem = $orm->luotxem + 1;
+                $orm->save();
+                session()->put($idXem, 1);
+            }
+            return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
+        }
+        else
+        {
+            $xemnhieu = BaiViet::orderBy('luotxem', 'desc')
+            ->where([
+                        ['hienthi',1],
+                        ['kiemduyet', 1],
+                    ])
+            ->paginate(2);
+
+            $moi = BaiViet::orderBy('created_at', 'desc')
+            ->where([
+                        ['hienthi',1],
+                        ['kiemduyet', 1],
+                    ])
+            ->paginate(2);
+
+            $chude = ChuDe::where('xoa',0)->get();
+            $session_title = $request->search;
+            return view('frontend.baiviet_chitiet',compact('chude','session_title','xemnhieu','moi'));
+        }
+        
+    }
 }

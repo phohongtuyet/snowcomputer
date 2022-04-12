@@ -411,7 +411,7 @@
                   html += '<div class="col-md-2">';
                   html += '<img src="'+data.img+'"/ height="50px;" width="70px;">';
                   html += '</div>';
-                  html += '<div class="col-md-10 pl-0" style="padding-left: 70px;width="1500px;">';
+                  html += '<div class="col-md-10 pl-0" style="padding-left: 70px;width=1500px;">';
                   html += '<span>'+data.name+'</span>';
                   html += '<p class="m-0">'+  data.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}); +'</p>';
                   html += '</div>';
