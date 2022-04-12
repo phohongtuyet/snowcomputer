@@ -123,7 +123,7 @@
                             @foreach($hangsanxuat as $value)
                             <li>
                               <input type="checkbox" name="hangsanxuat" value="{{$value->tenhangsanxuat_slug}}">
-                              <img src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt="" style="width: 100px;">
+                              <img src="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" alt="" style="width: 100px;">
                             </li>
                             @endforeach
                           </ul>
