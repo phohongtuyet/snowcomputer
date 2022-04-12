@@ -5,24 +5,24 @@
     <div class="row ">
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="card">
-        <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-                <div class="row ">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                        <div class="card-content">
-                            <h5 class="font-15">Đơn hàng mới </h5>
-                            <h2 class="mb-3 font-18">{{$donhang->count()}}</h2>
-                            <p class="mb-0"></p>
+            <div class="card-statistic-4">
+                <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                            <div class="card-content">
+                                <h5 class="font-15">Đơn hàng mới </h5>
+                                <h2 class="mb-3 font-18">{{$donhang->count()}}</h2>
+                                <p class="mb-0"><a href="{{route('admin.donhang')}}">Xem</a>  </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                        <div class="banner-img">
-                            <img src="{{ asset('public/admin/img/banner/1.png')}}" alt="">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                            <div class="banner-img">
+                                <img src="{{ asset('public/admin/img/banner/1.png')}}" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -77,7 +77,17 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                             <div class="card-content">
                                 <h5 class="font-15">Doanh thu</h5>
-                                <h2 class="mb-3 font-18">{{$doanhthu->count()}}</h2>
+                                @php $tong = 0; $tongkm = 0; @endphp
+                                @foreach($doanhthu as $value)       
+                                    @php 
+                                        $tong += $value->tongsoluongban * $value->dongia;
+                                        if(!empty($value->khuyenmai))
+                                            $tongkm += $value->tongsoluongban * ($value->dongia - ( $value->khuyenmai/100 * $value->dongia )) ;    
+                                        else
+                                            $tongkm += $value->tongsoluongban * $value->dongia;
+                                    @endphp
+                                @endforeach
+                                <h2 class="mb-3 font-18">{{number_format($tong)}}</h2>
                                 <p class="mb-0"></p>
                             </div>
                         </div>
