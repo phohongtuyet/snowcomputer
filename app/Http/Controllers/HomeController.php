@@ -241,7 +241,8 @@ class HomeController extends Controller
     {
         $chude = ChuDe::all();
         $baiviet = BaiViet::where('tieude_slug', $tieude_slug)->first();
-        $binhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
+        $binhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->limit(3)->get();
+        $dembinhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
         $xemnhieu = BaiViet::orderBy('luotxem', 'desc')
             ->where([
                         ['hienthi',1],
@@ -264,7 +265,7 @@ class HomeController extends Controller
             $orm->save();
             session()->put($idXem, 1);
         }
-        return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
+        return view('frontend.baiviet_chitiet',compact('dembinhluan','baiviet','binhluan','xemnhieu','moi','chude'));
     }
 
     public function getBinhLuan(Request $request, $tieude_slug)
@@ -1671,6 +1672,7 @@ class HomeController extends Controller
         if(!empty($baiviet))
         {
             $chude = ChuDe::where('xoa',0);
+            $dembinhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
             $binhluan = BinhLuan::where('baiviet_id', $baiviet->id)->where('hienthi', 1)->get();
             $xemnhieu = BaiViet::orderBy('luotxem', 'desc')
                 ->where([
@@ -1694,7 +1696,7 @@ class HomeController extends Controller
                 $orm->save();
                 session()->put($idXem, 1);
             }
-            return view('frontend.baiviet_chitiet',compact('baiviet','binhluan','xemnhieu','moi','chude'));
+            return view('frontend.baiviet_chitiet',compact('dembinhluan','baiviet','binhluan','xemnhieu','moi','chude'));
         }
         else
         {
@@ -1717,5 +1719,25 @@ class HomeController extends Controller
             return view('frontend.baiviet_chitiet',compact('chude','session_title','xemnhieu','moi'));
         }
         
+    }
+
+    public function postBinhLuanLoad(Request $request)
+    {
+        $row = $request->row;
+        $rowperpage = 3;
+        $binhluan = DB::table('binhluan')->join('users','users.id','=','binhluan.user_id')
+                        ->where('hienthi',1) 
+                        ->offset($rowperpage)
+                        ->limit($row)->get();
+        $data = array();
+        foreach($binhluan as $value)
+        {
+            $data[] = array(
+                'name'=> $value->name,
+                'date'=> $value->created_at,
+                'content'=> $value->noidung,
+            );
+        }
+        return view('frontend.binhluan_data',compact('data')); 
     }
 }

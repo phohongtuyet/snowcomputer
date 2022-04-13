@@ -63,10 +63,10 @@
                         <div class="blog-review wow fadeInUp">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3 class="title-review-comments">{{$binhluan->count()}} bình luận</h3>
+                                    <h3 class="title-review-comments">{{$dembinhluan->count()}} bình luận</h3>
                                 </div>
                                 @foreach($binhluan as $value)
-                                    <div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
+                                    <div id="blog-comments" class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
                                         <div class="blog-comments inner-bottom-xs">
                                             <h4>{{ $value->User->name }}</h4>
                                             <span class="review-action pull-right">
@@ -99,9 +99,15 @@
                                                 <div class="invalid-feedback "><strong class="text-danger">{{ $message }}</strong></div>
                                             @enderror
                                         </div>
+                                        @if(!Auth::check())
                                         <div class="col-md-12 outer-bottom-small m-t-20">
                                             <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Bình luận</button>
                                         </div>
+                                        @else
+                                            <div class="col-md-12 outer-bottom-small m-t-20">
+                                                <a class="btn-upper btn btn-primary checkout-page-button" href="{{ route('khachhang.dangnhap')}}">Đăng nhập để bình luận  </a>                                            
+                                            </div> 
+                                        @endif
                                     </form>
                                 </div>
                             </div>
@@ -128,7 +134,8 @@
 
 
 
-	<!-- ============================================== CATEGORY : END ============================================== -->						<div class="sidebar-widget outer-bottom-xs wow fadeInUp">
+	<!-- ============================================== CATEGORY : END ============================================== -->						
+                    <div class="sidebar-widget outer-bottom-xs wow fadeInUp">
                         <h3 class="section-title">Tab Widget</h3>
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#popular" data-toggle="tab">Xem nhiều</a></li>
@@ -142,7 +149,7 @@
 								@endphp
 								<div class="blog-post inner-bottom-30 " >
 									<img class="img-responsive" src="{{ $img }}" alt="">
-									<h4><a href="blog-details.html">{{ $value->tieude}}</a></h4>
+									<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}">{{ $value->tieude}}</a></h4>
                                     <span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
 									<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 									<p>{{ $value->tomtat}}</p>
@@ -157,7 +164,7 @@
 								@endphp
 								<div class="blog-post inner-bottom-30" >
 									<img class="img-responsive" src="{{ $img }}" alt="">
-									<h4><a href="blog-details.html">{{ $value->tieude}}</a></h4>
+									<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}">{{ $value->tieude}}</a></h4>
                                     <span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
 									<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 									<p>{{ $value->tomtat}}</p>
@@ -199,6 +206,13 @@
         <div class="progress"></div>
     </div>
 @endif
+<style>
+    .typeahead { border: 1px solid #999; background: #FFF; overflow: auto; width: 250px; }
+    .typeahead{ padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+	.tieude_ {
+		word-break: break-all;
+	}
+</style>
 @endsection
 @section('javascript')
 <script type="text/javascript">                      
@@ -210,14 +224,47 @@
 			});
 		},
 		highlighter: function (item, data) {
-			var parts = item.split('#'),
-				html = '<div class="row">';
-                  html += '<div class="col-4 pl-0">';
-                  html += '<span style="width=200px;word-break: break-all;">'+data.name+'</span>';
-                  html += '</div>';
-                  html += '</div>';
+            var parts = item.split('#'),
+                html = '<span class="tieude_">'+data.name+'</span>';
 			return html;
       	}
+    });
+    $(document).ready(function(){
+        $('.load-more').click(function(){
+            var row = Number($('#row').val());
+            var allcount = Number($('#all').val());
+            var rowperpage = 3;
+            row = row + rowperpage;
+            if(row <= allcount){
+                $("#row").val(row);
+                $.ajax({
+                    url: '{{ route("frontend.binhluan_load") }}',
+                    type: 'get',
+                    data: {row:row},
+                    beforeSend:function(){
+                        $(".load-more").text("Đang tải...");
+                    },
+                    success: function(response){
+                        setTimeout(function() {
+                            $("#blog-comments:last").after(response).show().fadeIn("slow");
+                            var rowno = row + rowperpage;
+                            if(rowno > allcount){
+                                $('.load-more').text("Ẩn");
+                            }else{
+                                $(".load-more").text("Xem thêm");
+                            }
+                        }, 2000);
+                    }
+                });
+            }else{
+                $('.load-more').text("Đang tải...");
+                setTimeout(function() {
+                    $('#blog-comments:nth-child(3)').nextAll('#blog-comments').remove();
+                    $("#row").val(0);
+                    $('.load-more').text("Xem thêm");                    
+                }, 2000);
+            }
+        });
     });
 </script>
 @endsection 

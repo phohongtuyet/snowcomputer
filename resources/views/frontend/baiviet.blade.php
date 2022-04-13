@@ -76,7 +76,7 @@
 							@endphp
 							<div class="blog-post inner-bottom-30 " >
 								<img class="img-responsive" src="{{ $img }}" alt="">
-								<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}"">{{ $value->tieude}}</a></h4>
+								<h4><a href="{{ route('frontend.baiviet_chitiet',['tieude_slug' => $value->tieude_slug ]) }}">{{ $value->tieude}}</a></h4>
 								<span class="eye"><i class="fa fa-eye"></i> {{$value->luotxem}}</span>
 								<span class="date-time">{{ date_format($value->created_at, 'd-m-y h:i:s') }}</span>
 								<p>{{ $value->tomtat}}</p>
@@ -116,6 +116,13 @@
 		</div>
 	</div>
 </div>
+<style>
+    .typeahead { border: 1px solid #999; background: #FFF; overflow: auto; width: 250px; }
+    .typeahead{ padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+	.tieude_ {
+		word-break: break-all;
+	}
+</style>
 @endsection
 @section('javascript')
 <script type="text/javascript">                      
@@ -128,11 +135,7 @@
 		},
 		highlighter: function (item, data) {
 			var parts = item.split('#'),
-				html = '<div class="row">';
-                  html += '<div class="col-4 pl-0">';
-                  html += '<span style="width=200px;word-break: break-all;">'+data.name+'</span>';
-                  html += '</div>';
-                  html += '</div>';
+                  html = '<span class="tieude_">'+data.name+'</span>';
 			return html;
       	}
     });
