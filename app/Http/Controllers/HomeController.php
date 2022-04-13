@@ -261,7 +261,7 @@ class HomeController extends Controller
         if(!session()->has($idXem))
         {
             $orm = BaiViet::find($baiviet->id);
-            $orm->LuotXem = $orm->luotxem + 1;
+            $orm->luotxem = $orm->luotxem + 1;
             $orm->save();
             session()->put($idXem, 1);
         }
@@ -1692,7 +1692,7 @@ class HomeController extends Controller
             if(!session()->has($idXem))
             {
                 $orm = BaiViet::find($baiviet->id);
-                $orm->LuotXem = $orm->luotxem + 1;
+                $orm->luotxem = $orm->luotxem + 1;
                 $orm->save();
                 session()->put($idXem, 1);
             }
