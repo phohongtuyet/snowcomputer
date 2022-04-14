@@ -44,8 +44,14 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="rating rateit-small">
-                                                    @if($value->options->stars <= 10)
+                                                    @if($value->options->stars = 0)
                                                         <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                        <i class="icon fa fal fa-star-o"></i>
+                                                    @elseif($value->options->stars <= 10)
+                                                        <i class="icon fa fa-star-half-o"></i>
                                                         <i class="icon fa fal fa-star-o"></i>
                                                         <i class="icon fa fal fa-star-o"></i>
                                                         <i class="icon fa fal fa-star-o"></i>
