@@ -34,11 +34,12 @@ class HomeController extends Controller
 
 		$slides = Slides::where('hienthi', 1)->get();
 		$hangsanxuat = HangSanXuat::all();
-        $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+        $danhmuc = DanhMuc::orderBy('tendanhmuc')->where('xoa')->get();
         $sanpham = SanPham::Join('loaisanpham','loaisanpham.id','=','sanpham.loaisanpham_id')
                           ->Join('nhomsanpham','nhomsanpham.id','=','loaisanpham.nhomsanpham_id')
                           ->Join('danhmuc', 'danhmuc.id', '=', 'nhomsanpham.danhmuc_id')                    
-                          ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1]])
+                          ->where([['sanpham.soluong','>',0],['sanpham.hienthi',1],['danhmuc.xoa',0]])
+                          
                           ->get();
 
         $sanphamsale = SanPham::where([['trangthaisanpham',3],['hienthi',1]])->get();
@@ -1118,7 +1119,7 @@ class HomeController extends Controller
             $nhomsanpham = NhomSanPham::where('id',$loaisanpham->nhomsanpham_id)->first();
             $danhmuc = DanhMuc::where('id',$nhomsanpham->danhmuc_id)->first();
             $danhgia = DanhGiaSanPham::where('sanpham_id',$sp->id)->get();
-            $hangsanxuat = HangSanXuat::all();
+            $hangsanxuat = HangSanXuat::where('xoa',0)->get();
             $danhgiasao = DanhGiaSanPham::selectRaw('SUM(sao) as sao')->where('sanpham_id',$sp->id)->first();
 
             //san pham cung danh muc
@@ -1140,8 +1141,8 @@ class HomeController extends Controller
     
             //anh san pham
             $all_files = array();
-            $dir = '/storage/app/' . $sp->thumuc . '/images/';
-            $files = Storage::files($sp->thumuc . '/images/');
+            $dir = '/storage/app/' . $sp->thumuc;
+            $files = Storage::files($sp->thumuc);
             foreach($files as $file)
                 $all_files[] = pathinfo($file);
             
@@ -1150,7 +1151,7 @@ class HomeController extends Controller
         }
         else
         {
-            $hangsanxuat = HangSanXuat::all();
+            $hangsanxuat = HangSanXuat::where('xoa',0)->get();
             $sesion_title = $request->search;
             return view('frontend.sanpham_chitiet',compact('hangsanxuat','sesion_title'));
         }

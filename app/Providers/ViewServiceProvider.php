@@ -28,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('layouts.frontend', function ($view) {
-            $danhmuc = DanhMuc::orderBy('tendanhmuc')->get();
+            $danhmuc = DanhMuc::orderBy('tendanhmuc')->where('xoa',0)->get();
             $view->with('danhmuc',$danhmuc);
         });
 
