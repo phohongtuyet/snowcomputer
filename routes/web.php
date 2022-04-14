@@ -11,7 +11,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\DonHangChiTietController;
 use App\Http\Controllers\NoiSanXuatController;
-use App\Http\Controllers\HinhAnhController;
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\BinhluanController;
 use App\Http\Controllers\ChuDeController;
@@ -269,14 +268,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/donhang/sua/{id}', [DonHangController::class, 'postSua'])->name('donhang.sua')->middleware('nhanvien');
     Route::get('/donhang/xoa/{id}', [DonHangController::class, 'getXoa'])->name('donhang.xoa')->middleware('nhanvien');
     Route::get('/donhang/moi', [DonHangController::class, 'getDanhSachDonHangMoi'])->name('donhang.moi')->middleware('nhanvien');
-    Route::post('/donhang/trangthai/{id}', [DonHangController::class, 'postTrangThai'])->name('donhang.trangthai')->middleware('admin');
+    Route::post('/donhang/trangthai/{id}', [DonHangController::class, 'postTrangThai'])->name('donhang.trangthai')->middleware('nhanvien');
     Route::get('/donhang/doanhthu', [DonHangController::class, 'getDoanhThu'])->name('donhang.doanhthu')->middleware('nhanvien');
     Route::get('/donhang/thongdoanhthu', [DonHangController::class, 'getDoanhThu'])->name('donhang.thongkedoanhthu')->middleware('admin');
     Route::get('/donhang/ngay', [DonHangController::class, 'getDanhSachNgay'])->name('donhang.ngay')->middleware('admin');
     Route::get('/donhang/chart', [DonHangController::class, 'getChartDoanhThu'])->name('donhang.chart')->middleware('admin');
 
     // Quản lý Đơn hàng chi tiết
-    Route::get('/donhang/chitiet/{id}', [DonHangChiTietController::class, 'getDanhSach'])->name('donhang.chitiet')->middleware('admin');
+    Route::get('/donhang/chitiet/{id}', [DonHangChiTietController::class, 'getDanhSach'])->name('donhang.chitiet')->middleware('nhanvien');
     Route::get('/donhang/chitiet/sua/{id}', [DonHangChiTietController::class, 'getSua'])->name('donhang.chitiet.sua')->middleware('admin');
     Route::post('/donhang/chitiet/sua/{id}', [DonHangChiTietController::class, 'postSua'])->name('donhang.chitiet.sua')->middleware('admin');
     Route::get('/donhang/chitiet/xoa/{id}', [DonHangChiTietController::class, 'getXoa'])->name('donhang.chitiet.xoa')->middleware('admin');

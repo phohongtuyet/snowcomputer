@@ -136,16 +136,17 @@
                 </ul>
               </li>
 
-              @if(Auth::user()->role === 'admin')
               <li class="menu-header">Đặt hàng</li>
               <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shopping-cart"></i><span>Quản lý đặt hàng</span></a>
                 <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="{{ route('admin.tinhtrang') }}">Tình trạng đơn hàng</a></li>
+                  @if(Auth::user()->role === 'admin')
+                    <li><a class="nav-link" href="{{ route('admin.tinhtrang') }}">Tình trạng đơn hàng</a></li>
+                  @endif
                   <li><a class="nav-link" href="{{ route('admin.donhang') }}">Đơn hàng </a></li>
                 </ul>
               </li>
-
+              @if(Auth::user()->role === 'admin')
               <li class="menu-header">Gmail</li>
               <li class="dropdown">
                 <a href="{{ route('admin.gmail') }}"><i data-feather="mail"></i><span>Quản lý Gmail</span></a>

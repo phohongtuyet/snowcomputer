@@ -80,7 +80,7 @@ class KhachHangController extends Controller
 
     public function getSanPhamYeuThich()
     {
-        $hangsanxuat = HangSanXuat::all();
+        $hangsanxuat = HangSanXuat::where('xoa',0)->get();
         $sanphamyeuthich = SanPhamYeuThich::where('user_id',Auth::user()->id)->get();
 
         $danhgiasao = DanhGiaSanPham::select('sanpham_id',DB::raw('SUM(sao) as sao'))->groupBy('sanpham_id')->get();
