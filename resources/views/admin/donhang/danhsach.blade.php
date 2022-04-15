@@ -69,7 +69,12 @@
                             </form>                           
                         </td>
                         <td class="text-center"><a href="{{ route('admin.donhang.chitiet', ['id' => $value->id]) }}" class="btn-xem"><i class="fas fa-info"></i></a></td>
-                        <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
+                        @if($value->TinhTrang->tinhtrang !== 'Thành công' )
+                            <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
+                        @else
+                            <td class="text-center"> <a class="disabled" role="button" aria-disabled="true"><i class="fas fa-trash-alt text-danger"></i></a></td>
+
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
