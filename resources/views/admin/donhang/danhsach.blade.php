@@ -13,7 +13,6 @@
                         <th width="15%">Ngày đặt</th>
                         <th width="8%">Tình trạng</th>
                         <th width="7%">Chi tiết</th>
-                        <th width="4%">Sửa</th>
                         <th width="4%">Xóa</th>
                     </tr>
                 </thead>
@@ -70,8 +69,7 @@
                             </form>                           
                         </td>
                         <td class="text-center"><a href="{{ route('admin.donhang.chitiet', ['id' => $value->id]) }}" class="btn-xem"><i class="fas fa-info"></i></a></td>
-                        <td class="text-center"><a href="{{ route('admin.donhang.sua', ['id' => $value->id]) }}"><i class="fas fa-edit"></i></a></td>
-                        <td class="text-center"><a href="{{ route('admin.donhang.xoa', ['id' => $value->id]) }}"><i class="fas fa-trash-alt text-danger"></i></a></td>
+                        <td class="text-center"><a href="#xoa" data-toggle="modal" data-target="#exampleModal" onclick="getXoa({{ $value->id }}); return false;"><i class="fas fa-trash-alt text-danger"></i></a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -97,6 +95,30 @@
     	</div>
   	</div>
 </div>
+<form action="{{ route('admin.donhang.xoa') }}" method="post">
+    @csrf
+    <input type="hidden" id="ID_delete" name="ID_delete" value="" />
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>            
+            </div>
+            <div class="modal-body">
+                <p class="font-weight-bold text-danger"><i class="fas fa-question-circle"></i> Xác nhận xóa? Hành động này không thể phục hồi.</p>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> Hủy bỏ</button>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Thực hiện</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</form> 
 @endsection
 @section('javascript')
 <script>
@@ -108,5 +130,8 @@
 			$('#modal-xem').modal('show');
 		})
 	});
+    function getXoa(id) {
+			$('#ID_delete').val(id);
+		}
 </script>
 @endsection

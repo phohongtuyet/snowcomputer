@@ -266,7 +266,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::post('/donhang/them', [DonHangController::class, 'postThem'])->name('donhang.them')->middleware('nhanvien');
     Route::get('/donhang/sua/{id}', [DonHangController::class, 'getSua'])->name('donhang.sua')->middleware('nhanvien');
     Route::post('/donhang/sua/{id}', [DonHangController::class, 'postSua'])->name('donhang.sua')->middleware('nhanvien');
-    Route::get('/donhang/xoa/{id}', [DonHangController::class, 'getXoa'])->name('donhang.xoa')->middleware('nhanvien');
+    Route::post('/donhang/xoa', [DonHangController::class, 'postXoa'])->name('donhang.xoa')->middleware('nhanvien');
     Route::get('/donhang/moi', [DonHangController::class, 'getDanhSachDonHangMoi'])->name('donhang.moi')->middleware('nhanvien');
     Route::post('/donhang/trangthai/{id}', [DonHangController::class, 'postTrangThai'])->name('donhang.trangthai')->middleware('nhanvien');
     Route::get('/donhang/doanhthu', [DonHangController::class, 'getDoanhThu'])->name('donhang.doanhthu')->middleware('nhanvien');

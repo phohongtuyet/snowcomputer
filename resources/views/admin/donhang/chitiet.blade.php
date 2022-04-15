@@ -9,8 +9,6 @@
                         <th width="5%">SL</th>
                         <th width="15%">Đơn giá bán</th>
                         <th width="15%">Thành tiền</th>
-                        <th width="5%">Sửa</th>
-                        <th width="5%">Xóa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,8 +20,6 @@
                             <td class="text-end">{{ $value->soluongban }}</td>
                             <td class="text-end">{{ number_format($value->dongiaban) }}<sup><u>đ</u></sup></td>
                             <td class="text-end">{{ number_format($value->soluongban * $value->dongiaban) }}<sup><u>đ</u></sup></td>
-                            <td class="text-center"><a href="{{ route('admin.donhang.chitiet.sua', ['id' => $value->id]) }}"><i class="fas fa-edit"></i></a></td>
-                            <td class="text-center"><a href="{{ route('admin.donhang.chitiet.xoa', ['id' => $value->id]) }}"><i class="fas fa-trash-alt text-danger"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>

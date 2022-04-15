@@ -10,7 +10,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="user_id">Khách hàng</label>
-                    <input type="text" class="form-control" id="user" name="user_id" value="{{ $donhang->NguoiDung->name }}" disabled required />
+                    <input type="text" class="form-control" id="user" name="user_id" value="{{ $donhang->user->name }}" disabled required />
                 </div>
 
                 <div class="mb-3">

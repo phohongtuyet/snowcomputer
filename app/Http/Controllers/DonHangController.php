@@ -18,7 +18,7 @@ class DonHangController extends Controller
 
     public function getDanhSach()
     {
-        $donhang = DonHang::orderBy('created_at', 'desc')->get();
+        $donhang = DonHang::orderBy('created_at', 'desc')->where('xoa',0)->get();
         $tinhtrang = TinhTrang::where('xoa',0)->get();
         return view('admin.donhang.danhsach', compact('donhang','tinhtrang'));
     }
@@ -69,18 +69,11 @@ class DonHangController extends Controller
         
     }
     
-    public function getXoa($id)
+    public function postXoa(Request $request )
     {
-        $orm = DonHang::find($id);
-        
-        $chitiet = DonHang_ChiTiet::where('donhang_id', $orm->id)->get();
-        foreach($chitiet as $value)
-        {
-            $value->delete();
-        }
-
-        $orm->delete();
-
+        $orm = DonHang::find($request->ID_delete);
+        $orm->xoa = 1;
+        $orm->save();
         return redirect()->route('admin.donhang');
     }
 
