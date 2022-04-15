@@ -687,7 +687,7 @@
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
             @foreach($hangsanxuat as $value)
             <div class="item m-t-15"> <a href="{{route('frontend.hangsanxuat',['hangsanxuat' => $value->tenhangsanxuat_slug])}}" class="image"> 
-                <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt=""> </a> 
+                <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" alt=""> </a> 
                 </div>
             @endforeach
         </div>

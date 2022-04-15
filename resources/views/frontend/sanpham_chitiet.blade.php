@@ -477,7 +477,7 @@
                         <div class="col-lg-3">
                             <h3 class="section-title">{{$danhmuc->tendanhmuc}}</h3>
                             <div class="ad-imgs">
-                                <img class="img-responsive" src="{{env('APP_URL') . '/storage/app/danhmuc/images/' . $danhmuc->hinhanh}}" alt="">
+                                <img class="img-responsive" src="{{env('APP_URL') . '/storage/app/danhmuc/' . $danhmuc->hinhanh}}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -674,7 +674,7 @@
                     <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
                     @foreach($hangsanxuat as $value)
                         <div class="item m-t-15"> <a href="{{route('frontend.hangsanxuat',['hangsanxuat' => $value->tenhangsanxuat_slug])}}" class="image"> 
-                        <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/images/' . $value->hinhanh }}" alt=""> </a> 
+                        <img data-echo="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" src="{{ env('APP_URL') . '/storage/app/hangsanxuat/' . $value->hinhanh }}" alt=""> </a> 
                         </div>
                     @endforeach
                     </div><!-- /.owl-carousel #logo-slider -->

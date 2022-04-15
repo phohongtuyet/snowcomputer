@@ -23,7 +23,6 @@
                 @if(!empty($baiviet))
                     <div class="col-xs-12 col-sm-9 col-md-9 rht-col">
                         <div class="blog-post wow fadeInUp">
-                            <img class="img-responsive" src="assets/images/blog-post/blog_big_01.jpg" alt="">
                             <h1>{{ $baiviet->tieude }}</h1>
                             <span class="author">{{ $baiviet->User->name }}</span>
                             <span class="eye"><i class="fa fa-eye"></i> {{$baiviet->luotxem}}</span>
