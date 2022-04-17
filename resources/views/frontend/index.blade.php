@@ -69,23 +69,35 @@
                                   if(in_array($extension2, $extensions))
                                   {
                                       $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
-                                      $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
                                   }
                                   else
                                   {
                                       $first_file = $no_image;
-                                      $two_file = $no_image;
                                   }
                               }
                               else
                               {
                                   $first_file = $no_image;
+                              }
+                              if(isset($files[4]))
+                              {
+                                  $extension2 = strtolower(pathinfo($files[4], PATHINFO_EXTENSION));
+                                  if(in_array($extension2, $extensions))
+                                  {
+                                      $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
+                                  }
+                                  else
+                                  {
+                                      $two_file = $no_image;
+                                  }
+                              }
+                              else
+                              {
                                   $two_file = $no_image;
                               }
                           }
                           else
                           {
-                              $first_file = $no_image;
                               $two_file = $no_image;
                           }                 
                         @endphp
@@ -218,23 +230,35 @@
                                       if(in_array($extension2, $extensions))
                                       {
                                           $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
-                                          $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
                                       }
                                       else
                                       {
                                           $first_file = $no_image;
-                                          $two_file = $no_image;
                                       }
                                   }
                                   else
                                   {
                                       $first_file = $no_image;
+                                  }
+                                  if(isset($files[4]))
+                                  {
+                                      $extension2 = strtolower(pathinfo($files[4], PATHINFO_EXTENSION));
+                                      if(in_array($extension2, $extensions))
+                                      {
+                                          $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
+                                      }
+                                      else
+                                      {
+                                          $two_file = $no_image;
+                                      }
+                                  }
+                                  else
+                                  {
                                       $two_file = $no_image;
                                   }
                               }
                               else
                               {
-                                  $first_file = $no_image;
                                   $two_file = $no_image;
                               }                 
                             @endphp
@@ -383,7 +407,7 @@
                             <div class="product">
                               <div class="product-image">
                                 <div class="image"> 
-                                @php
+                                @php 
                                   $no_image = env('APP_URL')."/public/frontend/images/noimage.png";
                                   $extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
                                   $dir = 'storage/app/' . $valuetag->thumuc;
@@ -395,24 +419,36 @@
                                           $extension2 = strtolower(pathinfo($files[3], PATHINFO_EXTENSION));
                                           if(in_array($extension2, $extensions))
                                           {
-                                              $first_file = config('app.url') . '/'. $dir. '/'.$files[3];
-                                              $two_file = config('app.url') . '/'. $dir . '/'. $files[4];
+                                              $first_file = config('app.url') . '/'. $dir .'/'. $files[3];
                                           }
                                           else
                                           {
                                               $first_file = $no_image;
-                                              $two_file = $no_image;
                                           }
                                       }
                                       else
                                       {
                                           $first_file = $no_image;
+                                      }
+                                      if(isset($files[4]))
+                                      {
+                                          $extension2 = strtolower(pathinfo($files[4], PATHINFO_EXTENSION));
+                                          if(in_array($extension2, $extensions))
+                                          {
+                                              $two_file = config('app.url') . '/'. $dir .'/'. $files[4];
+                                          }
+                                          else
+                                          {
+                                              $two_file = $no_image;
+                                          }
+                                      }
+                                      else
+                                      {
                                           $two_file = $no_image;
                                       }
                                   }
                                   else
                                   {
-                                      $first_file = $no_image;
                                       $two_file = $no_image;
                                   }                 
                                 @endphp
