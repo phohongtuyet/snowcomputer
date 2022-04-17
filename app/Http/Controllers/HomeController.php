@@ -157,7 +157,7 @@ class HomeController extends Controller
         
             // Sau đó đăng nhập
             Auth::login($newUser, true);
-            return redirect()->intended('khachhang');
+            return redirect()->route('khachhang');
         }
     }
 
