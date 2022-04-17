@@ -179,7 +179,7 @@
                                         <div class="pull-left">
                                             <div class="rating rateit-small">
                                                 @if($danhgiasao->sao <= 10)
-                                                    <i class="icon fa fal fa-star-o"></i>
+                                                    <i class="icon fa fa-star-half-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
                                                     <i class="icon fa fal fa-star-o"></i>
