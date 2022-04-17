@@ -166,19 +166,7 @@
             <!-- /.sidebar-widget --> 
             <!-- ============================================== PRICE SILDER : END ============================================== --> 
             </form>
-            <!-- ============================================== COMPARE============================================== -->
-            <div class="sidebar-widget outer-top-vs">
-              <h3 class="section-title">So sánh sản phẩm</h3>
-              <div class="sidebar-widget-body">
-                <div class="compare-report">
-                  <p>You have no <span>item(s)</span> to compare</p>
-                </div>
-                <!-- /.compare-report --> 
-              </div>
-              <!-- /.sidebar-widget-body --> 
-            </div>
-            <!-- /.sidebar-widget --> 
-            <!-- ============================================== COMPARE: END ============================================== --> 
+          
             <!-- ============================================== PRODUCT TAGS ============================================== -->
            
           <!-- /.Testimonials -->
@@ -222,10 +210,7 @@
             <div class="image"> <img src="{{ asset('public/frontend/images/banners/cat-banner-1.jpg')}}" alt="" class="img-responsive"> </div>
             <div class="container-fluid">
               <div class="caption vertical-top text-left">
-                <div class="big-text"> Big Sale </div>
-                <div class="excerpt hidden-sm hidden-md"> Save up to 49% off </div>
-                <div class="excerpt-normal hidden-sm hidden-md"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </div>
-                <div class="buy-btn"><a href="#" class="lnk btn btn-primary">Show Now</a></div>
+               
               </div>
               <!-- /.caption --> 
             </div>
@@ -468,7 +453,6 @@
                                     @if(Auth::check())
                                     <li class="lnk wishlist"> <a class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                     @endif
-                                    <li class="lnk"> <a class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
                                     </ul>
                                 </div>
                                 <!-- /.action --> 
@@ -629,7 +613,6 @@
                                             @if(Auth::check())
                                             <li class="lnk wishlist"> <a class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                             @endif
-                                            <li class="lnk"> <a class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
                                             </ul>
                                         </div>
                                         <!-- /.action --> 

@@ -628,11 +628,6 @@
                                                                     </a>
                                                                 </li>
                                                             @endif
-                                                            <li class="lnk">
-                                                                <a class="add-to-cart" href="detail.html" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </a>
-                                                            </li>
                                                         </ul>
                                                     </div><!-- /.action -->
                                                 </div><!-- /.cart -->

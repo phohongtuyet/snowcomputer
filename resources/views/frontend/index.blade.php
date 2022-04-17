@@ -47,6 +47,7 @@
         <!-- ================================== TOP NAVIGATION : END ================================== --> 
         
         <!-- ============================================== HOT DEALS ============================================== -->
+        @if($sanphamsale->count() > 0)
         <div class="sidebar-widget hot-deals outer-bottom-xs">
           <h3 class="section-title">Ưu đãi lớn </h3>
           <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
@@ -107,20 +108,7 @@
                     </div>
                     <div class="sale-offer-tag"><span>{{$value->phantramgia}}%<br>
                       off</span></div>
-                    <div class="timing-wrapper">
-                      <div class="box-wrapper">
-                        <div class="date box"> <span class="key">120</span> <span class="value">DAYS</span> </div>
-                      </div>
-                      <div class="box-wrapper">
-                        <div class="hour box"> <span class="key">20</span> <span class="value">HRS</span> </div>
-                      </div>
-                      <div class="box-wrapper">
-                        <div class="minutes box"> <span class="key">36</span> <span class="value">MINS</span> </div>
-                      </div>
-                      <div class="box-wrapper">
-                        <div class="seconds box"> <span class="key">60</span> <span class="value">SEC</span> </div>
-                      </div>
-                    </div>
+                   
                   </div>
                   <!-- /.hot-deal-wrapper -->
                   
@@ -147,6 +135,7 @@
           </div>
           <!-- /.sidebar-widget --> 
         </div>
+        @endif
         <!-- ============================================== HOT DEALS: END ============================================== -->         
         <!-- ============================================== NEWSLETTER ============================================== -->
         <div class="sidebar-widget newsletter outer-bottom-small">
@@ -374,7 +363,6 @@
                                 @if(Auth::check())
                                 <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $value->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                 @endif
-                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
                               </ul>
                             </div>
                             <!-- /.action --> 
@@ -562,7 +550,6 @@
                                     @if(Auth::check())
                                     <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="{{ route('khachhang.sanphamyeuthich.them', ['tensanpham_slug' => $valuetag->tensanpham_slug]) }}" title="Yêu thích"> <i class="icon fa fa-heart"></i> </a> </li>
                                     @endif
-                                    <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="So sánh"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
                                   </ul>
                                 </div>
                                 <!-- /.action --> 
