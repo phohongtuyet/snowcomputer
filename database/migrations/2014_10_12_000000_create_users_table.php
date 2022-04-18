@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('role', 20)->default('user'); // Quyền hạn
             $table->unsignedInteger('khoa')->default(0);
+            $table->unsignedTinyInteger('xoa')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
             $table->engine = 'InnoDB';

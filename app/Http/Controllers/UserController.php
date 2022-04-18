@@ -43,7 +43,7 @@ class UserController extends Controller
     
     public function getDanhSach()
     {
-        $nguoidung = User::all();
+        $nguoidung = User::where('xoa',0)->get();
         return view('admin.nguoidung.danhsach', compact('nguoidung'));
     }
 
@@ -125,10 +125,11 @@ class UserController extends Controller
         return redirect()->route('admin.nguoidung')->with('status', 'Cập nhật thành công');
     }
     
-    public function getXoa($id)
+    public function postXoa(Request $request)
     {
-        $orm = User::find($id);
-        $orm->delete();
+        $orm = User::find($request->ID_delete);
+        $orm->xoa = 1;
+        $orm->save();
         
         return redirect()->route('admin.nguoidung')->with('status', 'Xóa thành công');;
     }
